@@ -13,8 +13,9 @@ import java.util.Date;
 import java.util.Random;
 
 @Controller
+@RequestMapping("/index")
 public class IndexController {
-    @RequestMapping("/index")
+    @GetMapping
     public String indexWandou() {
         return "index";
     }

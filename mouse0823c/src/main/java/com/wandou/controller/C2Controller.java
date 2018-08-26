@@ -2,6 +2,8 @@ package com.wandou.controller;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,6 +81,12 @@ public class C2Controller {
         return stringBuffer.toString();
     }
 
+    /**
+     * 将内容加粗
+     *
+     * @param number
+     * @return
+     */
     private String strong(Number number) {
         return strong(number.toString());
     }

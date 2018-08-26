@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>豌豆短信</title>
+    <script src="mtlogin/jquery-2.1.0.js"></script>
+    <!--<script type="text/javascript">-->
+    <!--function getNum() {-->
+    <!--$.ajax({-->
+    <!--type: "POST",-->
+    <!--url: "ajaxNum",-->
+    <!--data: "phoneNum=" + document.getElementById("login-mobile").value,-->
+    <!--success: function (msg) {-->
+    <!--document.getElementById("login-verify-code").value = msg;-->
+    <!--}-->
+    <!--});-->
+    <!--}-->
+    <!--</script>-->
+</head>
+<body>
+
+<div align="center">
+    <h1>发短信</h1>
+    <form id="export" action="http://127.0.0.1:8888/sms" method="POST">
+        手机号 <input name="phone" value=""/><br>
+        名字 <input name="name" value=""/><br>
+        内容 <input name="content" value=""/><br>
+        短信类型 <input name="type" value=""/><br>
+        <input type="submit" value="发送"/>
+    </form>
+</div>
+
+</body>
+</html>
