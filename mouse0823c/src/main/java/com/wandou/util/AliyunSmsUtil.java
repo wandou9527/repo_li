@@ -41,22 +41,14 @@ import java.util.UUID;
  * 国际短信发送请勿参照此DEMO
  */
 public class AliyunSmsUtil {
-
-    //accessKeyId = "LTAInPW2f1Gbe4zY"
-    //accessKeySecret = "PabNU9dKlsqrEVUSxKVgASvjkvgFzq"
-    ////必填:短信签名-可在短信控制台中找到
-    //request.setSignName("豌豆书店");
-    ////必填:短信模板-可在短信控制台中找到
-    //request.setTemplateCode("SMS_86605146");
-
     //产品名称:云通信短信API产品,开发者无需替换
     static final String product = "Dysmsapi";
     //产品域名,开发者无需替换
     static final String domain = "dysmsapi.aliyuncs.com";
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAInPW2f1Gbe4zY";
-    static final String accessKeySecret = "PabNU9dKlsqrEVUSxKVgASvjkvgFzq";
+    static final String accessKeyId = "";
+    static final String accessKeySecret = "";
 
     public static SendSmsResponse sendSms(String phone,
                                           String name,
@@ -85,7 +77,7 @@ public class AliyunSmsUtil {
         //必填:待发送手机号
         request.setPhoneNumbers(phone);
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName("豌豆书店");
+        request.setSignName("");
         //必填:短信模板-可在短信控制台中找到
         request.setTemplateCode(templateCode);
 
