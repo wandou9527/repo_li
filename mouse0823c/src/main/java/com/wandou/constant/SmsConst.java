@@ -6,7 +6,7 @@ package com.wandou.constant;
  * @description
  */
 public class SmsConst {
-    //豌豆书店验证码
+    //模板code 豌豆书店验证码
     public static final String TEMPLATE_CODE_VERIFY_CODE = "SMS_86605146";
     //节日祝福 模版内容: 尊敬的${name}, 今天是${content}！
     public static final String TEMPLATE_CODE_FESTIVAL = "SMS_142953275";
