@@ -90,6 +90,11 @@
             <artifactId>library-common-util</artifactId>
             <version>1.5.0</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot</artifactId>-->
+            <!--<version>1.5.10.RELEASE</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
