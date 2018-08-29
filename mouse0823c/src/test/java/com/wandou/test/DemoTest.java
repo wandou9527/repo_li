@@ -2,7 +2,9 @@ package com.wandou.test;
 
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -30,4 +32,37 @@ public class DemoTest {
             System.out.println(random.nextInt(100));
         }
     }
+
+    @Test
+    public void m3Set() {
+        HashSet<Character> set = new HashSet<>();
+
+        String str = "asadfjkqwerkakl";
+        for (int i = 0; i < str.length(); i++) {
+            boolean add = set.add(str.charAt(i));
+            if (add == false) {
+                System.out.println(str.charAt(i));
+                return;
+            }
+        }
+    }
+
+    /**
+     * 判断一个数是否是2的次方
+     * 58到家面试 2018-8-29 上午
+     * 二进制中如果是2的次方，最高位为1，其余为0
+     */
+    @Test
+    public void m4() {
+        int[] arr = {8, 7, 16, 32, 64, 66};
+        int m = 9 & 8;
+        System.out.println(m);
+        for (int i = 0; i < arr.length; i++) {
+            int n = arr[i];
+            boolean b = (n & (n - 1)) == 0;
+            System.out.println(n + " 是否是2的次方 ? " + b);
+        }
+
+    }
+
 }
