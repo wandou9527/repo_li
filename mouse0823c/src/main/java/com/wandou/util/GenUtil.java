@@ -11,19 +11,20 @@ public class GenUtil {
     /**
      * 生产随机码
      *
-     * @param num 位数
+     * @param num 位数 默认4
      * @return
      */
     public static String genCode(int num) {
-        if (num == 0) {
-            num = 4;
-        }
-        int code = 0;
+        int code;
         switch (num) {
-            case 4:
-                code = new Random().nextInt(9000) + 1000;
+            case 5:
+                code = new Random().nextInt(90000) + 10000;
                 break;
-            default:
+            case 6:
+                code = new Random().nextInt(900000) + 100000;
+                break;
+            default: //默认4位
+                code = new Random().nextInt(9000) + 1000;
                 break;
         }
         return String.valueOf(code);

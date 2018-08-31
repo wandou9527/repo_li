@@ -8,6 +8,10 @@ import org.junit.Test;
  * @description
  */
 public class StringTest {
+
+    /**
+     * char 转 int
+     */
     @Test
     public void m1() {
         System.out.println();

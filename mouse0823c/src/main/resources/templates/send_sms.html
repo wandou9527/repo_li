@@ -9,11 +9,19 @@
 
 <div align="center">
     <h1>发短信</h1>
+    <h2>验证码</h2>
     <form id="export" action="http://127.0.0.1:8888/sms" method="POST">
+        手机号 <input name="phone" value=""/><br>
+        cipher <input name="cipher" value=""/><br>
+        <input type="submit" value="发送"/>
+    </form>
+
+    <h2>节日</h2>
+    <form id="节日" action="http://127.0.0.1:8888/sms?type=2" method="POST">
         手机号 <input name="phone" value=""/><br>
         名字 <input name="name" value=""/><br>
         内容 <input name="content" value=""/><br>
-        短信类型 <input name="type" value=""/><br>
+        cipher <input name="cipher" value=""/><br>
         <input type="submit" value="发送"/>
     </form>
 </div>

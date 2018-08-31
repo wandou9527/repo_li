@@ -3,6 +3,8 @@ package com.wandou.controller;
 import com.wandou.dto.HaHaDTO;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +17,12 @@ import java.util.Random;
 @Controller
 @RequestMapping("/index")
 public class IndexController {
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+
     @GetMapping
     public String indexWandou() {
-        return "index";
+        logger.info("请求 index 时间戳：" + System.currentTimeMillis());
+        return "/index2";
     }
 
     /**
@@ -34,6 +39,8 @@ public class IndexController {
     @ResponseBody
     public HaHaDTO m3(@RequestParam(name = "uname", required = false, defaultValue = "liming") String uname) {
         System.out.println("请求进来：" + System.currentTimeMillis());
+        logger.info("请求进来：" + System.currentTimeMillis());
+
         HaHaDTO haHaDTO = new HaHaDTO();
         StringBuilder uidSb = new StringBuilder("1");
         for (int i = 0; i < 5; i++) {

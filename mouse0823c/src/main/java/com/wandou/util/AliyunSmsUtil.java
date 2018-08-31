@@ -20,8 +20,13 @@ import com.aliyuncs.http.HttpResponse;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.wandou.constant.SmsConst;
+import com.wandou.constant.secrecy.SecrecySmsConst;
 import com.wandou.dto.SmsTemplateParamDTO;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -40,6 +45,7 @@ import java.util.UUID;
  * 备注:Demo工程编码采用UTF-8
  * 国际短信发送请勿参照此DEMO
  */
+@Component
 public class AliyunSmsUtil {
     //产品名称:云通信短信API产品,开发者无需替换
     static final String product = "Dysmsapi";
@@ -50,25 +56,42 @@ public class AliyunSmsUtil {
     static final String accessKeyId = "";
     static final String accessKeySecret = "";
 
+    private static final Logger logger = LoggerFactory.getLogger(AliyunSmsUtil.class);
+
+    /**
+     * 发短信
+     *
+     * @param phone
+     * @param name
+     * @param code
+     * @param content
+     * @param templateCode
+     * @param signName
+     * @return
+     * @throws ClientException
+     */
     public static SendSmsResponse sendSms(String phone,
                                           String name,
                                           String code,
                                           String content,
-                                          String templateCode)
+                                          String templateCode,
+                                          String signName)
             throws ClientException {
+
+        logger.info("发短信入参: phone：{}，name：{}，code：{}，content：{}", phone, name, code, content);
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 
         //初始化acsClient,暂不支持region化
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
+        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", SecrecySmsConst.accessKeyId, SecrecySmsConst.accessKeySecret);
         DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
         IAcsClient acsClient = new DefaultAcsClient(profile);
 
         //自己
         if (StringUtils.isBlank(templateCode)) {
-            templateCode = SmsConst.TEMPLATE_CODE_VERIFY_CODE;
+            templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
         }
         //自己 end
 
@@ -76,8 +99,11 @@ public class AliyunSmsUtil {
         SendSmsRequest request = new SendSmsRequest();
         //必填:待发送手机号
         request.setPhoneNumbers(phone);
+        if (StringUtils.isBlank(signName)) {
+            signName = SecrecySmsConst.signNameWdsd;
+        }
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName("");
+        request.setSignName(signName);
         //必填:短信模板-可在短信控制台中找到
         request.setTemplateCode(templateCode);
 
@@ -92,6 +118,8 @@ public class AliyunSmsUtil {
 
         //hint 此处可能会抛出异常，注意catch
         SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
+
+        logger.info("发短信返回: {}", JSON.toJSONString(sendSmsResponse));
 
         return sendSmsResponse;
     }
@@ -135,7 +163,8 @@ public class AliyunSmsUtil {
                 "limi",
                 GenUtil.genCode(4),
                 "几年几个月",
-                "");
+                "",
+                null);
         System.out.println("短信接口返回的数据----------------");
         System.out.println("Code=" + response.getCode());
         System.out.println("Message=" + response.getMessage());

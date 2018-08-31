@@ -4,14 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.wandou.constant.SmsConst;
+import com.wandou.constant.secrecy.SecrecySmsConst;
+import com.wandou.service.SmsService;
 import com.wandou.util.AliyunSmsUtil;
 import com.wandou.util.GenUtil;
-import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
 
@@ -23,6 +24,15 @@ import java.util.Objects;
 @RequestMapping("/sms")
 @Controller
 public class SmsController {
+    @Autowired
+    private SmsService smsService;
+
+    @Value("${changliang.zhuru}")
+    private String changLiangZr;
+
+    private static final String cipherBase = "7788";
+
+
     /**
      * 发短信
      *
@@ -38,28 +48,50 @@ public class SmsController {
     public String send(@RequestParam(name = "phone") String phone,
                        @RequestParam("name") String name,
                        @RequestParam(name = "content", required = false) String content,
-                       @RequestParam(name = "type", required = false) Integer type)
+                       @RequestParam(name = "type", required = false) Integer type,
+                       @RequestParam("cipher") String cipher)
             throws ClientException {
+        if (!cipherBase.equals(cipher)) {
+            throw new RuntimeException("无权访问！");
+        }
+
         System.out.println("请求 name: " + name + ";phone: " + phone);
+        System.out.println(changLiangZr + "----------");
 
         String templateCode = "";
         if (Objects.isNull(type)) {
-            templateCode = SmsConst.TEMPLATE_CODE_VERIFY_CODE;
+            templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
         } else if (type == 1) {
-            templateCode = SmsConst.TEMPLATE_CODE_VERIFY_CODE;
+            templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
         } else if (type == 2) {
-            templateCode = SmsConst.TEMPLATE_CODE_FESTIVAL;
+            templateCode = SecrecySmsConst.TEMPLATE_CODE_FESTIVAL;
         } else {
-            templateCode = SmsConst.TEMPLATE_CODE_VERIFY_CODE;
+            templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
         }
 
-        SendSmsResponse sendSmsResponse = AliyunSmsUtil.sendSms(phone,
+        SendSmsResponse sendSmsResponse = AliyunSmsUtil.sendSms(
+                phone,
                 name,
                 GenUtil.genCode(4),
                 content,
-                templateCode);
+                templateCode,
+                null);
 
 //        return "wandou thanks your use!";
-        return "<h4>wandou thanks your use!</h4>" + JSON.toJSONString(sendSmsResponse);
+        return "<h3>wandou thanks your use!</h3>" + JSON.toJSONString(sendSmsResponse);
+    }
+
+    /**
+     * 跳到短信页面
+     *
+     * @param modelAndView
+     * @return
+     */
+    @GetMapping
+    public String toSmsPage(ModelAndView modelAndView) {
+        if (smsService.checkSmsreQuest()) {
+            return "send_sms";
+        }
+        return "index";
     }
 }
