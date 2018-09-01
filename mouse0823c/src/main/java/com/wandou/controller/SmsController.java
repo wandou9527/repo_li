@@ -3,13 +3,11 @@ package com.wandou.controller;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
-import com.wandou.constant.SmsConst;
 import com.wandou.constant.secrecy.SecrecySmsConst;
 import com.wandou.service.SmsService;
 import com.wandou.util.AliyunSmsUtil;
 import com.wandou.util.GenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,8 +25,8 @@ public class SmsController {
     @Autowired
     private SmsService smsService;
 
-    @Value("${changliang.zhuru}")
-    private String changLiangZr;
+//    @Value("${changliang.zhuru}")
+//    private String changLiangZr;
 
     private static final String cipherBase = "7788";
 
@@ -55,19 +53,26 @@ public class SmsController {
             throw new RuntimeException("无权访问！");
         }
 
-        System.out.println("请求 name: " + name + ";phone: " + phone);
-        System.out.println(changLiangZr + "----------");
+        System.out.println("请求 name: " + name + "; phone: " + phone);
+//        System.out.println(changLiangZr + "----------");
 
         String templateCode = "";
         if (Objects.isNull(type)) {
             templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
-        } else if (type == 1) {
-            templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
-        } else if (type == 2) {
-            templateCode = SecrecySmsConst.TEMPLATE_CODE_FESTIVAL;
         } else {
-            templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
+            switch (type) {
+                case 1:
+                    templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
+                    break;
+                case 2:
+                    templateCode = SecrecySmsConst.TEMPLATE_CODE_FESTIVAL;
+                    break;
+                default:
+                    templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
+                    break;
+            }
         }
+
 
         SendSmsResponse sendSmsResponse = AliyunSmsUtil.sendSms(
                 phone,

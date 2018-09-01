@@ -2,7 +2,7 @@ package com.wandou.dto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
+//import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.HandlerMapping;
 
 public class HaHaDTO {
@@ -12,8 +12,8 @@ public class HaHaDTO {
     @Qualifier("viewControllerHandlerMapping")
     @Autowired
     private HandlerMapping viewControllerHandlerMapping;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+//    @Autowired
+//    private JdbcTemplate jdbcTemplate;
 
     public HaHaDTO() {
     }

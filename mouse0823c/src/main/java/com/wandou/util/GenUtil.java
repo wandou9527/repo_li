@@ -17,6 +17,9 @@ public class GenUtil {
     public static String genCode(int num) {
         int code;
         switch (num) {
+            case 4:
+                code = new Random().nextInt(9000) + 1000;
+                break;
             case 5:
                 code = new Random().nextInt(90000) + 10000;
                 break;

@@ -22,7 +22,7 @@ public class IndexController {
     @GetMapping
     public String indexWandou() {
         logger.info("请求 index 时间戳：" + System.currentTimeMillis());
-        return "/index2";
+        return "index";
     }
 
     /**
