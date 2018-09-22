@@ -1,14 +1,16 @@
 package com.wandou.controller;
 
+import com.wandou.service.C2Service;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
-//import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+
+//import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 /**
  * @author liming
@@ -16,11 +18,17 @@ import java.util.Date;
  * @description 接口的 Controller
  */
 @RestController
-@RequestMapping("/c2/")
+@RequestMapping("/c2")
 public class C2Controller {
     private static final long LOVE_START_TIME = 1493740800000L;//20170503
     private static final int DAYS_PER_YEAR = 365;
     private static final int DAYS_PER_MONTH = 30;
+
+    @Autowired
+    private C2Service c2Service;
+
+    private static final Logger logger = LoggerFactory.getLogger(C2Controller.class);
+
 
     @GetMapping
     public String m1() {
@@ -89,6 +97,20 @@ public class C2Controller {
      */
     private String strong(Number number) {
         return strong(number.toString());
+    }
+
+    /**
+     * 赞美
+     *
+     * @param name
+     * @return
+     */
+    @RequestMapping("/paris")
+    public String praise(@RequestParam("name") String name) {
+        logger.info("请求赞美 praise，参数：name：{}", name);
+        String paris = c2Service.paris(name);
+        logger.info("请求赞美 praise，返回值：{}", paris);
+        return paris;
     }
 
 }
