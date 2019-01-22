@@ -3,7 +3,6 @@ package com.wandou.controller;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
-import com.wandou.constant.secrecy.SecrecySmsConst;
 import com.wandou.service.SmsService;
 import com.wandou.util.AliyunSmsUtil;
 import com.wandou.util.GenUtil;
@@ -58,17 +57,17 @@ public class SmsController {
 
         String templateCode = "";
         if (Objects.isNull(type)) {
-            templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
+            templateCode = "SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE";
         } else {
             switch (type) {
                 case 1:
-                    templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
+                    templateCode = "SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE";
                     break;
                 case 2:
-                    templateCode = SecrecySmsConst.TEMPLATE_CODE_FESTIVAL;
+                    templateCode = "SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE";
                     break;
                 default:
-                    templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
+                    templateCode = "SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE";
                     break;
             }
         }
