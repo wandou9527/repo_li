@@ -16,11 +16,11 @@ import java.util.List;
 @Service
 public class C2Service {
 
-    private static final List list = Arrays.asList("曲艳杰", "甜甜");
+    private static final List list = Arrays.asList("曲艳杰", "艳杰", "甜甜");
 
     public String paris(String name) {
         if (list.contains(name)) {
-            return "美丽的我，果然漂亮哦！";
+            return "hi " + name + "，美丽的我，果然漂亮哦！ :)";
         } else if (StringUtils.isBlank(name)) {
             return "你一定如" + NameConst.shuffleList(NameConst.jinSwordsmans).get(0) + "一样潇洒！";
         }

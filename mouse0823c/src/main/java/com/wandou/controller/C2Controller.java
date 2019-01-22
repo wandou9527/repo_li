@@ -106,10 +106,10 @@ public class C2Controller {
      * @return
      */
     @RequestMapping("/paris")
-    public String praise(@RequestParam("name") String name) {
-        logger.info("请求赞美 praise，参数：name：{}", name);
+    public String praise(@RequestParam(name = "name", required = false) String name) {
+        logger.info("请求赞美 paris，参数：name：{}", name);
         String paris = c2Service.paris(name);
-        logger.info("请求赞美 praise，返回值：{}", paris);
+        logger.info("请求赞美 paris，返回值：{}", paris);
         return paris;
     }
 

@@ -16,7 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 //@SpringBootTest(classes = CoinServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.MOCK, properties = "eureka.client.enabled=true")
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Mouse0823cApplication.class, webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+//@SpringBootTest(classes = Mouse0823cApplication.class, webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@SpringBootTest
 public class ApplicationTest {
 
     @Autowired
