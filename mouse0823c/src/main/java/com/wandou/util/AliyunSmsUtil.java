@@ -13,26 +13,17 @@ import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
-import com.aliyuncs.dysmsapi.transform.v20170525.SendSmsResponseUnmarshaller;
 import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.http.FormatType;
-import com.aliyuncs.http.HttpResponse;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.wandou.constant.SmsConst;
-import com.wandou.constant.secrecy.SecrecySmsConst;
 import com.wandou.dto.SmsTemplateParamDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
-import java.util.UUID;
 
 /**
  * Created on 17/6/7.
@@ -85,13 +76,15 @@ public class AliyunSmsUtil {
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 
         //初始化acsClient,暂不支持region化
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", SecrecySmsConst.accessKeyId, SecrecySmsConst.accessKeySecret);
+        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou",
+                "SecrecySmsConst.accessKeyId",
+                "SecrecySmsConst.accessKeySecret");
         DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
         IAcsClient acsClient = new DefaultAcsClient(profile);
 
         //自己
         if (StringUtils.isBlank(templateCode)) {
-            templateCode = SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE;
+            templateCode = "SecrecySmsConst.TEMPLATE_CODE_VERIFY_CODE";
         }
         //自己 end
 
@@ -100,7 +93,7 @@ public class AliyunSmsUtil {
         //必填:待发送手机号
         request.setPhoneNumbers(phone);
         if (StringUtils.isBlank(signName)) {
-            signName = SecrecySmsConst.signNameWdsd;
+            signName = "SecrecySmsConst.signNameWdsd";
         }
         //必填:短信签名-可在短信控制台中找到
         request.setSignName(signName);
