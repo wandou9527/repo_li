@@ -34,7 +34,7 @@ public class MybatisGen {
         List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
         //指定 逆向工程配置文件
-        File configFile = new File("D:\\javaSelf\\git_site\\repoLi\\mbg\\src\\main\\java\\com\\wandou\\demo\\generatorConfig.xml");
+        File configFile = new File("D:\\javaSelf\\git_site\\repo_li\\mbg\\src\\main\\java\\com\\wandou\\demo\\generatorConfig.xml");
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
