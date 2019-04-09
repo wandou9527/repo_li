@@ -13,8 +13,9 @@
 
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://10." userId=""
-                        password="">
+                        connectionURL="jdbc:mysql://0.0.0.0:3306/ku?useUnicode=true"
+                        userId="rd"
+                        password="pass">
         </jdbcConnection>
 
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
@@ -25,7 +26,7 @@
 
 
         <!-- targetProject:生成PO类的位置 -->
-        <javaModelGenerator targetPackage="com.wandou.po"
+        <javaModelGenerator targetPackage="com.po"
                             targetProject=".\src\main\java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
@@ -34,7 +35,7 @@
         </javaModelGenerator>
 
         <!-- targetProject:mapper映射文件生成的位置 -->
-        <sqlMapGenerator targetPackage="com.wandou.po"
+        <sqlMapGenerator targetPackage="com.wandou.mapper"
                          targetProject=".\src\main\java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
