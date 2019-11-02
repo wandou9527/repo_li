@@ -5,7 +5,7 @@
 
     <groupId>com.wandou</groupId>
     <artifactId>mouse0823c</artifactId>
-    <version>1.1.7</version>
+    <version>1.1.8</version>
     <packaging>jar</packaging>
 
     <name>mouse0823c</name>
@@ -95,7 +95,20 @@
         <!--<artifactId>spring-boot</artifactId>-->
         <!--<version>1.5.10.RELEASE</version>-->
         <!--</dependency>-->
-
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>

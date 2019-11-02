@@ -1,4 +1,4 @@
-package com.wandou.dto;
+package com.wandou.model.dto;
 
 /**
  * @author liming

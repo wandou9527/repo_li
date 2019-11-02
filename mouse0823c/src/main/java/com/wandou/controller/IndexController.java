@@ -1,6 +1,6 @@
 package com.wandou.controller;
 
-import com.wandou.dto.HaHaDTO;
+import com.wandou.model.dto.HaHaDTO;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
