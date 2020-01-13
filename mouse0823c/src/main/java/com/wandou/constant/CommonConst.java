@@ -8,4 +8,8 @@ package com.wandou.constant;
  */
 public class CommonConst {
 
+    public static final String UTF_8 = "UTF-8";
+
+    public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
 }

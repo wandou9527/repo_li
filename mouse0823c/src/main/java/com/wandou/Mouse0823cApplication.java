@@ -6,10 +6,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.TimeZone;
 
 
+@EnableAsync
+@EnableScheduling
 @SpringBootApplication
 public class Mouse0823cApplication {
     private static final Logger logger = LoggerFactory.getLogger(Mouse0823cApplication.class);
@@ -21,7 +26,8 @@ public class Mouse0823cApplication {
         logger.warn("warn log *** {}", "逗号后面的占位符里吗");
 
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
-        SpringApplication.run(Mouse0823cApplication.class, args);
+        ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(Mouse0823cApplication.class, args);
+        System.out.println("configurableApplicationContext.getId() = " + configurableApplicationContext.getId());
     }
 
 //    @Bean

@@ -1,8 +1,14 @@
 package com.wandou.constant;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author liming
@@ -11,10 +17,13 @@ import java.util.List;
  * @modify
  */
 
+@Slf4j
+//@PropertySource(value = {"classpath:application.properties"}, encoding = CommonConst.UTF_8)
+@Configuration
 public class NameConst {
 
 //    《天龙八部》人物（共有169人）
-//    刀白凤 丁春秋 马夫人 马五德 小翠 于光豪 巴天石 不平道人
+//    刀白凤 丁春秋 马夫人 马五德 于光豪 巴天石 不平道人
 //    邓百川 风波恶 甘宝宝 公冶乾 木婉清 少林老僧 太皇太后 天狼子
 //    天山童姥 王语嫣 乌老大 无崖子 云岛主 云中鹤 止清 白世镜
 //    包不同 本参 本观 本相 本因 出尘子 冯阿三 古笃诚
@@ -37,11 +46,50 @@ public class NameConst {
 //    谭婆 谭青 摘星子 慧方 慧观 慧净 慧真 穆贵妃
 //    薛慕华
 
-    public static final List jinSwordsmans = Arrays.asList("无崖子", "云中鹤", "出尘子", "乔峰", "苏星河",
-            "段誉", "段正淳", "秦红棉", "萧远山", "虚竹", "摘星子");
+    //金庸武侠人物
+    public static final List<String> jinSwordsmans = Arrays.asList("无崖子", "云中鹤", "出尘子", "乔峰", "苏星河", "段誉",
+            "段正淳", "秦红棉", "萧远山", "虚竹", "摘星子", "梦姑", "奚长老", "奚长老", "慧净", "慧净", "刀白凤", "丁春秋",
+            "马夫人", "马五德", "于光豪", "巴天石", "不平道人", "邓百川", "风波恶", "甘宝宝", "公冶乾", "木婉清", "少林老僧",
+            "太皇太后", "天狼子", "天山童姥", "王语嫣");
+
+    @Value("#{'${mouse.jinSwordsmans}'.split('%2c')}")
+    private List<String> configJinSwordsmans;
+
+    private List<String> jinSwordsmans2 = new ArrayList<>(200);
+
+    private int decodedFlag = 0;
+    private AtomicInteger decodeFlagAtomic = new AtomicInteger(0);
+
 
     public static List shuffleList(List list) {
         Collections.shuffle(list);
         return list;
+    }
+
+    public static String getRandomJinSwordsman() {
+        return jinSwordsmans.get(RandomUtils.nextInt(0, jinSwordsmans.size() - 1));
+    }
+
+    public String getDynamicRandomJinSwordsman() throws UnsupportedEncodingException {
+//        decodeList(null);
+        log.info("随机一个武侠人物, 总数: {}", jinSwordsmans2.size());
+        return jinSwordsmans2.get(RandomUtils.nextInt(0, jinSwordsmans2.size() - 1));
+    }
+
+    public void decodeList(List<String> strList) {
+        if (decodeFlagAtomic.incrementAndGet() > 1) {
+            return;
+        }
+        decodedFlag = 1;
+
+        log.info("decodeList");
+        for (String string : configJinSwordsmans) {
+            try {
+                string = URLDecoder.decode(string, CommonConst.UTF_8);
+                jinSwordsmans2.add(string);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
