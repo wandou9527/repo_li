@@ -16,6 +16,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.Date;
 
 /**
@@ -52,7 +54,7 @@ public class DemoJob {
 
 
         //1方式 事件发布
-        applicationContext.publishEvent(new MyContextEvent("publish this event .... " + randomJinSwordsman + " 来了"));
+        applicationContext.publishEvent(new MyContextEvent(this,"publish this event .... " + randomJinSwordsman + " 来了"));
         log.info("1方式 发送完");
 
 
@@ -112,6 +114,25 @@ public class DemoJob {
                 log.info("方法5 配置的武侠人物, 随机一个: {}", nameConst.getDynamicRandomJinSwordsman());
             }
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 获取 pid
+     */
+    @Async("scheduleExecutor")
+    @Scheduled(cron = "0/25 * * * * ?")
+    public void m6() {
+        try {
+            for (int i = 0; i < 2; i++) {
+                log.info("m6");
+                RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
+                String name = runtime.getName(); // format: "pid@hostname"
+                log.info("name: {}", name);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
