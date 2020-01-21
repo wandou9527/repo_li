@@ -31,7 +31,7 @@ public class Mouse0823cApplicationTests {
 
     @Test
     public void accountInsert() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             AccountPO accountPO = new AccountPO();
             accountPO.setUid(5L);
             accountPO.setAmount(RandomUtils.nextLong(1L, 10000L));
