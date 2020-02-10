@@ -41,19 +41,19 @@ public class AccountPO implements Serializable {
     /**
      * account_time
      */
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date accountTime;
 
     /**
      * create_time
      */
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date createTime;
 
     /**
      * update_time
      */
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private Date updateTime;
 
     /**

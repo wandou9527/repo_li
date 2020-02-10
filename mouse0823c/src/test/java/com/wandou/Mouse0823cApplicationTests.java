@@ -1,7 +1,9 @@
 package com.wandou;
 
 import com.wandou.mapper.AccountMapper;
+import com.wandou.mapper.TbCouponMapper;
 import com.wandou.model.po.AccountPO;
+import com.wandou.model.po.TbCouponPO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -18,6 +21,8 @@ public class Mouse0823cApplicationTests {
 
     @Autowired
     private AccountMapper accountMapper;
+    @Autowired
+    private TbCouponMapper tbCouponMapper;
 
     @Test
     public void contextLoads() {
@@ -45,6 +50,19 @@ public class Mouse0823cApplicationTests {
         List<AccountPO> accountPOS = accountMapper.selectList(null);
         System.out.println(accountPOS);
 
+    }
+
+    @Test
+    public void couponInsert() {
+        TbCouponPO tbCouponPO = new TbCouponPO();
+        tbCouponPO.setId(4);
+        tbCouponPO.setCouponContent("啦啦啦卡券内容content");
+        tbCouponPO.setCouponSum(8);
+        tbCouponPO.setCouponType(1);
+        Date date = new Date();
+        tbCouponPO.setStartTime(date);
+        tbCouponPO.setEndTime(date);
+        tbCouponMapper.insert(tbCouponPO);
     }
 
 }
