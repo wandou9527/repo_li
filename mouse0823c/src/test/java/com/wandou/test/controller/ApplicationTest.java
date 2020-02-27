@@ -1,7 +1,6 @@
 package com.wandou.test.controller;
 
-import com.wandou.Mouse0823cApplication;
-import com.wandou.controller.C2Controller;
+import com.wandou.controller.CController;
 import com.wandou.controller.IndexController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ApplicationTest {
 
     @Autowired
-    private C2Controller c2Controller;
+    private CController c2Controller;
     @Autowired
     private IndexController indexController;
 

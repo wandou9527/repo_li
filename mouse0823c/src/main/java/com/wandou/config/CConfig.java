@@ -14,7 +14,7 @@ import java.util.concurrent.RejectedExecutionException;
  * @description
  */
 @Component
-public class C1Config {
+public class CConfig {
     /**
      * 通用异步执行线程池
      *

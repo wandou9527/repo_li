@@ -3,6 +3,8 @@ package com.wandou.service;
 import com.wandou.constant.NameConst;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.EAN;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -14,9 +16,12 @@ import java.util.List;
  * @description
  */
 @Service
-public class C2Service {
+public class CService {
 
     private static final List list = Arrays.asList("曲艳杰", "艳杰", "甜甜");
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     public String paris(String name) {
         if (list.contains(name)) {
@@ -28,4 +33,11 @@ public class C2Service {
     }
 
 
+    public Integer visitor() {
+        Long mVisitor = redisTemplate.opsForValue().increment("m_visitor", 1);
+        if (mVisitor == null) {
+            return 9527;
+        }
+        return mVisitor.intValue();
+    }
 }

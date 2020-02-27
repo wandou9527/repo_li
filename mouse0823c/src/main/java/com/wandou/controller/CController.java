@@ -1,6 +1,8 @@
 package com.wandou.controller;
 
-import com.wandou.service.C2Service;
+import com.wandou.service.CService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
@@ -17,17 +19,19 @@ import java.util.Date;
  * @date 2018/8/24 15:53
  * @description 接口的 Controller
  */
+
+@Slf4j
 @RestController
-@RequestMapping("/c2")
-public class C2Controller {
+@RequestMapping("/c")
+public class CController {
     private static final long LOVE_START_TIME = 1493740800000L;//20170503
     private static final int DAYS_PER_YEAR = 365;
     private static final int DAYS_PER_MONTH = 30;
 
     @Autowired
-    private C2Service c2Service;
+    private CService cService;
 
-    private static final Logger logger = LoggerFactory.getLogger(C2Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(CController.class);
 
 
     @GetMapping
@@ -108,9 +112,24 @@ public class C2Controller {
     @RequestMapping("/paris")
     public String praise(@RequestParam(name = "name", required = false) String name) {
         logger.info("请求赞美 paris，参数：name：{}", name);
-        String paris = c2Service.paris(name);
+        String paris = cService.paris(name);
         logger.info("请求赞美 paris，返回值：{}", paris);
         return paris;
+    }
+
+    /**
+     * 访客
+     *
+     * @return
+     */
+    @GetMapping("/visitor")
+    public Integer visitor() {
+        try {
+            return cService.visitor();
+        } catch (Exception e) {
+            log.error("访客接口错误：", e);
+            return RandomUtils.nextInt(0, 100);
+        }
     }
 
 }
