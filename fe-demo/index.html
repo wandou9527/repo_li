@@ -34,6 +34,7 @@
     <script src="js/script.js"></script>
     <script src="js/jquery183.min.js"></script>
     <script src="js/responsiveslides.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         // You can also use "$(window).load(function() {"
         $(function () {
@@ -71,7 +72,7 @@
 
 </head>
 <body>
-<div class="wrap-body">
+<div class="wrap-body" id="app">
 
     <!--////////////////////////////////////Header-->
     <header>
@@ -122,6 +123,8 @@
 
     <!-- 轮播图之下 -->
     <!--////////////////////////////////////Container-->
+    <br>
+    今日访客：{{visitor}}
     <section id="container">
         <div class="wrap-container">
             <section class="content-box box-1">
@@ -349,6 +352,7 @@
     </footer>
 
     <!-- Google Map -->
+    <!--
     <script>
         $('.maps').click(function () {
             $('.maps iframe').css("pointer-events", "auto");
@@ -358,7 +362,40 @@
             $('.maps iframe').css("pointer-events", "none");
         });
     </script>
+    -->
 
 </div>
 </body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            visitor: 45
+        },
+        ready: function () {
+            alert(111)
+            this.visitor = this.visitor + 1
+            this.getVisitor();
+        },
+        methods: {
+            getVisitor: function () {
+                // var vm = this;
+                // $.ajax({
+                //     url: 'http://wandour.top/c/visitor',
+                //     type: 'get',
+                //     dataType: 'json',
+                //     success: function (data) {
+                //         console.log('resp', data)
+                //         // vm.$set('peoples', data.result);
+                //     },
+                //     error: function(xhr, errorType, error) {
+                //         alert('Ajax request error, errorType: ' + errorType +  ', error: ' + error)
+                //     }
+                // });
+                console.log('resp test')
+            }
+        }
+    })
+</script>
 </html>
