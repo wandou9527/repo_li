@@ -13,7 +13,7 @@
   ================================================== -->
     <meta charset="utf-8">
     <title>豌豆</title>
-    <meta name="description" content="豌豆的记录 ">
+    <meta name="description" content="豌豆的记录">
     <meta name="author" content="">
     <link href="http://qn.wandour.top/if_letter_W_blue_1553052.ico" rel="icon" type="image/x-ico">
 
@@ -371,12 +371,10 @@
         el: '#app',
         data: {
             message: 'Hello Vue!',
-            visitor: 45
+            visitor: 46
         },
         ready: function () {
-            alert(111)
-            this.visitor = this.visitor + 1
-            this.getVisitor();
+            console.log('vue eee')
         },
         methods: {
             getVisitor: function () {
@@ -397,5 +395,23 @@
             }
         }
     })
+
+    var visitorAjax = 47;
+    get();
+    function get() {
+        $.ajax({
+            url: 'http://wandour.top/mouse/c/visitor',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                // vm.$set('peoples', data.result);
+                console.log('ajax', data)
+                visitorAjax = data;
+            },
+            error: function (xhr, errorType, error) {
+                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error)
+            }
+        });
+    }
 </script>
 </html>

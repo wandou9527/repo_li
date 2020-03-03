@@ -2,10 +2,8 @@
 <html style="height: 100%">
 <head>
     <meta charset="utf-8">
-    <title>豌豆-柱状图-横</title>
 </head>
-<body style="height: 90%; margin: 0">
-<br>
+<body style="height: 100%; margin: 0">
 <div id="container" style="height: 100%"></div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
@@ -14,7 +12,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
 <!--<script type="text/javascript"-->
-        <!--src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+<!--src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
 <script type="text/javascript">
     var dom = document.getElementById("container");
@@ -23,48 +21,37 @@
     option = null;
     option = {
         title: {
-            text: '小目标完成比例',
-            subtext: '数据来自豌豆'
+            text: '小目标完成情况折线图',
+            subtext: 'y轴累计完成数额(千元)'
         },
-        // 提示框组件。
         tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
+            show: true,
+            trigger: 'axis'
         },
-        legend: {
-            data: ['走过时间(%)', '完成度(%)']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        // x轴
         xAxis: {
-            type: 'value',
-            // 边界的差距
-            boundaryGap: [0, 0.01]
-        },
-        // y轴
-        yAxis: {
             type: 'category',
-            data: ['2020-01-20', '2020-02-20']
+            data: ['1.01','1.20', '2.20']
         },
-        // n. 系列，连续；[电] 串联；级数；丛书
+        yAxis: {
+            type: 'value'
+        },
         series: [
             {
-                name: '走过时间(%)',
-                type: 'bar',
-                data: [5, 13]
-            },
-            {
-                name: '完成度(%)',
-                type: 'bar',
-                data: [8, 8]
+                data: [0, 6, 5.7],
+                type: 'line'
             }
+            // {
+            //     name: '完成数额(元)',
+            //     type: 'line',
+            //     stack: '总量',
+            //     data: [6000, 5700]
+            // },
+            // {
+            //     name: '走过时间(天)',
+            //     type: 'line',
+            //     stack: '总量',
+            //     data: [20, 50,]
+            // }
         ]
     };
     ;
