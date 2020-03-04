@@ -125,6 +125,8 @@
     <!--////////////////////////////////////Container-->
     <br>
     今日访客：{{visitor}}
+    <br>
+    <div id="visitorAjax">今日访客ajax：</div>
     <section id="container">
         <div class="wrap-container">
             <section class="content-box box-1">
@@ -405,8 +407,8 @@
             dataType: 'json',
             success: function (data) {
                 // vm.$set('peoples', data.result);
-                console.log('ajax', data)
-                visitorAjax = data;
+                console.log('ajax /c/visitor ', data)
+                $('#visitorAjax').append(data)
             },
             error: function (xhr, errorType, error) {
                 alert('Ajax request error, errorType: ' + errorType + ', error: ' + error)
