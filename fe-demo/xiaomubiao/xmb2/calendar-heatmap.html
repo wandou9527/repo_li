@@ -61,6 +61,8 @@
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp)
                 data = resp
+                myChart.hideLoading();    //隐藏加载动画
+                myChart.setOption(option, true);
             },
             error: function (xhr, errorType, error) {
                 alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
@@ -106,9 +108,9 @@
         }
     };
     ;
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
+    // if (option && typeof option === "object") {
+    //     myChart.setOption(option, true);
+    // }
 </script>
 </body>
 </html>
