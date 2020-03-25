@@ -1,6 +1,7 @@
 package com.wandou.listener;
 
 import com.alibaba.fastjson.JSON;
+import com.wandou.config.wechat.properties.WxMaWandouiProperties;
 import com.wandou.constant.NameConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class MySpringApplicationListener {
 
     @Autowired
     private NameConst nameConst;
+    @Autowired
+    private WxMaWandouiProperties wxMaWandouiProperties;
 
 
     @EventListener
@@ -30,6 +33,7 @@ public class MySpringApplicationListener {
                 applicationStartedEvent,
                 JSON.toJSONString(applicationStartedEvent.getSource()));
         nameConst.decodeList(null);
+        log.info("appId:{}", wxMaWandouiProperties.getAppId());
     }
 
     @EventListener

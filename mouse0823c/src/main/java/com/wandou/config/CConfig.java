@@ -1,6 +1,10 @@
 package com.wandou.config;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
+import com.wandou.config.wechat.WxMaWandouiConfigStorage;
 import org.greenrobot.eventbus.EventBus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -15,6 +19,10 @@ import java.util.concurrent.RejectedExecutionException;
  */
 @Component
 public class CConfig {
+
+    @Autowired
+    private WxMaWandouiConfigStorage wxMaWandouiConfigStorage;
+
     /**
      * 通用异步执行线程池
      *
@@ -79,5 +87,12 @@ public class CConfig {
 //        context.refresh();
 //        return context;
 //    }
+
+    @Bean("wandouiMaService")
+    public WxMaService wxMaService(){
+        WxMaService service = new WxMaServiceImpl();
+        service.setWxMaConfig(wxMaWandouiConfigStorage);
+        return service;
+    }
 
 }
