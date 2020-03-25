@@ -13,11 +13,13 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
 <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script src="../../js/jquery-latest.min.js"></script>
 <script type="text/javascript">
     // 单年的热力图
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     var app = {};
+    var data = [];
     option = null;
 
     function getVirtulData(year) {
@@ -46,6 +48,27 @@
         // }
         return data;
     }
+
+
+    listMatterLog();
+    function listMatterLog() {
+        $.ajax({
+            url: 'http://wandour.top/mouse/matter_log/list',
+            // url: 'http://localhost:63342/matter_log/list',
+            type: 'get',
+            dataType: 'json',
+            success: function (resp) {
+                // vm.$set('peoples', data.result);
+                console.log('ajax matter_log/list ', resp)
+                data = resp
+            },
+            error: function (xhr, errorType, error) {
+                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
+                data.push(['2020-03-20', 12]);
+            }
+        });
+    }
+
 
     option = {
         title: {
@@ -79,7 +102,7 @@
         series: {
             type: 'heatmap',
             coordinateSystem: 'calendar',
-            data: getVirtulData(2020)
+            data: data
         }
     };
     ;
