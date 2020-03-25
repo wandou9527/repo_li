@@ -61,7 +61,7 @@
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp)
                 // data = resp
-                myChart.hideLoading();    //隐藏加载动画
+                // myChart.hideLoading();    //隐藏加载动画
                 myChart.setOption({        //加载数据图表
                     title: {
                         top: 30,
@@ -96,7 +96,7 @@
                         coordinateSystem: 'calendar',
                         data: resp
                     }
-                });
+                }, true);
                 console.log('jie shu')
             },
             error: function (xhr, errorType, error) {
