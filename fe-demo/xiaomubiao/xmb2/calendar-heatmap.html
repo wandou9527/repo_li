@@ -62,7 +62,41 @@
                 console.log('ajax matter_log/list ', resp)
                 data = resp
                 myChart.hideLoading();    //隐藏加载动画
-                myChart.setOption(option, true);
+                myChart.setOption({        //加载数据图表
+                    title: {
+                        top: 30,
+                        left: 'center',
+                        text: '2020年艳杰每天学习时长'
+                    },
+                    tooltip: {},
+                    visualMap: {
+                        min: 0,
+                        max: 12,
+                        type: 'piecewise',
+                        orient: 'horizontal',
+                        left: 'center',
+                        top: 65,
+                        textStyle: {
+                            color: '#000'
+                        }
+                    },
+                    calendar: {
+                        top: 120,
+                        left: 30,
+                        right: 30,
+                        cellSize: ['auto', 13],
+                        range: '2020',
+                        itemStyle: {
+                            borderWidth: 0.5
+                        },
+                        yearLabel: {show: true}
+                    },
+                    series: {
+                        type: 'heatmap',
+                        coordinateSystem: 'calendar',
+                        data: resp
+                    }
+                });
             },
             error: function (xhr, errorType, error) {
                 alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
@@ -108,9 +142,9 @@
         }
     };
     ;
-    // if (option && typeof option === "object") {
-    //     myChart.setOption(option, true);
-    // }
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
 </script>
 </body>
 </html>
