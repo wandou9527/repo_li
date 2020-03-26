@@ -1,10 +1,13 @@
 package com.wandou.enumeration;
 
+import lombok.Getter;
+
 /**
  * @author liming
  * @date 2020-03-26
  * @description
  */
+@Getter
 public enum MatterLogTypeEnum {
     /**
      * 2020还款计划

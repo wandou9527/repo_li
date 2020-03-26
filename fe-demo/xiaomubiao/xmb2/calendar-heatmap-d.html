@@ -80,7 +80,7 @@
         series: {
             type: 'heatmap',
             coordinateSystem: 'calendar',
-            data: []
+            data: [['2020-01-01', 12]]
         }
     };
 
@@ -88,22 +88,26 @@
     listMatterLog();
 
     function listMatterLog() {
-        var ajaxData = [];
+        let ajaxData = [];
         $.ajax({
             url: 'http://wandour.top/mouse/matter_log/list',
             // url: 'http://localhost:63342/matter_log/list',
+            async: true,
             type: 'get',
             dataType: 'json',
             success: function (resp) {
+                for (let i = 0; i < 10000; i++) {
+                    var date = new Date();
+                }
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp)
                 // ajaxData = resp
-                var data = resp.data
+                let data = resp.data;
                 for (let i = 0; i < data.length; i++) {
                     ajaxData.push([data[i].happenDate, data[i].reachAmount])
                 }
                 console.log('ajaxData', ajaxData)
-                myChart.hideLoading();    //隐藏加载动画
+                // myChart.hideLoading();    //隐藏加载动画
                 myChart.setOption({        //加载数据图表
                     title: {
                         top: 30,

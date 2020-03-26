@@ -11,8 +11,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
-<!--<script type="text/javascript"-->
-        <!--src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+<!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
 <script type="text/javascript">
     // calendar-horizontal 日历-水平面 多个年的热力图
@@ -51,10 +50,11 @@
             top: 'top'
         },
 
-        calendar: [{
-            range: '2017',
-            cellSize: ['auto', 20]
-        },
+        calendar: [
+            {
+                range: '2017',
+                cellSize: ['auto', 20]
+            },
             {
                 top: 260,
                 range: '2016',
@@ -65,7 +65,8 @@
                 range: '2015',
                 cellSize: ['auto', 20],
                 right: 5
-            }],
+            }
+        ],
 
         series: [{
             type: 'heatmap',
