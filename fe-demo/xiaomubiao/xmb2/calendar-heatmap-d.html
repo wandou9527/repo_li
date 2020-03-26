@@ -49,9 +49,44 @@
         return data;
     }
 
+    option = {
+        title: {
+            top: 30,
+            left: 'center',
+            text: '2020年艳杰每天学习时长'
+        },
+        tooltip: {},
+        visualMap: {
+            min: 0,
+            max: 12,
+            type: 'piecewise',
+            orient: 'horizontal',
+            left: 'center',
+            top: 65,
+            textStyle: {
+                color: '#000'
+            }
+        },
+        calendar: {
+            top: 120,
+            left: 30,
+            right: 30,
+            cellSize: ['auto', 13],
+            range: '2020',
+            itemStyle: {
+                borderWidth: 0.5
+            },
+            yearLabel: {show: true}
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: []
+        }
+    };
+
 
     listMatterLog();
-
     function listMatterLog() {
         $.ajax({
             url: 'http://wandour.top/mouse/matter_log/list',
@@ -61,7 +96,7 @@
             success: function (resp) {
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp)
-                ajaxData = resp
+                // ajaxData = resp
                 for (let i = 0; i < resp.length; i++) {
                     ajaxData.push(resp[i])
                 }
@@ -70,30 +105,7 @@
                     title: {
                         top: 30,
                         left: 'center',
-                        text: '2020年艳杰每天学习时长'
-                    },
-                    tooltip: {},
-                    visualMap: {
-                        min: 0,
-                        max: 12,
-                        type: 'piecewise',
-                        orient: 'horizontal',
-                        left: 'center',
-                        top: 65,
-                        textStyle: {
-                            color: '#000'
-                        }
-                    },
-                    calendar: {
-                        top: 120,
-                        left: 30,
-                        right: 30,
-                        cellSize: ['auto', 13],
-                        range: '2020',
-                        itemStyle: {
-                            borderWidth: 0.5
-                        },
-                        yearLabel: {show: true}
+                        text: '2020年艳杰每天学习时长-d'
                     },
                     series: {
                         type: 'heatmap',
