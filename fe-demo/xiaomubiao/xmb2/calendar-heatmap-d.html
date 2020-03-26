@@ -86,6 +86,7 @@
 
 
     listMatterLog();
+
     function listMatterLog() {
         var ajaxData = [];
         $.ajax({
@@ -97,8 +98,9 @@
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp)
                 // ajaxData = resp
-                for (let i = 0; i < resp.length; i++) {
-                    ajaxData.push(resp[i])
+                var data = resp.data
+                for (let i = 0; i < data.length; i++) {
+                    ajaxData.push([data[i].happenDate, data[i].reachAmount])
                 }
                 console.log('ajaxData', ajaxData)
                 myChart.hideLoading();    //隐藏加载动画
@@ -109,7 +111,6 @@
                         text: '2020年艳杰每天学习时长-d'
                     },
                     series: {
-                        name: 'series.name',
                         type: 'heatmap',
                         coordinateSystem: 'calendar',
                         data: ajaxData
@@ -119,7 +120,6 @@
             },
             error: function (xhr, errorType, error) {
                 alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
-                ajaxData.push(['2020-03-20', 12]);
             }
         });
     }

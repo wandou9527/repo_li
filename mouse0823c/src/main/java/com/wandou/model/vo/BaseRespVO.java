@@ -8,7 +8,7 @@ public class BaseRespVO<T> {
     private String message;
     private T data;
 
-    public static <T> BaseRespVO success(T data) {
+    public static <T> BaseRespVO<T> success(T data) {
         BaseRespVO<T> baseRespVO = new BaseRespVO<>();
         baseRespVO.setCode("2000");
         baseRespVO.setMessage("success");
