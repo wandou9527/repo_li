@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 </head>
-<body style="height: 90%; width: 90%; margin: 0">
+<body style="height: 90%; width: 90%; margin: 30px">
 <div id="container" style="height: 100%"></div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
@@ -39,6 +39,7 @@
         // 周一
         data.push(['2020-03-23', 7]);
         data.push(['2020-03-24', 5]);
+        data.push(['2020-03-24', 8.5]);
 
         // for (var time = date; time < end; time += dayTime) {
         //     data.push([
@@ -50,102 +51,45 @@
     }
 
 
-    listMatterLog();
-    function listMatterLog() {
-        $.ajax({
-            url: 'http://wandour.top/mouse/matter_log/list',
-            // url: 'http://localhost:63342/matter_log/list',
-            type: 'get',
-            dataType: 'json',
-            success: function (resp) {
-                // vm.$set('peoples', data.result);
-                console.log('ajax matter_log/list ', resp)
-                // data = resp
-                // myChart.hideLoading();    //隐藏加载动画
-                myChart.setOption({        //加载数据图表
-                    title: {
-                        top: 30,
-                        left: 'center',
-                        text: '2020年艳杰每天学习时长'
-                    },
-                    tooltip: {},
-                    visualMap: {
-                        min: 0,
-                        max: 12,
-                        type: 'piecewise',
-                        orient: 'horizontal',
-                        left: 'center',
-                        top: 65,
-                        textStyle: {
-                            color: '#000'
-                        }
-                    },
-                    calendar: {
-                        top: 120,
-                        left: 30,
-                        right: 30,
-                        cellSize: ['auto', 13],
-                        range: '2020',
-                        itemStyle: {
-                            borderWidth: 0.5
-                        },
-                        yearLabel: {show: true}
-                    },
-                    series: {
-                        type: 'heatmap',
-                        coordinateSystem: 'calendar',
-                        data: resp
-                    }
-                }, true);
-                console.log('jie shu')
-            },
-            error: function (xhr, errorType, error) {
-                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
-                data.push(['2020-03-20', 12]);
+    option = {
+        title: {
+            top: 30,
+            left: 'center',
+            text: '2020年艳杰每天学习时长'
+        },
+        tooltip: {},
+        visualMap: {
+            min: 0,
+            max: 12,
+            type: 'piecewise',
+            orient: 'horizontal',
+            left: 'center',
+            top: 65,
+            textStyle: {
+                color: '#000'
             }
-        });
+        },
+        calendar: {
+            top: 120,
+            left: 30,
+            right: 30,
+            cellSize: ['auto', 13],
+            range: '2020',
+            itemStyle: {
+                borderWidth: 0.5
+            },
+            yearLabel: {show: true}
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: getVirtulData(2020)
+        }
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
     }
-
-
-    // option = {
-    //     title: {
-    //         top: 30,
-    //         left: 'center',
-    //         text: '2020年艳杰每天学习时长'
-    //     },
-    //     tooltip: {},
-    //     visualMap: {
-    //         min: 0,
-    //         max: 12,
-    //         type: 'piecewise',
-    //         orient: 'horizontal',
-    //         left: 'center',
-    //         top: 65,
-    //         textStyle: {
-    //             color: '#000'
-    //         }
-    //     },
-    //     calendar: {
-    //         top: 120,
-    //         left: 30,
-    //         right: 30,
-    //         cellSize: ['auto', 13],
-    //         range: '2020',
-    //         itemStyle: {
-    //             borderWidth: 0.5
-    //         },
-    //         yearLabel: {show: true}
-    //     },
-    //     series: {
-    //         type: 'heatmap',
-    //         coordinateSystem: 'calendar',
-    //         data: data
-    //     }
-    // };
-    // ;
-    // if (option && typeof option === "object") {
-    //     myChart.setOption(option, true);
-    // }
 </script>
 </body>
 </html>
