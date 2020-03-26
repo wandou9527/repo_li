@@ -19,7 +19,7 @@
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     var app = {};
-    var data = [];
+    var ajaxData = [];
     option = null;
 
     function getVirtulData(year) {
@@ -51,6 +51,7 @@
 
 
     listMatterLog();
+
     function listMatterLog() {
         $.ajax({
             url: 'http://wandour.top/mouse/matter_log/list',
@@ -60,8 +61,11 @@
             success: function (resp) {
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp)
-                // data = resp
-                // myChart.hideLoading();    //隐藏加载动画
+                ajaxData = resp
+                for (let i = 0; i < resp.length; i++) {
+                    ajaxData.push(resp[i])
+                }
+                myChart.hideLoading();    //隐藏加载动画
                 myChart.setOption({        //加载数据图表
                     title: {
                         top: 30,
@@ -94,14 +98,14 @@
                     series: {
                         type: 'heatmap',
                         coordinateSystem: 'calendar',
-                        data: resp
+                        data: ajaxData
                     }
-                }, true);
+                });
                 console.log('jie shu')
             },
             error: function (xhr, errorType, error) {
                 alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
-                data.push(['2020-03-20', 12]);
+                ajaxData.push(['2020-03-20', 12]);
             }
         });
     }
@@ -142,10 +146,9 @@
     //         data: data
     //     }
     // };
-    // ;
-    // if (option && typeof option === "object") {
-    //     myChart.setOption(option, true);
-    // }
+
+    myChart.setOption(option);
+
 </script>
 </body>
 </html>
