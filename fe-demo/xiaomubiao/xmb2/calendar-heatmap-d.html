@@ -96,9 +96,7 @@
             type: 'get',
             dataType: 'json',
             success: function (resp) {
-                for (let i = 0; i < 10000; i++) {
-                    var date = new Date();
-                }
+                sleep(5000)
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp)
                 // ajaxData = resp
@@ -166,6 +164,18 @@
     // };
 
     myChart.setOption(option);
+
+    //参数n为休眠时间，单位为毫秒:
+    function sleep(n) {
+        var start = new Date().getTime();
+        //  console.log('休眠前：' + start);
+        while (true) {
+            if (new Date().getTime() - start > n) {
+                break;
+            }
+        }
+        // console.log('休眠后：' + new Date().getTime());
+    }
 
 </script>
 </body>
