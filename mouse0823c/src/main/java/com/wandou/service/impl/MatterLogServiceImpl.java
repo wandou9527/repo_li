@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author liming
@@ -50,6 +52,7 @@ public class MatterLogServiceImpl implements MatterLogService {
             matterLogDTO.setHappenDate(DateFormatUtils.format(matterLog.getHappenTime(), CommonConst.PATTERN_YYYY_MM_DD));
             matterLogDTOS.add(matterLogDTO);
         }
+        matterLogDTOS = matterLogDTOS.stream().sorted(Comparator.comparing(MatterLogDTO::getHappenTime)).collect(Collectors.toList());
         return matterLogDTOS;
     }
 }

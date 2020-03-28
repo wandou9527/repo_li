@@ -2,6 +2,7 @@ package com.wandou.test.service;
 
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.service.MatterLogService;
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,13 @@ public class MatterLogServiceTest {
 
     @Test
     public void m1() {
-        List<MatterLogDTO> list = matterLogService.list(2, 2);
-        System.out.println("list = " + list);
+        List<MatterLogDTO> list = matterLogService.list(23, 3);
+        if (CollectionUtils.isEmpty(list)) {
+            return;
+        }
+        for (MatterLogDTO matterLogDTO : list) {
+            System.out.println("matterLogDTO = " + matterLogDTO);
+        }
     }
 
 
