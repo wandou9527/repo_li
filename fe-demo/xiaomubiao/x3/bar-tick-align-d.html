@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<!-- 知足是福步数 简单柱状图 📊 动态数据 -->
+<body style="height: 90%; width: 90%; margin: 20px">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+<!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script src="../../config/config.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        title: {
+            text: '「知足是福」步数',
+            subtext: ''
+        },
+        color: ['#3398DB'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                //第12周 3.16周一 - 3.22周日
+                data: ['2020-03-16'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '步数',
+                type: 'bar',
+                barWidth: '40%',
+                data: [6000]
+            }
+        ]
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+    listMatterLog();
+
+    function listMatterLog() {
+        let xData = []
+        let reachAmounts = []
+        $.ajax({
+            url: listMatterLogUrl + '?userId=23&mType=3',
+            // url: 'http://localhost:63342/matter_log/list',
+            async: false,
+            type: 'get',
+            dataType: 'json',
+            success: function (resp) {
+                sleep(2000);
+                // vm.$set('peoples', data.result);
+                console.log('ajax matter_log/list ', resp);
+                // ajaxData = resp
+                let data = resp.data;
+
+                for (let i = 0; i < data.length; i++) {
+                    //[data[i].happenDate, data[i].reachAmount]
+                    xData.push(data[i].happenDate)
+                    reachAmounts.push(data[i].reachAmount)
+                }
+                console.log('xData', xData, 'reachAmounts', reachAmounts)
+                // myChart.hideLoading();    //隐藏加载动画
+                myChart.setOption({
+                    //加载数据图表
+                    xAxis: [
+                        {
+                            type: 'category',
+                            //第12周 3.16周一 - 3.22周日
+                            data: xData,
+                            axisTick: {
+                                alignWithLabel: true
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '步数',
+                            type: 'bar',
+                            barWidth: '40%',
+                            data: reachAmounts
+                        }
+                    ]
+                });
+                console.log('jie shu')
+            },
+            error: function (xhr, errorType, error) {
+                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
+            }
+        });
+    }
+
+    //参数n为休眠时间，单位为毫秒:
+    function sleep(n) {
+        var start = new Date().getTime();
+        //  console.log('休眠前：' + start);
+        while (true) {
+            if (new Date().getTime() - start > n) {
+                break;
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

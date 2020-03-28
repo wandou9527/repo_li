@@ -1,9 +1,9 @@
 package com.wandou.controller;
 
 import com.wandou.model.dto.MatterLogDTO;
-import com.wandou.model.po.MatterLogPO;
 import com.wandou.model.vo.BaseRespVO;
 import com.wandou.service.MatterLogService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,7 @@ import java.util.List;
  * @description 事件记录，每个事件的记录比如一个小目标每天完成的时间，阶段完成的数额等等
  */
 
+@Slf4j
 @RequestMapping("/matter_log")
 @RestController
 public class MatterLogController {
@@ -55,6 +56,7 @@ public class MatterLogController {
     @GetMapping("/list")
     public BaseRespVO<List<MatterLogDTO>> list(@RequestParam(name = "userId", required = false, defaultValue = "2") Long userId,
                                                @RequestParam(name = "mType", required = false, defaultValue = "2") Integer mType) {
+        log.info("matter log list req userId: {}, mType: {}", userId, mType);
         List<MatterLogDTO> list = matterLogService.list(userId, mType);
         BaseRespVO<List<MatterLogDTO>> baseRespVO = BaseRespVO.success(list);
         return baseRespVO;
