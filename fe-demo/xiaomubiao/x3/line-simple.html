@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 90%; margin: 50px">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+<!--<script type="text/javascript"-->
+<!--src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+
+    const data = [];
+    // data.push(['2020-02-15', 8488]);
+    // data.push(['2020-02-16', 4488]);
+    // data.push(['2020-02-17', 2488]);
+    // data.push(['2020-02-18', 2488]);
+    // data.push(['2020-02-19', 2488]);
+    // data.push(['2020-02-20', 2488]);
+    // data.push(['2020-03-20', 2488]);
+    // data.push(['2020-03-21', 24881]);
+    data.push(['2020-03-22', 21486]);
+    data.push(['3-23', 24759]);
+    data.push(['3-24', 17806]);
+    data.push(['3-25', 24878]);
+    data.push(['3-26', 12144]);
+    data.push(['3-27', 5116]);
+    data.push(['3-28', 11669]);
+
+    const dates = [];
+    const daySteps = [];
+    for (let i = 0; i < data.length; i++) {
+        dates.push(data[i][0])
+        daySteps.push(data[i][1])
+    }
+
+
+    option = {
+        title: {
+            text: '2020年「知足是福」每天的步数',
+            subtext: ''
+        },
+        tooltip: {
+            show: true,
+            trigger: 'axis'
+        },
+        xAxis: {
+            type: 'category',
+            data: dates
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '步数',
+                data: daySteps,
+                type: 'line'
+            }
+            // {
+            //     name: '完成数额(元)',
+            //     type: 'line',
+            //     stack: '总量',
+            //     data: [6000, 5700]
+            // },
+            // {
+            //     name: '走过时间(天)',
+            //     type: 'line',
+            //     stack: '总量',
+            //     data: [20, 50,]
+            // }
+        ]
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+</body>
+</html>
