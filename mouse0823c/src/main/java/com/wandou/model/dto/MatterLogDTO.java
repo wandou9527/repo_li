@@ -23,6 +23,10 @@ public class MatterLogDTO {
 
     private Integer subType;
 
+    private String partitionValue;
+
+    private Integer partitionType;
+
     private Double reachAmount;
 
     private String reachAmountUnit;

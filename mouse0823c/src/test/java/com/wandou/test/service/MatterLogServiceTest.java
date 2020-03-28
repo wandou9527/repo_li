@@ -24,7 +24,7 @@ public class MatterLogServiceTest {
 
     @Test
     public void m1() {
-        List<MatterLogDTO> list = matterLogService.list(0, 0);
+        List<MatterLogDTO> list = matterLogService.list(2, 2);
         System.out.println("list = " + list);
     }
 

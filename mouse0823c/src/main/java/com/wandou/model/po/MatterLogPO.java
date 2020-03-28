@@ -27,6 +27,10 @@ public class MatterLogPO {
 
     private String reachAmountUnit;
 
+    private String partitionValue;
+
+    private Integer partitionType;
+
     private Date createTime;
 
     private Integer isDelete;
