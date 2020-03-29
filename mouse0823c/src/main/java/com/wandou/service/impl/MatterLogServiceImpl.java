@@ -10,6 +10,7 @@ import com.wandou.service.MatterLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,6 +80,13 @@ public class MatterLogServiceImpl implements MatterLogService {
         log.info("matterLogPOS: {}", JSON.toJSONString(matterLogPOS, true));
         if (CollectionUtils.isNotEmpty(matterLogPOS)) {
             return;
+        }
+
+        //看是否有今天数据
+        for (MatterLogPO m : matterLogPOS) {
+            if (DateUtils.isSameDay(date, m.getHappenTime())) {
+                return;
+            }
         }
 
         matterLogPO.setHappenTime(date);

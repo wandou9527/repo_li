@@ -1,6 +1,8 @@
 package com.wandou.mq.rocket;
 
+import com.alibaba.fastjson.JSON;
 import com.wandou.constant.RocketMQConstant;
+import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.service.MatterLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -33,7 +35,12 @@ public class Demo0819MQListener implements RocketMQListener<MessageExt>, RocketM
         log.info("msgBody: {}", message.getBody());
         String msgBodyStr = new String(message.getBody());
         log.info("msgBodyStr: {}", msgBodyStr);
-        matterLogService.addMatterLogByMqDemo(23L, msgBodyStr);
+        MatterLogDTO matterLogDTO = JSON.parseObject(msgBodyStr, MatterLogDTO.class);
+        Long userId = 23L;
+        if (matterLogDTO != null && matterLogDTO.getUserId() != null) {
+            userId = matterLogDTO.getUserId();
+        }
+        matterLogService.addMatterLogByMqDemo(userId, msgBodyStr);
     }
 
     @Override
