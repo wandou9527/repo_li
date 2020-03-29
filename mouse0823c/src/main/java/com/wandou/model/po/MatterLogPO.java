@@ -31,6 +31,8 @@ public class MatterLogPO {
 
     private Integer partitionType;
 
+    private String remark;
+
     private Date createTime;
 
     private Integer isDelete;

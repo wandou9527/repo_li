@@ -14,4 +14,6 @@ public class CommonConst {
 
     public static final String PATTERN_YYYY_MM_DD = "yyyy-MM-dd";
 
+    public static final String PATTERN_YYYYMM = "yyyyMM";
+
 }

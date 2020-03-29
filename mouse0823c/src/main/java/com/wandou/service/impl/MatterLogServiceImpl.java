@@ -1,5 +1,6 @@
 package com.wandou.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wandou.constant.CommonConst;
 import com.wandou.mapper.MatterLogMapper;
@@ -13,10 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -53,5 +51,44 @@ public class MatterLogServiceImpl implements MatterLogService {
         }
         matterLogDTOS = matterLogDTOS.stream().sorted(Comparator.comparing(MatterLogDTO::getHappenTime)).collect(Collectors.toList());
         return matterLogDTOS;
+    }
+
+
+    @Override
+    public void addMatterLogByMqDemo(Long userId, String remark) {
+        if (userId == null) {
+            userId = 0L;
+        }
+        Date date = new Date();
+//        Date startTimeOfDay = DateUtil.getStartTimeOfDay(date);
+//        Date endTimeOfDay = DateUtils.addDays(startTimeOfDay, 1);
+//        log.info("startTimeOfDay: {}, endTimeOfDay: {}", startTimeOfDay, endTimeOfDay);
+//        List<MatterLogPO> matterLogPOS = matterLogMapper.listByUserIdAndHappenTime(23L, startTimeOfDay, endTimeOfDay, 3);
+//        log.info("matterLogPOS: {}", JSON.toJSONString(matterLogPOS, true));
+//        if (CollectionUtils.isNotEmpty(matterLogPOS)) {
+//            return;
+//        }
+        // =========================
+
+        MatterLogPO matterLogPO = new MatterLogPO();
+        matterLogPO.setUserId(userId);
+        matterLogPO.setMType(3);
+        matterLogPO.setIsDelete(0);
+        QueryWrapper<MatterLogPO> queryWrapper = new QueryWrapper(matterLogPO);
+        List<MatterLogPO> matterLogPOS = matterLogMapper.selectList(queryWrapper);
+        log.info("matterLogPOS: {}", JSON.toJSONString(matterLogPOS, true));
+        if (CollectionUtils.isNotEmpty(matterLogPOS)) {
+            return;
+        }
+
+        matterLogPO.setHappenTime(date);
+        matterLogPO.setReachAmount(666D);
+        matterLogPO.setReachAmountUnit("bu");
+        matterLogPO.setPartitionValue(DateFormatUtils.format(date, CommonConst.PATTERN_YYYYMM));
+        matterLogPO.setPartitionType(1);
+        matterLogPO.setRemark(remark);
+        int insert = matterLogMapper.insert(matterLogPO);
+        log.info("insert: {}", insert);
+
     }
 }

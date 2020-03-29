@@ -43,7 +43,7 @@
             {
                 type: 'category',
                 //第12周 3.16周一 - 3.22周日
-                data: ['2020-03-16'],
+                data: [],
                 axisTick: {
                     alignWithLabel: true
                 }
@@ -59,7 +59,7 @@
                 name: '学习时长(h)',
                 type: 'bar',
                 barWidth: '40%',
-                data: [6]
+                data: []
             }
         ]
     };
@@ -80,7 +80,7 @@
             type: 'get',
             dataType: 'json',
             success: function (resp) {
-                sleep(2000)
+                // sleep(2000)
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp)
                 // ajaxData = resp

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wandou.mapper.MatterLogMapper">
+    <resultMap id="BaseResultMap" type="com.wandou.model.po.MatterLogPO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="happen_time" property="happenTime" jdbcType="TIMESTAMP"/>
+        <result column="m_type" property="mType" jdbcType="TINYINT"/>
+        <result column="sub_type" property="subType" jdbcType="TINYINT"/>
+        <result column="reach_amount" property="reachAmount" jdbcType="DOUBLE"/>
+        <result column="reach_amount_unit" property="reachAmountUnit" jdbcType="CHAR"/>
+        <result column="partition_value" property="partitionValue" jdbcType="VARCHAR"/>
+        <result column="partition_type" property="partitionType" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, happen_time, m_type, sub_type, reach_amount, reach_amount_unit, partition_value, partition_type
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from matter_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="listByUserIdAndHappenTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from matter_log
+        where is_delete = 0
+        and user_id = #{userId}
+        <if test="happenTimeStart != null">
+            and happen_time > #{happenTimeStart}
+        </if>
+        <if test="happenTimeEnd != null">
+            and #{happenTimeEnd} > happen_time
+        </if>
+        <if test="mType != null">
+            and m_type = #{mType}
+        </if>
+    </select>
+</mapper>

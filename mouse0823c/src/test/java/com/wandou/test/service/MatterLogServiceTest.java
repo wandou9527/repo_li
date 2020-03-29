@@ -35,4 +35,10 @@ public class MatterLogServiceTest {
     }
 
 
+    @Test
+    public void m2Inset() {
+        matterLogService.addMatterLogByMqDemo(null, "单元测试-29-1");
+    }
+
+
 }
