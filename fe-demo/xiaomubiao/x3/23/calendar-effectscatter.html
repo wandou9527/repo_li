@@ -17,6 +17,8 @@
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     var app = {};
+    //控制点大小的分母
+    const symbolSizeDenominator = 1500;
     option = null;
 
     function getVirtulData(year) {
@@ -31,21 +33,23 @@
         //         Math.floor(Math.random() * 10000)
         //     ]);
         // }
-        data.push(['2020-02-15', 8488]);
-        data.push(['2020-02-16', 4488]);
-        data.push(['2020-02-17', 2488]);
-        data.push(['2020-02-18', 2488]);
-        data.push(['2020-02-19', 2488]);
-        data.push(['2020-02-20', 2488]);
+        // data.push(['2020-02-15', 8488]);
+        // data.push(['2020-02-16', 4488]);
+        // data.push(['2020-02-17', 2488]);
+        // data.push(['2020-02-18', 2488]);
+        // data.push(['2020-02-19', 2488]);
+        // data.push(['2020-02-20', 2488]);
 
-        data.push(['2020-03-20', 2488]);
-        data.push(['2020-03-21', 24881]);
+        // data.push(['2020-03-20', 2488]);
+        // data.push(['2020-03-21', 24881]);
         data.push(['2020-03-22', 21486]);
         data.push(['2020-03-23', 24759]);
         data.push(['2020-03-24', 17806]);
         data.push(['2020-03-25', 24878]);
         data.push(['2020-03-26', 12144]);
         data.push(['2020-03-27', 5116]);
+        data.push(['2020-03-28', 11669]);
+
         return data;
     }
 
@@ -57,7 +61,7 @@
         title: {
             top: 30,
             text: '2020年「知足是福」每天的步数',
-            subtext: '数据纯属虚构',
+            subtext: '知足是福',
             left: 'center',
             textStyle: {
                 color: '#fff'
@@ -127,11 +131,9 @@
                 type: 'scatter',
                 coordinateSystem: 'calendar',
                 data: data,
+                // 控制点的大小
                 symbolSize: function (val) {
-                    // return val[1] / 5000;
-                    for (i in val) {
-
-                    }
+                    return val[1] / symbolSizeDenominator;
                 },
                 itemStyle: {
                     color: '#ddb926'
@@ -144,7 +146,7 @@
                 calendarIndex: 1,
                 data: data,
                 symbolSize: function (val) {
-                    return val[1] / 500;
+                    return val[1] / symbolSizeDenominator;
                 },
                 itemStyle: {
                     color: '#ddb926'
@@ -159,7 +161,7 @@
                     return b[1] - a[1];
                 }).slice(0, 12),
                 symbolSize: function (val) {
-                    return val[1] / 5000;
+                    return val[1] / symbolSizeDenominator;
                 },
                 showEffectOn: 'render',
                 rippleEffect: {
@@ -182,7 +184,7 @@
                     return b[1] - a[1];
                 }).slice(0, 12),
                 symbolSize: function (val) {
-                    return val[1] / 500;
+                    return val[1] / symbolSizeDenominator;
                 },
                 showEffectOn: 'render',
                 rippleEffect: {

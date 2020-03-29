@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 </head>
 <!-- 知足是福步数 简单柱状图 📊 动态数据 -->
-<body style="height: 90%; width: 90%; margin: 20px">
+<body style="height: 90%; width: 90%; margin: 30px">
 <div id="container" style="height: 100%"></div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
@@ -15,7 +15,7 @@
 <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
-<script src="../../config/config.js"></script>
+<script src="../../../config/config.js"></script>
 <script type="text/javascript">
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
@@ -23,7 +23,7 @@
     option = null;
     option = {
         title: {
-            text: '「知足是福」步数',
+            text: '2020年「知足是福」每天步数',
             subtext: ''
         },
         color: ['#3398DB'],
@@ -42,8 +42,7 @@
         xAxis: [
             {
                 type: 'category',
-                //第12周 3.16周一 - 3.22周日
-                data: ['2020-03-16'],
+                data: [],
                 axisTick: {
                     alignWithLabel: true
                 }
@@ -58,8 +57,8 @@
             {
                 name: '步数',
                 type: 'bar',
-                barWidth: '40%',
-                data: [6000]
+                barWidth: '50%',
+                data: []
             }
         ]
     };
@@ -71,16 +70,18 @@
     listMatterLog();
 
     function listMatterLog() {
+        //x轴 日期
         let xData = []
+        //每日达成数量 即每日步数
         let reachAmounts = []
         $.ajax({
             url: listMatterLogUrl + '?userId=23&mType=3',
             // url: 'http://localhost:63342/matter_log/list',
-            async: false,
+            async: true,
             type: 'get',
             dataType: 'json',
             success: function (resp) {
-                sleep(2000);
+                // sleep(2000);
                 // vm.$set('peoples', data.result);
                 console.log('ajax matter_log/list ', resp);
                 // ajaxData = resp
