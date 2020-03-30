@@ -43,20 +43,24 @@
 
 
         <!-- targetPackage：mapper接口生成的位置 -->
-<!--        <javaClientGenerator type="XMLMAPPER"-->
-<!--                             targetPackage="com.wandou.mapper"-->
-<!--                             targetProject="./src/main/java">-->
-<!--            &lt;!&ndash; enableSubPackages:是否让schema作为包的后缀 &ndash;&gt;-->
-<!--            <property name="enableSubPackages" value="false"/>-->
-<!--        </javaClientGenerator>-->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.wandou.mapper"
+                             targetProject="./src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- ANNOTATEDMAPPER 注解形式Mapper -->
+        <!--
         <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="com.wandou.mapper"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
+        -->
 
 
         <!-- 指定数据库表 -->
-        <table schema="" tableName="" domainObjectName=""></table>
+        <table schema="sch" tableName="dict" domainObjectName="Dict"></table>
 
     </context>
 </generatorConfiguration>

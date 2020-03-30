@@ -79,13 +79,11 @@ public class MatterLogServiceImpl implements MatterLogService {
         List<MatterLogPO> matterLogPOS = matterLogMapper.selectList(queryWrapper);
         log.info("matterLogPOS: {}", JSON.toJSONString(matterLogPOS, true));
         if (CollectionUtils.isNotEmpty(matterLogPOS)) {
-            return;
-        }
-
-        //看是否有今天数据
-        for (MatterLogPO m : matterLogPOS) {
-            if (DateUtils.isSameDay(date, m.getHappenTime())) {
-                return;
+            //看是否有今天数据
+            for (MatterLogPO m : matterLogPOS) {
+                if (DateUtils.isSameDay(date, m.getHappenTime())) {
+                    return;
+                }
             }
         }
 
