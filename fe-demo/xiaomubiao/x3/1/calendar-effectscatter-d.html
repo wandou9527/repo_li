@@ -303,7 +303,7 @@
                             type: 'effectScatter',
                             coordinateSystem: 'calendar',
                             calendarIndex: 1,
-                            data: data.sort(function (a, b) {
+                            data: ajaxData.sort(function (a, b) {
                                 return b[1] - a[1];
                             }).slice(0, 12),
                             symbolSize: function (val) {
@@ -326,7 +326,7 @@
                             name: 'Top 12',
                             type: 'effectScatter',
                             coordinateSystem: 'calendar',
-                            data: data.sort(function (a, b) {
+                            data: ajaxData.sort(function (a, b) {
                                 return b[1] - a[1];
                             }).slice(0, 12),
                             symbolSize: function (val) {
