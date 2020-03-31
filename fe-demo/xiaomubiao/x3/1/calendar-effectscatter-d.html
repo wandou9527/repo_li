@@ -276,7 +276,7 @@
                             name: '步数',
                             type: 'scatter',
                             coordinateSystem: 'calendar',
-                            data: data,
+                            data: ajaxData,
                             // 控制点的大小
                             symbolSize: function (val) {
                                 return val[1] / symbolSizeDenominator;
@@ -290,7 +290,7 @@
                             type: 'scatter',
                             coordinateSystem: 'calendar',
                             calendarIndex: 1,
-                            data: data,
+                            data: ajaxData,
                             symbolSize: function (val) {
                                 return val[1] / symbolSizeDenominator;
                             },
