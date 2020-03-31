@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+<!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script src="../../../config/config.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    //控制点大小的分母
+    const symbolSizeDenominator = 500;
+    option = null;
+
+    function getVirtulData(year) {
+        year = year || '2020';
+        var date = +echarts.number.parseDate(year + '-01-01');
+        var end = +echarts.number.parseDate((+year + 1) + '-01-01');
+        var dayTime = 3600 * 24 * 1000;
+        var data = [];
+        // for (var time = date; time < end; time += dayTime) {
+        //     data.push([
+        //         echarts.format.formatTime('yyyy-MM-dd', time),
+        //         Math.floor(Math.random() * 10000)
+        //     ]);
+        // }
+        // data.push(['2020-02-15', 8488]);
+        // data.push(['2020-02-16', 4488]);
+        // data.push(['2020-02-17', 2488]);
+        // data.push(['2020-02-18', 2488]);
+        // data.push(['2020-02-19', 2488]);
+        // data.push(['2020-02-20', 2488]);
+
+        // data.push(['2020-03-20', 2488]);
+        // data.push(['2020-03-21', 24881]);
+        data.push(['2020-02-24', 1000]);
+        data.push(['2020-02-25', 2054]);
+        data.push(['2020-02-26', 1000]);
+        data.push(['2020-02-27', 1590]);
+        data.push(['2020-02-27', 1590]);
+        data.push(['2020-02-28', 1000]);
+        data.push(['2020-02-28', 1000]);
+        data.push(['2020-02-29', 2677]);
+        data.push(['2020-03-01', 4906]);
+        data.push(['2020-03-02', 4352]);
+        data.push(['2020-03-03', 4595]);
+        data.push(['2020-03-04', 4608]);
+        data.push(['2020-03-05', 4808]);
+        data.push(['2020-03-06', 5131]);
+        data.push(['2020-03-07', 1000]);
+        data.push(['2020-03-08', 1000]);
+        data.push(['2020-03-09', 1000]);
+        data.push(['2020-03-10', 1000]);
+        data.push(['2020-03-11', 1000]);
+        data.push(['2020-03-12', 1000]);
+        data.push(['2020-03-13', 1000]);
+        data.push(['2020-03-14', 1273]);
+        data.push(['2020-03-15', 4529]);
+        data.push(['2020-03-16', 4574]);
+        data.push(['2020-03-17', 4679]);
+        data.push(['2020-03-18', 5827]);
+        data.push(['2020-03-19', 4583]);
+        data.push(['2020-03-20', 5219]);
+        data.push(['2020-03-21', 5765]);
+        data.push(['2020-03-22', 2761]);
+        data.push(['2020-03-23', 2115]);
+        data.push(['2020-03-24', 2219]);
+        data.push(['2020-03-25', 1000]);
+        data.push(['2020-03-26', 1000]);
+        data.push(['2020-03-27', 1121]);
+        data.push(['2020-03-28', 1652]);
+        data.push(['2020-03-29', 4487]);
+        data.push(['2020-03-30', 3228]);
+        data.push(['2020-03-31', 2450]);
+
+        return data;
+    }
+
+    var data = getVirtulData(2020);
+
+    option = {
+        backgroundColor: '#404a59',
+
+        title: {
+            top: 30,
+            text: '2020年「李明」每天的步数',
+            subtext: '李明',
+            left: 'center',
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: '30',
+            left: '100',
+            data: ['步数', 'Top 12'],
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        calendar: [{
+            top: 100,
+            left: 'center',
+            range: ['2020-01-01', '2020-06-30'],
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#000',
+                    width: 4, //月份边框线的宽度 粗细
+                    type: 'solid'
+                }
+            },
+            yearLabel: {
+                formatter: '{start}  1st',
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            itemStyle: {
+                color: '#323c48',
+                borderWidth: 1,
+                borderColor: '#111'
+            }
+        }, {
+            top: 340,
+            left: 'center',
+            range: ['2020-07-01', '2020-12-31'],
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#000',
+                    width: 4,
+                    type: 'solid'
+                }
+            },
+            yearLabel: {
+                formatter: '{start}  2nd',
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            itemStyle: {
+                color: '#323c48',
+                borderWidth: 1,
+                borderColor: '#111'
+            }
+        }],
+        series: [
+            {
+                name: '步数',
+                type: 'scatter',
+                coordinateSystem: 'calendar',
+                data: [],
+                // 控制点的大小
+                symbolSize: function (val) {
+                    return val[1] / symbolSizeDenominator;
+                },
+                itemStyle: {
+                    color: '#ddb926'
+                }
+            },
+            {
+                name: '步数',
+                type: 'scatter',
+                coordinateSystem: 'calendar',
+                calendarIndex: 1,
+                data: [],
+                symbolSize: function (val) {
+                    return val[1] / symbolSizeDenominator;
+                },
+                itemStyle: {
+                    color: '#ddb926'
+                }
+            },
+            // {
+            //     name: 'Top 12',
+            //     type: 'effectScatter',
+            //     coordinateSystem: 'calendar',
+            //     calendarIndex: 1,
+            //     data: data.sort(function (a, b) {
+            //         return b[1] - a[1];
+            //     }).slice(0, 12),
+            //     symbolSize: function (val) {
+            //         return val[1] / symbolSizeDenominator;
+            //     },
+            //     showEffectOn: 'render',
+            //     rippleEffect: {
+            //         brushType: 'stroke'
+            //     },
+            //     hoverAnimation: true,
+            //     itemStyle: {
+            //         color: '#f4e925',
+            //         // shadowBlur: 10,
+            //         shadowBlur: 1,
+            //         shadowColor: '#333'
+            //     },
+            //     zlevel: 1
+            // },
+            // {
+            //     name: 'Top 12',
+            //     type: 'effectScatter',
+            //     coordinateSystem: 'calendar',
+            //     data: data.sort(function (a, b) {
+            //         return b[1] - a[1];
+            //     }).slice(0, 12),
+            //     symbolSize: function (val) {
+            //         return val[1] / symbolSizeDenominator;
+            //     },
+            //     showEffectOn: 'render',
+            //     rippleEffect: {
+            //         brushType: 'stroke'
+            //     },
+            //     hoverAnimation: true,
+            //     itemStyle: {
+            //         color: '#f4e925',
+            //         // shadowBlur: 10,
+            //         shadowBlur: 1,
+            //         shadowColor: '#333'
+            //     },
+            //     zlevel: 1
+            // }
+        ]
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+    listMatterLog();
+
+    function listMatterLog() {
+        let ajaxData = [];
+        $.ajax({
+            url: listMatterLogUrl + '?userId=1&mType=3',
+            // url: 'http://localhost:63342/matter_log/list',
+            async: true,
+            type: 'get',
+            dataType: 'json',
+            success: function (resp) {
+                // sleep(5000)
+                // vm.$set('peoples', data.result);
+                console.log('ajax matter_log/list ', resp)
+                // ajaxData = resp
+                let data = resp.data;
+                for (let i = 0; i < data.length; i++) {
+                    ajaxData.push([data[i].happenDate, data[i].reachAmount])
+                }
+                console.log('ajaxData', ajaxData)
+                // myChart.hideLoading();    //隐藏加载动画
+                myChart.setOption({        //加载数据图表
+                    title: {
+                        top: 30,
+                        text: '2020年「李明」每天的步数',
+                        subtext: '李明',
+                        left: 'center',
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    },
+                    series: [
+                        {
+                            name: '步数',
+                            type: 'scatter',
+                            coordinateSystem: 'calendar',
+                            data: data,
+                            // 控制点的大小
+                            symbolSize: function (val) {
+                                return val[1] / symbolSizeDenominator;
+                            },
+                            itemStyle: {
+                                color: '#ddb926'
+                            }
+                        },
+                        {
+                            name: '步数',
+                            type: 'scatter',
+                            coordinateSystem: 'calendar',
+                            calendarIndex: 1,
+                            data: data,
+                            symbolSize: function (val) {
+                                return val[1] / symbolSizeDenominator;
+                            },
+                            itemStyle: {
+                                color: '#ddb926'
+                            }
+                        },
+                        {
+                            name: 'Top 12',
+                            type: 'effectScatter',
+                            coordinateSystem: 'calendar',
+                            calendarIndex: 1,
+                            data: data.sort(function (a, b) {
+                                return b[1] - a[1];
+                            }).slice(0, 12),
+                            symbolSize: function (val) {
+                                return val[1] / symbolSizeDenominator;
+                            },
+                            showEffectOn: 'render',
+                            rippleEffect: {
+                                brushType: 'stroke'
+                            },
+                            hoverAnimation: true,
+                            itemStyle: {
+                                color: '#f4e925',
+                                // shadowBlur: 10,
+                                shadowBlur: 1,
+                                shadowColor: '#333'
+                            },
+                            zlevel: 1
+                        },
+                        {
+                            name: 'Top 12',
+                            type: 'effectScatter',
+                            coordinateSystem: 'calendar',
+                            data: data.sort(function (a, b) {
+                                return b[1] - a[1];
+                            }).slice(0, 12),
+                            symbolSize: function (val) {
+                                return val[1] / symbolSizeDenominator;
+                            },
+                            showEffectOn: 'render',
+                            rippleEffect: {
+                                brushType: 'stroke'
+                            },
+                            hoverAnimation: true,
+                            itemStyle: {
+                                color: '#f4e925',
+                                // shadowBlur: 10,
+                                shadowBlur: 1,
+                                shadowColor: '#333'
+                            },
+                            zlevel: 1
+                        }
+                    ]
+                });
+                console.log('jie shu')
+            },
+            error: function (xhr, errorType, error) {
+                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

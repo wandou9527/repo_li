@@ -33,16 +33,18 @@
 
     <!-- logback为java中的包 -->
     <!--<logger name="com.dudu.controller"/>-->
+
     <!--logback.LogbackDemo：类的全路径 -->
     <!--<logger name="com.dudu.controller.LearnController" level="WARN" additivity="false">-->
-    <!--<appender-ref ref="console"/>-->
+        <!--<appender-ref ref="console"/>-->
     <!--</logger>-->
-    <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
-    <!--<springProfile name="test,dev,prd">-->
-    <!--<logger name="com.xhc" level="info"/>-->
-    <!--</springProfile>-->
 
-    <!--<springProfile name="test">-->
-    <!--<property name="log.path" value="/root/community_management/project/userapp/cm_logs"/>-->
-    <!--</springProfile>-->
+    <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
+    <springProfile name="test,dev,prd">
+        <logger name="com.wandou" level="info"/>
+    </springProfile>
+
+    <springProfile name="test">
+        <property name="log.path" value="/root/project/boot-demo/mousec/log"/>
+    </springProfile>
 </configuration>
