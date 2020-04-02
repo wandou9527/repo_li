@@ -88,7 +88,7 @@ public class MatterLogServiceImpl implements MatterLogService {
         }
 
         matterLogPO.setHappenTime(date);
-        matterLogPO.setReachAmount(666D);
+        matterLogPO.setReachAmount(1200D);
         matterLogPO.setReachAmountUnit("bu");
         matterLogPO.setPartitionValue(DateFormatUtils.format(date, CommonConst.PATTERN_YYYYMM));
         matterLogPO.setPartitionType(1);
@@ -97,4 +97,10 @@ public class MatterLogServiceImpl implements MatterLogService {
         log.info("insert: {}", insert);
 
     }
+
+
+    /**
+     * mybatisPlus 用法
+     * queryWrapper.in(R column, Object... values)
+     */
 }
