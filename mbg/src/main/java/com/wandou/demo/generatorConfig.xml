@@ -13,9 +13,9 @@
 
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://0.0.0.0:3306/ku?useUnicode=true"
-                        userId="rd"
-                        password="pass">
+                        connectionURL="jdbc:mysql://101.201.114.221:3306/cash"
+                        userId="tester"
+                        password="xcdq7SO45Ql5Wjhg">
         </jdbcConnection>
 
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
@@ -60,7 +60,7 @@
 
 
         <!-- 指定数据库表 -->
-        <table schema="sch" tableName="dict" domainObjectName="Dict"></table>
+        <table schema="cash" tableName="withdraw_record" domainObjectName="WithdrawRecord"></table>
 
     </context>
 </generatorConfiguration>
