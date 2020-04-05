@@ -2,36 +2,46 @@
 <html style="height: 100%">
 <head>
     <meta charset="utf-8">
-    <title>大家加油 动起来</title>
+    <title>v3</title>
+    <!-- v4
+        接下来试试vue方法 接下来试试从数据库拉用户数据，v-for遍历按钮，在v4里试吧
+     -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+    <script src="../../../config/config.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body style="height: 100%; margin: 0">
-<div style="height: 2%">
-    <div style="margin-top: 10px; margin-left: 20px">
-        <button onclick="listMatterLog(1)">李明</button>
-        <button onclick="listMatterLog(2)">艳杰</button>
-        <button onclick="listMatterLog(23)">知足是福</button>
-        <button onclick="listMatterLog(25)">阿冷</button>
-    </div>
+<div id="app1" style="height: 6%;">
+    <!--<div style="margin-top: 10px; margin-left: 20px">-->
+    <!--<button onclick="listMatterLog(1)">李明</button>-->
+    <!--<button onclick="listMatterLog(2)">艳杰</button>-->
+    <!--<button onclick="listMatterLog(23)">知足是福</button>-->
+    <!--<button onclick="listMatterLog(25)">阿冷</button>-->
+    <!--</div>-->
+    {{users}}
+    <br>
+    <button @click="listMatterLog(u.id)" v-for="u in users" style="margin-right: 10px">{{u.nick}}</button>
 </div>
-<br>
-<div id="container" style="height: 98%"></div>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
-<!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
-<script src="../../../config/config.js"></script>
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<div id="container" style="height: 98%;"></div>
+
+</body>
+
+
 <script type="text/javascript">
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     var app = {};
     //控制点大小的分母
-    const symbolSizeDenominator = 800;
+    const symbolSizeDenominator = 500;
     option = null;
 
     function getVirtulData(year) {
@@ -94,167 +104,162 @@
         data.push(['2020-03-29', 4487]);
         data.push(['2020-03-30', 3228]);
         data.push(['2020-03-31', 2450]);
-        data.push(['2020-04-01', 10000]);
-        data.push(['2020-04-02', 20000]);
 
         return data;
     }
 
     var data = getVirtulData(2020);
 
-    function defaultCharts() {
-        option = {
-            backgroundColor: '#404a59',
+    option = {
+        backgroundColor: '#404a59',
 
-            title: {
-                top: 30,
-                text: '2020年「李明」每天的步数',
-                subtext: '李明',
-                left: 'center',
+        title: {
+            top: 30,
+            text: '2020年「李明」每天的步数',
+            subtext: '李明',
+            left: 'center',
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: '30',
+            left: '100',
+            data: ['步数', 'Top 12'],
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        calendar: [{
+            top: 100,
+            left: 'center',
+            range: ['2020-01-01', '2020-06-30'],
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#000',
+                    width: 4, //月份边框线的宽度 粗细
+                    type: 'solid'
+                }
+            },
+            yearLabel: {
+                formatter: '{start}  1st',
                 textStyle: {
                     color: '#fff'
                 }
             },
-            tooltip: {
-                trigger: 'item'
+            itemStyle: {
+                color: '#323c48',
+                borderWidth: 1,
+                borderColor: '#111'
+            }
+        }, {
+            top: 340,
+            left: 'center',
+            range: ['2020-07-01', '2020-12-31'],
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#000',
+                    width: 4,
+                    type: 'solid'
+                }
             },
-            legend: {
-                top: '30',
-                left: '100',
-                data: ['步数', 'Top 12'],
+            yearLabel: {
+                formatter: '{start}  2nd',
                 textStyle: {
                     color: '#fff'
                 }
             },
-            calendar: [{
-                top: 100,
-                left: 'center',
-                range: ['2020-01-01', '2020-06-30'],
-                splitLine: {
-                    show: true,
-                    lineStyle: {
-                        color: '#000',
-                        width: 4, //月份边框线的宽度 粗细
-                        type: 'solid'
-                    }
-                },
-                yearLabel: {
-                    formatter: '{start}  1st',
-                    textStyle: {
-                        color: '#fff'
-                    }
+            itemStyle: {
+                color: '#323c48',
+                borderWidth: 1,
+                borderColor: '#111'
+            }
+        }],
+        series: [
+            {
+                name: '步数',
+                type: 'scatter',
+                coordinateSystem: 'calendar',
+                data: [],
+                // 控制点的大小
+                symbolSize: function (val) {
+                    return val[1] / symbolSizeDenominator;
                 },
                 itemStyle: {
-                    color: '#323c48',
-                    borderWidth: 1,
-                    borderColor: '#111'
+                    color: '#ddb926'
                 }
-            }, {
-                top: 340,
-                left: 'center',
-                range: ['2020-07-01', '2020-12-31'],
-                splitLine: {
-                    show: true,
-                    lineStyle: {
-                        color: '#000',
-                        width: 4,
-                        type: 'solid'
-                    }
-                },
-                yearLabel: {
-                    formatter: '{start}  2nd',
-                    textStyle: {
-                        color: '#fff'
-                    }
+            },
+            {
+                name: '步数',
+                type: 'scatter',
+                coordinateSystem: 'calendar',
+                calendarIndex: 1,
+                data: [],
+                symbolSize: function (val) {
+                    return val[1] / symbolSizeDenominator;
                 },
                 itemStyle: {
-                    color: '#323c48',
-                    borderWidth: 1,
-                    borderColor: '#111'
+                    color: '#ddb926'
                 }
-            }],
-            series: [
-                {
-                    name: '步数',
-                    type: 'scatter',
-                    coordinateSystem: 'calendar',
-                    data: data,
-                    // 控制点的大小
-                    symbolSize: function (val) {
-                        return val[1] / symbolSizeDenominator;
-                    },
-                    itemStyle: {
-                        color: '#ddb926'
-                    }
-                },
-                {
-                    name: '步数',
-                    type: 'scatter',
-                    coordinateSystem: 'calendar',
-                    calendarIndex: 1,
-                    data: data,
-                    symbolSize: function (val) {
-                        return val[1] / symbolSizeDenominator;
-                    },
-                    itemStyle: {
-                        color: '#ddb926'
-                    }
-                },
-                // {
-                //     name: 'Top 12',
-                //     type: 'effectScatter',
-                //     coordinateSystem: 'calendar',
-                //     calendarIndex: 1,
-                //     data: data.sort(function (a, b) {
-                //         return b[1] - a[1];
-                //     }).slice(0, 12),
-                //     symbolSize: function (val) {
-                //         return val[1] / symbolSizeDenominator;
-                //     },
-                //     showEffectOn: 'render',
-                //     rippleEffect: {
-                //         brushType: 'stroke'
-                //     },
-                //     hoverAnimation: true,
-                //     itemStyle: {
-                //         color: '#f4e925',
-                //         // shadowBlur: 10,
-                //         shadowBlur: 1,
-                //         shadowColor: '#333'
-                //     },
-                //     zlevel: 1
-                // },
-                // {
-                //     name: 'Top 12',
-                //     type: 'effectScatter',
-                //     coordinateSystem: 'calendar',
-                //     data: data.sort(function (a, b) {
-                //         return b[1] - a[1];
-                //     }).slice(0, 12),
-                //     symbolSize: function (val) {
-                //         return val[1] / symbolSizeDenominator;
-                //     },
-                //     showEffectOn: 'render',
-                //     rippleEffect: {
-                //         brushType: 'stroke'
-                //     },
-                //     hoverAnimation: true,
-                //     itemStyle: {
-                //         color: '#f4e925',
-                //         // shadowBlur: 10,
-                //         shadowBlur: 1,
-                //         shadowColor: '#333'
-                //     },
-                //     zlevel: 1
-                // }
-            ]
-        };
-        ;
-        if (option && typeof option === "object") {
-            myChart.setOption(option, true);
-        }
+            },
+            // {
+            //     name: 'Top 12',
+            //     type: 'effectScatter',
+            //     coordinateSystem: 'calendar',
+            //     calendarIndex: 1,
+            //     data: data.sort(function (a, b) {
+            //         return b[1] - a[1];
+            //     }).slice(0, 12),
+            //     symbolSize: function (val) {
+            //         return val[1] / symbolSizeDenominator;
+            //     },
+            //     showEffectOn: 'render',
+            //     rippleEffect: {
+            //         brushType: 'stroke'
+            //     },
+            //     hoverAnimation: true,
+            //     itemStyle: {
+            //         color: '#f4e925',
+            //         // shadowBlur: 10,
+            //         shadowBlur: 1,
+            //         shadowColor: '#333'
+            //     },
+            //     zlevel: 1
+            // },
+            // {
+            //     name: 'Top 12',
+            //     type: 'effectScatter',
+            //     coordinateSystem: 'calendar',
+            //     data: data.sort(function (a, b) {
+            //         return b[1] - a[1];
+            //     }).slice(0, 12),
+            //     symbolSize: function (val) {
+            //         return val[1] / symbolSizeDenominator;
+            //     },
+            //     showEffectOn: 'render',
+            //     rippleEffect: {
+            //         brushType: 'stroke'
+            //     },
+            //     hoverAnimation: true,
+            //     itemStyle: {
+            //         color: '#f4e925',
+            //         // shadowBlur: 10,
+            //         shadowBlur: 1,
+            //         shadowColor: '#333'
+            //     },
+            //     zlevel: 1
+            // }
+        ]
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
     }
-
 
     listMatterLog();
 
@@ -370,7 +375,6 @@
             },
             error: function (xhr, errorType, error) {
                 alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
-                defaultCharts()
             }
         });
     }
@@ -390,6 +394,22 @@
         }
     }
 
+
+    var app = new Vue({
+        el: '#app1',
+        data: {
+            message: 'Hello Vue! lalalala 888',
+            url: listMatterLogUrl,
+            strList: list,
+            users: confUsers
+        },
+        created: function () {
+            // `this` 指向 vm 实例
+            console.log('a is: ' + '666')
+            // f() 好使
+        },
+        method: {}
+    })
+
 </script>
-</body>
 </html>
