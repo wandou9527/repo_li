@@ -99,6 +99,7 @@
             // `this` 指向 vm 实例
             // console.log('a is: ' + '666')
             // f() 好使
+            var thisV= this
             this.listMatterLogV();
         },
         methods: {
@@ -125,8 +126,11 @@
                             xData.push(data[i].happenDate)
                             reachAmounts.push(data[i].reachAmount)
                             sumTime = sumTime + data[i].reachAmount
+                            console.log("sumTime", sumTime)
                             this.sumTimeV = this.sumTimeV + data[i].reachAmount
                             console.log("this.sumTimeV", this.sumTimeV)
+
+                            this.$set(thisV.sumTimeV, sumTime)
                         }
                         console.log('xData', xData, 'reachAmounts', reachAmounts)
                         // myChart.hideLoading();    //隐藏加载动画
