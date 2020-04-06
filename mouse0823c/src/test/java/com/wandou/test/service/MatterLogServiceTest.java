@@ -1,5 +1,6 @@
 package com.wandou.test.service;
 
+import com.wandou.enumeration.MatterLogTypeEnum;
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.service.MatterLogService;
 import org.apache.commons.collections.CollectionUtils;
@@ -37,7 +38,7 @@ public class MatterLogServiceTest {
 
     @Test
     public void m2Inset() {
-        matterLogService.addMatterLogByMqDemo(null, "单元测试-29-1");
+        matterLogService.addMatterLogByMqDemo(32L, MatterLogTypeEnum.STEP_NUMBER.getCode(), "单元测试-6-1");
     }
 
 

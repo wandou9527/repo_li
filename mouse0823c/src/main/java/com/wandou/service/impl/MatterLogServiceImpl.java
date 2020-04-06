@@ -3,12 +3,14 @@ package com.wandou.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wandou.constant.CommonConst;
+import com.wandou.enumeration.MatterLogTypeEnum;
 import com.wandou.mapper.MatterLogMapper;
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.model.po.MatterLogPO;
 import com.wandou.service.MatterLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.BeanUtils;
@@ -56,9 +58,12 @@ public class MatterLogServiceImpl implements MatterLogService {
 
 
     @Override
-    public void addMatterLogByMqDemo(Long userId, String remark) {
+    public void addMatterLogByMqDemo(Long userId, Integer mType, String remark) {
         if (userId == null) {
             userId = 0L;
+        }
+        if (mType == null) {
+            mType = MatterLogTypeEnum.STEP_NUMBER.getCode();
         }
         Date date = new Date();
 //        Date startTimeOfDay = DateUtil.getStartTimeOfDay(date);
@@ -73,7 +78,7 @@ public class MatterLogServiceImpl implements MatterLogService {
 
         MatterLogPO matterLogPO = new MatterLogPO();
         matterLogPO.setUserId(userId);
-        matterLogPO.setMType(3);
+        matterLogPO.setMType(mType);
         matterLogPO.setIsDelete(0);
         QueryWrapper<MatterLogPO> queryWrapper = new QueryWrapper(matterLogPO);
         List<MatterLogPO> matterLogPOS = matterLogMapper.selectList(queryWrapper);
@@ -87,15 +92,33 @@ public class MatterLogServiceImpl implements MatterLogService {
             }
         }
 
+        computeMatterLogRanch(matterLogPO);
         matterLogPO.setHappenTime(date);
-        matterLogPO.setReachAmount(1200D);
-        matterLogPO.setReachAmountUnit("bu");
         matterLogPO.setPartitionValue(DateFormatUtils.format(date, CommonConst.PATTERN_YYYYMM));
         matterLogPO.setPartitionType(1);
         matterLogPO.setRemark(remark);
         int insert = matterLogMapper.insert(matterLogPO);
         log.info("insert: {}", insert);
 
+    }
+
+    /**
+     * 随机给出reachAmount值，给出unit字段信息
+     *
+     * @param matterLog
+     */
+    private void computeMatterLogRanch(MatterLogPO matterLog) {
+        if (matterLog.getReachAmount() != null) {
+            return;
+        }
+        if (MatterLogTypeEnum.STUDY.getCode().equals(matterLog.getMType())) {
+            matterLog.setReachAmount(0d);
+            matterLog.setReachAmountUnit(MatterLogTypeEnum.STUDY.getDefaultUnit());
+
+        } else if (MatterLogTypeEnum.STEP_NUMBER.getCode().equals(matterLog.getMType())) {
+            matterLog.setReachAmount(2000d + (100d * RandomUtils.nextInt(1, 10)));
+            matterLog.setReachAmountUnit(MatterLogTypeEnum.STEP_NUMBER.getDefaultUnit());
+        }
     }
 
 

@@ -40,7 +40,7 @@ public class Demo0819MQListener implements RocketMQListener<MessageExt>, RocketM
         if (matterLogDTO != null && matterLogDTO.getUserId() != null) {
             userId = matterLogDTO.getUserId();
         }
-        matterLogService.addMatterLogByMqDemo(userId, msgBodyStr);
+        matterLogService.addMatterLogByMqDemo(userId, matterLogDTO.getMType(), msgBodyStr);
     }
 
     @Override
