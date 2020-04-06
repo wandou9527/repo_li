@@ -1,14 +1,12 @@
 package com.wandou.controller;
 
+import com.wandou.enumeration.MatterLogTypeEnum;
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.model.vo.BaseRespVO;
 import com.wandou.service.MatterLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -60,6 +58,18 @@ public class MatterLogController {
         List<MatterLogDTO> list = matterLogService.list(userId, mType);
         BaseRespVO<List<MatterLogDTO>> baseRespVO = BaseRespVO.success(list);
         return baseRespVO;
+    }
+
+    @PostMapping
+    public BaseRespVO<Object> add(@RequestBody MatterLogDTO matterLog) {
+        if (matterLog.getUserId() == null || matterLog.getUserId() != 25L) {
+            return BaseRespVO.success("你只可添加冷的数据 userId=25");
+        }
+        if (matterLog.getMType() == null) {
+            matterLog.setMType(MatterLogTypeEnum.STEP_NUMBER.getCode());
+        }
+        String addResult = matterLogService.add(matterLog);
+        return BaseRespVO.success(addResult);
     }
 
 }

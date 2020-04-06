@@ -8,6 +8,7 @@ import com.wandou.mapper.MatterLogMapper;
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.model.po.MatterLogPO;
 import com.wandou.service.MatterLogService;
+import com.wandou.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -102,6 +103,17 @@ public class MatterLogServiceImpl implements MatterLogService {
 
     }
 
+    @Override
+    public String add(MatterLogDTO matterLog) {
+        MatterLogPO matterLogPO = new MatterLogPO();
+        BeanUtils.copyProperties(matterLog, matterLogPO);
+        matterLogPO.setMType(matterLog.getMType());
+        matterLogPO.setPartitionType(1);
+        matterLogPO.setPartitionValue(DateFormatUtils.format(new Date(), CommonConst.PATTERN_YYYYMM));
+        matterLogMapper.insert(matterLogPO);
+        return "冷";
+    }
+
     /**
      * 随机给出reachAmount值，给出unit字段信息
      *
@@ -118,6 +130,8 @@ public class MatterLogServiceImpl implements MatterLogService {
         } else if (MatterLogTypeEnum.STEP_NUMBER.getCode().equals(matterLog.getMType())) {
             matterLog.setReachAmount(2000d + (100d * RandomUtils.nextInt(1, 10)));
             matterLog.setReachAmountUnit(MatterLogTypeEnum.STEP_NUMBER.getDefaultUnit());
+        } else {
+            matterLog.setReachAmount(0d);
         }
     }
 

@@ -27,4 +27,6 @@ public interface MatterLogService {
      */
     void addMatterLogByMqDemo(Long userId, Integer mType, String remark);
 
+    String add(MatterLogDTO matterLog);
+
 }
