@@ -6,6 +6,7 @@ import com.wandou.demo.EventHandler;
 import com.wandou.demo.MyContextEvent;
 import com.wandou.demo.UserRegisterEvent;
 import com.wandou.model.po.UserPO;
+import com.wandou.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ public class DemoJob {
 
     @Autowired
     private NameConst nameConst;
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -54,7 +57,7 @@ public class DemoJob {
 
 
         //1方式 事件发布
-        applicationContext.publishEvent(new MyContextEvent(this,"publish this event .... " + randomJinSwordsman + " 来了"));
+        applicationContext.publishEvent(new MyContextEvent(this, "publish this event .... " + randomJinSwordsman + " 来了"));
         log.info("1方式 发送完");
 
 
@@ -142,9 +145,10 @@ public class DemoJob {
      * 完善userId
      */
     @Async("scheduleExecutor")
-    @Scheduled(cron = "* 0/30 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void perfectUserId() {
         log.info("完善userId");
+        userService.perfectUserInfo();
     }
 
 }

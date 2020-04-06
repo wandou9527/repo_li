@@ -1,5 +1,6 @@
 package com.wandou.test;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -61,7 +62,19 @@ public class DemoTest {
             boolean b = (n & (n - 1)) == 0;
             System.out.println(n + " 是否是2的次方 ? " + b);
         }
+    }
 
+
+    /**
+     * do while
+     */
+    @Test
+    public void m5() {
+        int i = 1;
+        do {
+            System.out.println("RandomStringUtils.randomNumeric(4) = " + RandomStringUtils.randomNumeric(4));
+            i ++;
+        } while (i < 5);
     }
 
 }

@@ -16,4 +16,6 @@ public class CommonConst {
 
     public static final String PATTERN_YYYYMM = "yyyyMM";
 
+    public static final String APPLICATION_NAME = "mouse";
+
 }
