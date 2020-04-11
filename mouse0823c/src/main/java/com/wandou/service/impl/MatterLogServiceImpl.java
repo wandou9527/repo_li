@@ -8,6 +8,7 @@ import com.wandou.mapper.MatterLogMapper;
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.model.po.MatterLogPO;
 import com.wandou.service.MatterLogService;
+import com.wandou.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -104,6 +105,18 @@ public class MatterLogServiceImpl implements MatterLogService {
 
     @Override
     public String add(MatterLogDTO matterLog) {
+        Date happenTime = matterLog.getHappenTime();
+        List<MatterLogPO> matterLogPOS = matterLogMapper.listByUserIdAndHappenTime(matterLog.getUserId(),
+                DateUtil.getStartTimeOfDay(happenTime),
+                DateUtil.getEndTimeOfDay(happenTime),
+                matterLog.getMType());
+        if (CollectionUtils.isNotEmpty(matterLogPOS)) {
+            MatterLogPO matterLogOld = matterLogPOS.get(matterLogPOS.size() - 1);
+            matterLogOld.setReachAmount(matterLog.getReachAmount());
+            matterLogMapper.updateById(matterLogOld);
+            return "已有记录，将为你更新原记录";
+        }
+
         MatterLogPO matterLogPO = new MatterLogPO();
         BeanUtils.copyProperties(matterLog, matterLogPO);
         matterLogPO.setMType(matterLog.getMType());

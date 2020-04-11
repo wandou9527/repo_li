@@ -4,19 +4,29 @@
     <meta charset="UTF-8">
     <title>添加</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .addArea {
+            width: 160px;
+            margin-top: 12px;
+        }
+    </style>
 </head>
 <body>
 
-<div id="app" style="margin-left: 50px; margin-top: 50px">
-    日期: <input type="date" v-model="addObj.happenTime"/>
-    步数: <input type="number" v-model="addObj.reachAmount"/>
+<div id="app" style="margin-left: 150px; margin-top: 50px">
+    <h1>添加你的步数吧</h1>
+    日期: <input type="date" v-model="addObj.happenTime" class="addArea"/>
+    <br>
+    步数: <input type="number" v-model="addObj.reachAmount" class="addArea"/>
+    <br>
     用户:
     <!--<input v-model="addObj.userId"/>-->
-    <select v-model="addObj.userId" style="width: 80px">
+    <select v-model="addObj.userId" class="addArea">
         <option selected="selected">请选择用户</option>
         <option v-for="(u, i) in users" :value="u.id">{{u.nick}}</option>
     </select>
-    <button type="submit" @click="add">保存</button>
+    <br>
+    <button type="submit" @click="add" class="addArea" style="margin-left: 20px">保存</button>
 </div>
 
 

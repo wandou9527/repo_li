@@ -1,5 +1,6 @@
 package com.wandou.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.wandou.enumeration.MatterLogTypeEnum;
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.model.vo.BaseRespVO;
@@ -62,6 +63,7 @@ public class MatterLogController {
 
     @PostMapping
     public BaseRespVO<Object> add(@RequestBody MatterLogDTO matterLog) {
+        log.info("matter log add req:{}", JSON.toJSONString(matterLog));
         if (matterLog.getUserId() == null || matterLog.getUserId() > 40L) {
             return BaseRespVO.error("请添加自己的数据");
         }
@@ -70,6 +72,7 @@ public class MatterLogController {
         }
         if (matterLog.getMType() == null) {
             matterLog.setMType(MatterLogTypeEnum.STEP_NUMBER.getCode());
+            matterLog.setReachAmountUnit(MatterLogTypeEnum.STEP_NUMBER.getDefaultUnit());
         }
         String addResult = matterLogService.add(matterLog);
         return BaseRespVO.success(addResult);
