@@ -8,7 +8,6 @@ import com.wandou.mapper.MatterLogMapper;
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.model.po.MatterLogPO;
 import com.wandou.service.MatterLogService;
-import com.wandou.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -110,6 +109,7 @@ public class MatterLogServiceImpl implements MatterLogService {
         matterLogPO.setMType(matterLog.getMType());
         matterLogPO.setPartitionType(1);
         matterLogPO.setPartitionValue(DateFormatUtils.format(new Date(), CommonConst.PATTERN_YYYYMM));
+        matterLogPO.setId(null);
         matterLogMapper.insert(matterLogPO);
         return "冷";
     }

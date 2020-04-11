@@ -62,8 +62,11 @@ public class MatterLogController {
 
     @PostMapping
     public BaseRespVO<Object> add(@RequestBody MatterLogDTO matterLog) {
-        if (matterLog.getUserId() == null || matterLog.getUserId() != 25L) {
-            return BaseRespVO.success("你只可添加冷的数据 userId=25");
+        if (matterLog.getUserId() == null || matterLog.getUserId() > 40L) {
+            return BaseRespVO.error("请添加自己的数据");
+        }
+        if (matterLog.getReachAmount() == null || matterLog.getReachAmount() > 20000d) {
+            return BaseRespVO.error("请填写合理的数值");
         }
         if (matterLog.getMType() == null) {
             matterLog.setMType(MatterLogTypeEnum.STEP_NUMBER.getCode());

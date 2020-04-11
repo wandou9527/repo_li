@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-@RocketMQMessageListener(topic = RocketMQConstant.DEMO0819_TOPIC, consumerGroup = RocketMQConstant.MOUSE_CONSUMER_GROUP)
+//@RocketMQMessageListener(topic = RocketMQConstant.DEMO0819_TOPIC, consumerGroup = RocketMQConstant.MOUSE_CONSUMER_GROUP)
 public class Demo0819MQListener implements RocketMQListener<MessageExt>, RocketMQPushConsumerLifecycleListener {
     @Autowired
     private MatterLogService matterLogService;
