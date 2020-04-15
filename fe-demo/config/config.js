@@ -2,6 +2,7 @@ const mHost = 'http://wandour.top/mouse/';
 // const mHost = 'http://localhost:63342';
 const listMatterLogUrl = mHost + '/matter_log/list';
 const addMatterLogUrl = mHost + '/matter_log';
+const addMatterLogCheckAuthUrl = mHost + '/matter_log/add_check_auth';
 const list = ['1', '2', 'str3', 'str4', "str5", "str6", "str7"];
 const confUsers = [
     {id: 1, nick: '李明'},
