@@ -1,9 +1,13 @@
 package com.wandou.config;
 
 import com.wandou.annotation.XParam;
+import com.wandou.common.BusinessException;
+import com.wandou.enumeration.ReturnCodeEnum;
+import com.wandou.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -21,6 +25,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Slf4j
 @Component
 public class XParamsArgument implements HandlerMethodArgumentResolver {
+
+    @Autowired
+    private RedisUtil redisUtil;
+
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -51,11 +59,11 @@ public class XParamsArgument implements HandlerMethodArgumentResolver {
                 String token = webRequest.getHeader("token");
                 log.info("token: {}", token);
                 if (StringUtils.isBlank(token) && annotation.validate()) {
-                    throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "token不能为空");
+                    throw new BusinessException(ReturnCodeEnum.BAD_TOKEN);
                 }
-                Long uid = NumberUtils.toLong(token, 8);
-                if (uid == null || uid <= 0) {
-                    throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "非法的角色");
+                long uid = redisUtil.getUserIdByToken(token);
+                if (uid <= 0) {
+                    throw new BusinessException(ReturnCodeEnum.BAD_TOKEN);
                 }
                 return uid;
             case Scope:

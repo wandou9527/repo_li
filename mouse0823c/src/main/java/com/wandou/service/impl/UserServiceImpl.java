@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wandou.constant.RedisConst;
 import com.wandou.mapper.UserMapper;
+import com.wandou.model.dto.req.ReqLoginDTO;
 import com.wandou.model.po.UserPO;
 import com.wandou.service.UserService;
 import com.wandou.util.RedisUtil;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author liming
@@ -30,6 +34,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private RedisUtil redisUtil;
+
 
     @Override
     public void perfectUserInfo() {
@@ -60,6 +65,19 @@ public class UserServiceImpl implements UserService {
 
             }
         }
+    }
+
+    @Override
+    public String login(ReqLoginDTO reqLoginDTO) {
+        UserPO userParam = new UserPO(reqLoginDTO.getUsername(), reqLoginDTO.getPassword());
+        QueryWrapper<UserPO> queryWrapper = new QueryWrapper<>(userParam);
+        UserPO userPO = userMapper.selectOne(queryWrapper);
+        if (userPO == null) {
+            return null;
+        }
+        String token = userPO.getId() + UUID.randomUUID().toString();
+        redisUtil.set(RedisConst.TOKEN_KEY + token, userPO.getId().toString(), 7L, TimeUnit.DAYS);
+        return token;
     }
 }
 

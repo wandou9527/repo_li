@@ -14,17 +14,11 @@
 <body>
 
 <div id="app" style="margin-left: 150px; margin-top: 50px">
-    <h1>添加你的步数吧</h1>
+    <h1>添加你的步数吧-a</h1>
     日期: <input type="date" v-model="addObj.happenTime" class="addArea"/>
     <br>
     步数: <input type="number" v-model="addObj.reachAmount" class="addArea"/>
     <br>
-    用户:
-    <!--<input v-model="addObj.userId"/>-->
-    <select v-model="addObj.userId" class="addArea">
-        <option selected="selected">请选择用户</option>
-        <option v-for="(u, i) in users" :value="u.id">{{u.nick}}</option>
-    </select>
     <br>
     <button type="submit" @click="add" class="addArea" style="margin-left: 20px">保存</button>
 </div>
@@ -33,6 +27,7 @@
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="../config/config.js"></script>
+<script src="../js/login/loginUtil.js"></script>
 <script>
     var app = new Vue({
         el: '#app',
@@ -64,7 +59,7 @@
                 if (!token) {
                     // window.location.href = login.html
                     alert('请登录')
-                    return
+                    toLoginPage()
                 }
                 if (!this.addObj.happenTime) {
                     alert('请选择时间')
@@ -72,9 +67,6 @@
                 }
                 if (!this.addObj.reachAmount) {
                     alert('请填写步数')
-                }
-                if (!this.addObj.userId) {
-                    alert('请选择用户')
                 }
                 this.addObj.remark = 'html add'
                 console.log('addObj', this.addObj)
@@ -90,6 +82,8 @@
                         console.log('ajax matter_log add resp', resp)
                         if (resp.code == "2000") {
                             alert('成功')
+                        } else if (resp.code == '4005') {
+                            toLoginPage()
                         } else {
                             alert(resp.message)
                         }

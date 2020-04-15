@@ -13,4 +13,6 @@ public class RedisConst {
      * 乱序随意的id 多处可用
      */
     public static final String RANDOM_INC_ID_KEY = CommonConst.APPLICATION_NAME + ":random_inc_id";
+
+    public static final String TOKEN_KEY = CommonConst.APPLICATION_NAME + ":token:";
 }

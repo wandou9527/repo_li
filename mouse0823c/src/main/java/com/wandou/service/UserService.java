@@ -1,5 +1,7 @@
 package com.wandou.service;
 
+import com.wandou.model.dto.req.ReqLoginDTO;
+
 /**
  * @author liming
  * @date 2020-04-04
@@ -12,4 +14,11 @@ public interface UserService {
      */
     void perfectUserInfo();
 
+    /**
+     * 登录
+     *
+     * @param reqLoginDTO
+     * @return
+     */
+    String login(ReqLoginDTO reqLoginDTO);
 }

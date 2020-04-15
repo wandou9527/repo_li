@@ -29,11 +29,11 @@
             <div class="login-center-img"><img src="../images/login/password.png"/></div>
             <div class="login-center-input">
                 <input type="password" name="" value="" placeholder="请输入您的密码" onfocus="this.placeholder=''"
-                       onblur="this.placeholder='请输入您的密码'" v-model="loginObj.username"/>
+                       onblur="this.placeholder='请输入您的密码'" v-model="loginObj.password"/>
                 <div class="login-center-input-text">密码</div>
             </div>
         </div>
-        <div class="login-button">
+        <div class="login-button" @click="login()">
             登陆
         </div>
     </div>
@@ -43,6 +43,7 @@
 <!-- scripts -->
 <script src="../js/login/particles.min.js"></script>
 <script src="../js/login/app.js"></script>
+<script src="../js/login/loginUtil.js"></script>
 <script src="../config/config.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -101,7 +102,7 @@
         methods: {
             login() {
                 $.ajax({
-                    url: listMatterLogUrl + '?mType=3&userId=' + userId,
+                    url: loginUrl,
                     async: true,
                     type: 'post',
                     dataType: 'json',
@@ -113,6 +114,9 @@
                             //加入token
                             window.localStorage.setItem('token', resp.data)
                             alert("登录成功")
+                            toIndexPage()
+                        } else {
+                            alert(resp.message)
                         }
                         console.log('jie shu')
                     },

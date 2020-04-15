@@ -24,9 +24,13 @@ public class BaseRespVO<T> {
         return baseRespVO;
     }
 
-    public static <T> BaseRespVO<T> error(String message) {
+    public static <T> BaseRespVO<T> error(String code, String message) {
         BaseRespVO<T> baseRespVO = new BaseRespVO<>();
-        baseRespVO.setCode(ReturnCodeEnum.ERROR.getCode());
+        if (StringUtils.isNotBlank(code)) {
+            baseRespVO.setCode(code);
+        } else {
+            baseRespVO.setCode(ReturnCodeEnum.ERROR.getCode());
+        }
         if (StringUtils.isNotBlank(message)) {
             baseRespVO.setMessage(message);
         } else {
@@ -36,15 +40,15 @@ public class BaseRespVO<T> {
         return baseRespVO;
     }
 
+    public static <T> BaseRespVO<T> error(String message) {
+        return error("", message);
+    }
+
     public static <T> BaseRespVO<T> error() {
         return error("");
     }
 
     public static <T> BaseRespVO<T> error(ReturnCodeEnum returnCodeEnum) {
-        BaseRespVO<T> baseRespVO = new BaseRespVO<>();
-        baseRespVO.setCode(returnCodeEnum.getCode());
-        baseRespVO.setMessage(returnCodeEnum.getMessage());
-        baseRespVO.setData(null);
-        return baseRespVO;
+        return error(returnCodeEnum.getCode(), returnCodeEnum.getMessage());
     }
 }

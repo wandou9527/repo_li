@@ -1,5 +1,6 @@
 package com.wandou.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,6 +11,9 @@ import java.util.List;
 //拦截器配置类
 @Configuration
 public class MyWebMVCConfig extends WebMvcConfigurerAdapter {
+
+    @Autowired
+    private XParamsArgument xParamsArgument;
 
     /**
      * 好使
@@ -36,7 +40,8 @@ public class MyWebMVCConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new XParamsArgument());
+        argumentResolvers.add(xParamsArgument);
         super.addArgumentResolvers(argumentResolvers);
     }
+
 }

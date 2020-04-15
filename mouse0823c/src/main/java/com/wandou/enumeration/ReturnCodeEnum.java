@@ -15,6 +15,14 @@ public enum ReturnCodeEnum {
      */
     SUCCESS("2000", "成功"),
 
+    BAD_PARAM("4001", "参数错误"),
+
+    BAD_REQUEST("4002", "错误的请求"),
+
+    BAD_USERNAME_OR_PASSWORD("4003", "用户名或密码错误"),
+
+    BAD_TOKEN("4005", "token无效"),
+
     ERROR("5000", "网络开小差，请稍后再试~");
 
     private String code;
