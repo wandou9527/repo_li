@@ -1,7 +1,9 @@
 package com.wandou.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.wandou.annotation.XParam;
 import com.wandou.enumeration.MatterLogTypeEnum;
+import com.wandou.enumeration.XParamsType;
 import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.model.vo.BaseRespVO;
 import com.wandou.service.MatterLogService;
@@ -70,6 +72,29 @@ public class MatterLogController {
         if (matterLog.getReachAmount() == null || matterLog.getReachAmount() > 20000d) {
             return BaseRespVO.error("请填写合理的数值");
         }
+        if (matterLog.getMType() == null) {
+            matterLog.setMType(MatterLogTypeEnum.STEP_NUMBER.getCode());
+            matterLog.setReachAmountUnit(MatterLogTypeEnum.STEP_NUMBER.getDefaultUnit());
+        }
+        String addResult = matterLogService.add(matterLog);
+        return BaseRespVO.success(addResult);
+    }
+
+
+    /**
+     * 添加（校验权限）
+     *
+     * @param matterLog
+     * @param userId
+     * @return
+     */
+    @PostMapping("add_check_auth")
+    public BaseRespVO<Object> addCheckAuth(@RequestBody MatterLogDTO matterLog, @XParam(XParamsType.UID) Long userId) {
+        log.info("matter log add_check_auth req:{}", JSON.toJSONString(matterLog));
+        if (matterLog.getReachAmount() == null || matterLog.getReachAmount() > 20000d) {
+            return BaseRespVO.error("请填写合理的数值");
+        }
+        matterLog.setUserId(userId);
         if (matterLog.getMType() == null) {
             matterLog.setMType(MatterLogTypeEnum.STEP_NUMBER.getCode());
             matterLog.setReachAmountUnit(MatterLogTypeEnum.STEP_NUMBER.getDefaultUnit());
