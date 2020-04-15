@@ -1,5 +1,5 @@
 function toLoginPage() {
-    window.location.href = mHost + '/login/index.html'
+    window.location.href = feHost + '/login/index.html'
 }
 
 function toIndexPage() {

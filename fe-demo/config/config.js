@@ -1,4 +1,7 @@
+// 后端接口域名
 const mHost = 'http://wandour.top/mouse/';
+const feHost = 'http://wandour.top';
+// const feHost = 'http://localhost:63343/repo_li/fe-demo';
 // const mHost = 'http://localhost:8086';
 const listMatterLogUrl = mHost + '/matter_log/list';
 const addMatterLogUrl = mHost + '/matter_log';
