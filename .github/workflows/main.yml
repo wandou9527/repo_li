@@ -32,12 +32,12 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
-      - name: pull html on a2
+      - name: pull html
         uses: appleboy/ssh-action@v0.0.7
-          with:
-            host: ${{ secrets.A1_HOST }}
-            username: ${{ secrets.A1_HOST_USERNAME }}
-            password: ${{ secrets.A1_HOST_PASSWORD }}
-            script: |
-              cd /java/git_site_self/repo_li/
-              git pull
+        with:
+          host: ${{ secrets.A1_HOST }}
+          username: ${{ secrets.A1_HOST_USERNAME }}
+          password: ${{ secrets.A1_HOST_PASSWORD }}
+          script: |
+            cd /java/git_site_self/repo_li/ \
+            git pull
