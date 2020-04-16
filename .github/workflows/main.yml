@@ -41,7 +41,6 @@ jobs:
 #          script: |
 #            cd /java/git_site_self/repo_li/ \
 #            git pull
-      - name: pull code
         run: |
           cd /java/git_site_self/repo_li/
           git pull
