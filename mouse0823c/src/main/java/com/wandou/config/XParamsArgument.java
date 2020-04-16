@@ -1,7 +1,7 @@
 package com.wandou.config;
 
 import com.wandou.annotation.XParam;
-import com.wandou.common.BusinessException;
+import com.wandou.common.BizException;
 import com.wandou.enumeration.ReturnCodeEnum;
 import com.wandou.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -58,11 +58,11 @@ public class XParamsArgument implements HandlerMethodArgumentResolver {
                 String token = webRequest.getHeader("token");
                 log.info("token: {}", token);
                 if (StringUtils.isBlank(token) && annotation.validate()) {
-                    throw new BusinessException(ReturnCodeEnum.BAD_TOKEN);
+                    throw new BizException(ReturnCodeEnum.BAD_TOKEN);
                 }
                 long uid = redisUtil.getUserIdByToken(token);
                 if (uid <= 0) {
-                    throw new BusinessException(ReturnCodeEnum.BAD_TOKEN);
+                    throw new BizException(ReturnCodeEnum.BAD_TOKEN);
                 }
                 return uid;
             case Scope:

@@ -1,6 +1,6 @@
 package com.wandou.config;
 
-import com.wandou.common.BusinessException;
+import com.wandou.common.BizException;
 import com.wandou.enumeration.ReturnCodeEnum;
 import com.wandou.model.vo.BaseRespVO;
 import lombok.extern.slf4j.Slf4j;
@@ -53,10 +53,10 @@ public class ExceptionHandler {
      * @return
      */
     @SuppressWarnings("rawtypes")
-    @org.springframework.web.bind.annotation.ExceptionHandler(BusinessException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(BizException.class)
     @ResponseBody
-    public BaseRespVO handleTradeException(BusinessException e) {
-        log.error("BusinessException: ", e);
+    public BaseRespVO handleTradeException(BizException e) {
+        log.error("BizException: ", e);
         return BaseRespVO.error(e.getCode(), e.getMessage());
     }
 

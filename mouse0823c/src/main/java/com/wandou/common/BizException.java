@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class BusinessException extends RuntimeException {
+public class BizException extends RuntimeException {
 
     private String code;
 
     private String message;
 
-    public BusinessException(ReturnCodeEnum returnCodeEnum) {
+    public BizException(ReturnCodeEnum returnCodeEnum) {
         this.code = returnCodeEnum.getCode();
         this.message = returnCodeEnum.getMessage();
     }

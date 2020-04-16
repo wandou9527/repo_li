@@ -1,5 +1,6 @@
 package com.wandou.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ public class MatterLogDTO {
 
     private Long userId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date happenTime;
 
     private String happenDate;
