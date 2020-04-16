@@ -39,6 +39,7 @@ public class MatterLogController {
         addList(matterLogs, "2020-03-20", 12);
         addList(matterLogs, "2020-03-21", 5);
         addList(matterLogs, "2020-03-22", 11);
+        addList(matterLogs, "2020-04-16", 16);
         return matterLogs;
     }
 
