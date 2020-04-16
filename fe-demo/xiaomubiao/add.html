@@ -69,8 +69,10 @@
                 }
                 if (!this.addObj.reachAmount) {
                     alert('请填写步数')
+                    return
                 }
                 this.addObj.remark = 'html add'
+                this.addObj.happenTime = this.addObj.happenTime + ' 08:01:00'
                 console.log('addObj', this.addObj)
                 $.ajax({
                     url: addMatterLogCheckAuthUrl,

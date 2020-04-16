@@ -83,7 +83,7 @@ public class MatterLogServiceImpl implements MatterLogService {
         matterLogPO.setIsDelete(0);
         QueryWrapper<MatterLogPO> queryWrapper = new QueryWrapper(matterLogPO);
         List<MatterLogPO> matterLogPOS = matterLogMapper.selectList(queryWrapper);
-        log.info("matterLogPOS: {}", JSON.toJSONString(matterLogPOS, true));
+        log.info("matterLogPOS: {}", JSON.toJSONString(matterLogPOS));
         if (CollectionUtils.isNotEmpty(matterLogPOS)) {
             //看是否有今天数据
             for (MatterLogPO m : matterLogPOS) {
