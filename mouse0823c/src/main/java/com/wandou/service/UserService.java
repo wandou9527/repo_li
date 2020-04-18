@@ -1,6 +1,7 @@
 package com.wandou.service;
 
 import com.wandou.model.dto.req.ReqLoginDTO;
+import com.wandou.model.po.UserPO;
 
 /**
  * @author liming
@@ -21,4 +22,6 @@ public interface UserService {
      * @return
      */
     String login(ReqLoginDTO reqLoginDTO);
+
+    UserPO getInfoById(Long userId);
 }

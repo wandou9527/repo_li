@@ -15,6 +15,7 @@
     <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
     <script src="../../../config/config.js"></script>
+    <script src="../../../js/commonUtil.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
@@ -58,6 +59,7 @@
     <!--</div>-->
     <!--{{users}}-->
 
+    <button class="button" style="margin-left: 20px;background-color: #F3542D" onclick="toAddStepPage()">添加步数</button>
     <button type="button" v-for="(u, i) in users" @click="clickUser(u.id, i)" class="button yellow"
             v-bind:class=" activeClass==i ? 'active' : '' ">
         {{u.nick}}

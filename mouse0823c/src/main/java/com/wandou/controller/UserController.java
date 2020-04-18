@@ -1,21 +1,17 @@
 package com.wandou.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.wandou.enumeration.MatterLogTypeEnum;
+import com.wandou.annotation.XParam;
 import com.wandou.enumeration.ReturnCodeEnum;
-import com.wandou.model.dto.MatterLogDTO;
 import com.wandou.model.dto.req.ReqLoginDTO;
+import com.wandou.model.po.UserPO;
 import com.wandou.model.vo.BaseRespVO;
 import com.wandou.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author liming
@@ -41,6 +37,12 @@ public class UserController {
         } else {
             return BaseRespVO.error(ReturnCodeEnum.BAD_USERNAME_OR_PASSWORD);
         }
+    }
+
+    @GetMapping("/get_info_by_token")
+    public BaseRespVO<UserPO> getInfoByToken(@XParam Long userId) {
+        UserPO userPO = userService.getInfoById(userId);
+        return BaseRespVO.success(userPO);
     }
 
 

@@ -79,5 +79,10 @@ public class UserServiceImpl implements UserService {
         redisUtil.set(RedisConst.TOKEN_KEY + token, userPO.getId().toString(), 7L, TimeUnit.DAYS);
         return token;
     }
+
+    @Override
+    public UserPO getInfoById(Long userId) {
+        return userMapper.selectById(userId);
+    }
 }
 

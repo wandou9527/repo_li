@@ -34,6 +34,8 @@
     <script src="js/script.js"></script>
     <script src="js/jquery183.min.js"></script>
     <script src="js/responsiveslides.min.js"></script>
+    <script src="js/commonUtil.js"></script>
+    <script src="config/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         // You can also use "$(window).load(function() {"
@@ -84,6 +86,7 @@
                         <li><a href="archive.html">Motobike-5</a></li>
                         <li><a href="single.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#" id="userInfo">hi~欢迎~ {{user.nick}}</a></li>
                     </ul>
                 </div>
                 <a href='index.html' class="logo"><img src="images/logo.png"/></a>
@@ -96,11 +99,13 @@
         <div class="callbacks_container">
             <ul class="rslides" id="slider">
                 <li>
-                    <img src="images/slideshow-image1.jpg" alt="">
-                    <div class="caption">
-                        <h1>流水它带走光阴的故事改变了我们</h1>
-                        <span>就在那多愁善感而初次回忆的青春</span>
-                    </div>
+                    <a href="xiaomubiao/x3/u/calendar-effectscatter-d-v3.html">
+                        <img src="images/slideshow-image1.jpg" alt="">
+                        <div class="caption">
+                            <h1>目标统计（比如你的步数）</h1>
+                            <span></span>
+                        </div>
+                    </a>
                 </li>
                 <li>
                     <img src="images/slideshow-image2.jpg" alt="">
@@ -373,7 +378,8 @@
         el: '#app',
         data: {
             message: 'Hello Vue!',
-            visitor: 46
+            visitor: 46,
+            user: {}
         },
         ready: function () {
             console.log('vue eee')
@@ -400,6 +406,7 @@
 
     var visitorAjax = 47;
     get();
+    getUserInfoByToken()
 
     function get() {
         $.ajax({
@@ -410,6 +417,24 @@
                 // vm.$set('peoples', data.result);
                 console.log('ajax /c/visitor ', data)
                 $('#visitorAjax').append(data)
+            },
+            error: function (xhr, errorType, error) {
+                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error)
+            }
+        });
+    }
+
+    function getUserInfoByToken() {
+        $.ajax({
+            url: getUserInfoByTokenUrl,
+            type: 'get',
+            dataType: 'json',
+            headers: {token: getToken()},
+            success: function (data) {
+                // vm.$set('peoples', data.result);
+                console.log('ajax user ', data)
+                $('#userInfo').append(data.data.nick)
+                return data.data
             },
             error: function (xhr, errorType, error) {
                 alert('Ajax request error, errorType: ' + errorType + ', error: ' + error)
