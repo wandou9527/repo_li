@@ -9,7 +9,7 @@ function getToken() {
     let token = window.localStorage.getItem('token');
     if (!token) {
         // window.location.href = login.html
-        alert('请登录')
+        // alert('请登录')
         // window.location.href = feHost + '/login/index.html'
         return
     }

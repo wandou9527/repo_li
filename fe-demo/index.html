@@ -35,6 +35,7 @@
     <script src="js/jquery183.min.js"></script>
     <script src="js/responsiveslides.min.js"></script>
     <script src="js/commonUtil.js"></script>
+    <script src="js/login/loginUtil.js"></script>
     <script src="config/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
@@ -86,7 +87,14 @@
                         <li><a href="archive.html">Motobike-5</a></li>
                         <li><a href="single.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#" id="userInfo">hi~欢迎~ {{user.nick}}</a></li>
+                        <li>
+                            <!--<a href="login/index.html" v-if="!user.nick" style="color: blue;">-->
+                            <!--hi~请登录~-->
+                            <!--</a>-->
+                            <a href="#" id="userInfo" style="color: rebeccapurple" @click="clickNick()">hi~欢迎~
+                                {{user.nick}}
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <a href='index.html' class="logo"><img src="images/logo.png"/></a>
@@ -385,21 +393,11 @@
             console.log('vue eee')
         },
         methods: {
-            getVisitor: function () {
-                // var vm = this;
-                // $.ajax({
-                //     url: 'http://wandour.top/c/visitor',
-                //     type: 'get',
-                //     dataType: 'json',
-                //     success: function (data) {
-                //         console.log('resp', data)
-                //         // vm.$set('peoples', data.result);
-                //     },
-                //     error: function(xhr, errorType, error) {
-                //         alert('Ajax request error, errorType: ' + errorType +  ', error: ' + error)
-                //     }
-                // });
-                console.log('resp test')
+            clickNick: function () {
+                if (this.user && this.user.nick) {
+                    return
+                }
+                toLoginPage()
             }
         }
     })
