@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String submit(ReqSubmitOrderDTO submitOrderDTO) {
+    public String submit(ReqSubmitOrderDTO submitOrderDTO, Long userId) {
         CommodityPO commodity = commodityService.get(submitOrderDTO.getCid());
         if (commodity == null) {
             throw new BizException(ReturnCodeEnum.COMMODITY_INEXISTENCE);
@@ -54,6 +54,7 @@ public class OrderServiceImpl implements OrderService {
         if (orderPO.getCoinUsed() == null) {
             orderPO.setCoinUsed(0L);
         }
+        orderPO.setUid(userId);
         orderPO.setOrderNo(redisUtil.randomIncId().toString());
         orderMapper.insert(orderPO);
         return orderPO.getOrderNo();

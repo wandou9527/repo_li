@@ -1,7 +1,7 @@
 package com.wandou.controller;
 
-import com.wandou.common.BizException;
-import com.wandou.enumeration.ReturnCodeEnum;
+import com.wandou.annotation.XParam;
+import com.wandou.enumeration.XParamsType;
 import com.wandou.model.dto.req.ReqSubmitOrderDTO;
 import com.wandou.model.dto.resp.RespOrderDTO;
 import com.wandou.model.vo.BaseRespVO;
@@ -26,18 +26,16 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/submit")
-    public BaseRespVO<String> submit(@RequestBody @Validated ReqSubmitOrderDTO submitOrderDTO) {
-        String orderNo = orderService.submit(submitOrderDTO);
+    public BaseRespVO<String> submit(@XParam(XParamsType.UID) Long userId,
+                                     @RequestBody @Validated ReqSubmitOrderDTO submitOrderDTO) {
+        String orderNo = orderService.submit(submitOrderDTO, userId);
         return BaseRespVO.success(orderNo);
     }
 
     @GetMapping("/list")
-    public BaseRespVO<List<RespOrderDTO>> list(@RequestHeader(name = "uid", required = false) Long uid,
+    public BaseRespVO<List<RespOrderDTO>> list(@XParam(XParamsType.UID) Long userId,
                                                @RequestParam(name = "oStatus", required = false) Integer oStatus) {
-        if (uid == null) {
-            throw new BizException(ReturnCodeEnum.BAD_PARAM, "uid不可为空，在header传递");
-        }
-        List<RespOrderDTO> orderList = orderService.list(uid, oStatus);
+        List<RespOrderDTO> orderList = orderService.list(userId, oStatus);
         return BaseRespVO.success(orderList);
     }
 

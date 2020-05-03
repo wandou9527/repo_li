@@ -17,9 +17,10 @@ public interface OrderService {
      * 提交订单
      *
      * @param submitOrderDTO
+     * @param userId
      * @return
      */
-    String submit(ReqSubmitOrderDTO submitOrderDTO);
+    String submit(ReqSubmitOrderDTO submitOrderDTO, Long userId);
 
     List<RespOrderDTO> list(Long uid, Integer oStatus);
 }
