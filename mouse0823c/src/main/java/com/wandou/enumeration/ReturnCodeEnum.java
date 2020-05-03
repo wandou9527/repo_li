@@ -23,7 +23,10 @@ public enum ReturnCodeEnum {
 
     BAD_TOKEN("4005", "token无效"),
 
-    ERROR("5000", "网络开小差，请稍后再试~");
+    COMMODITY_INEXISTENCE("4006", "商品不存在"),
+
+    ERROR("5000", "网络开小差，请稍后再试~"),
+    ;
 
     private String code;
     private String message;

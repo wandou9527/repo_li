@@ -40,7 +40,6 @@ public class MatterLogServiceImpl implements MatterLogService {
         matterLogParam.setMType(mType);
         matterLogParam.setIsDelete(0);
         QueryWrapper<MatterLogPO> queryWrapper = new QueryWrapper(matterLogParam);
-        queryWrapper.excludeColumns("create_time");
         List<MatterLogPO> matterLogs = matterLogMapper.selectList(queryWrapper);
         log.info("matterLogs: {}", matterLogs);
         if (CollectionUtils.isEmpty(matterLogs)) {
@@ -53,7 +52,7 @@ public class MatterLogServiceImpl implements MatterLogService {
             matterLogDTO.setHappenDate(DateFormatUtils.format(matterLog.getHappenTime(), CommonConst.PATTERN_YYYY_MM_DD));
             matterLogDTOS.add(matterLogDTO);
         }
-        matterLogDTOS = matterLogDTOS.stream().sorted(Comparator.comparing(MatterLogDTO::getHappenTime)).collect(Collectors.toList());
+        matterLogDTOS = matterLogDTOS.stream().sorted(Comparator.comparing(MatterLogDTO::getHappenTime).reversed()).collect(Collectors.toList());
         return matterLogDTOS;
     }
 

@@ -3,6 +3,7 @@ package com.wandou.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wandou.constant.ColumnConst;
 import com.wandou.mapper.CommodityMapper;
 import com.wandou.model.dto.PageDTO;
 import com.wandou.model.dto.req.ReqCommodityQueryDTO;
@@ -34,6 +35,7 @@ public class CommodityServiceImpl implements CommodityService {
         commodityParam.setCommodityType(reqCommodityQueryDTO.getCommodityType());
         commodityParam.setMerchant(reqCommodityQueryDTO.getMerchant());
         QueryWrapper<CommodityPO> queryWrapper = new QueryWrapper<>(commodityParam);
+        queryWrapper = queryWrapper.orderByDesc(ColumnConst.CREATE_TIME);
         Page<CommodityPO> page = new Page<>(reqCommodityQueryDTO.getPageNo(), reqCommodityQueryDTO.getPageSize());
         page.setOptimizeCountSql(false);
         IPage<CommodityPO> pageResp = commodityMapper.selectPage(page, queryWrapper);
@@ -47,5 +49,10 @@ public class CommodityServiceImpl implements CommodityService {
             respList.add(respCommodityDTO);
         }
         return new PageDTO<>(pageResp.getTotal(), respList);
+    }
+
+    @Override
+    public CommodityPO get(Long id) {
+        return commodityMapper.selectById(id);
     }
 }

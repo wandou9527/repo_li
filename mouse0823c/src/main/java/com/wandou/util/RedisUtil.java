@@ -32,7 +32,7 @@ public class RedisUtil {
      */
     public Long randomIncId() {
         Long increment = redisTemplate.opsForValue().increment(RedisConst.RANDOM_INC_ID_KEY,
-                RandomUtils.nextLong(5L, 11L));
+                RandomUtils.nextLong(11L, 21L));
         return increment;
     }
 

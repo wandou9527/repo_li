@@ -4,6 +4,7 @@ import com.wandou.enumeration.ReturnCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author liming
@@ -23,6 +24,15 @@ public class BizException extends RuntimeException {
     public BizException(ReturnCodeEnum returnCodeEnum) {
         this.code = returnCodeEnum.getCode();
         this.message = returnCodeEnum.getMessage();
+    }
+
+    public BizException(ReturnCodeEnum returnCodeEnum, String message) {
+        this.code = returnCodeEnum.getCode();
+        if (StringUtils.isNotBlank(message)) {
+            this.message = message;
+        } else {
+            this.message = returnCodeEnum.getMessage();
+        }
     }
 
 }
