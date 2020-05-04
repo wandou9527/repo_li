@@ -46,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
         if (commodity == null) {
             throw new BizException(ReturnCodeEnum.COMMODITY_INEXISTENCE);
         }
+        commodity.setStock(commodity.getStock() - submitOrderDTO.getNum());
+        commodityService.updateById(commodity);
         OrderPO orderPO = new OrderPO();
         BeanUtils.copyProperties(submitOrderDTO, orderPO);
         if (orderPO.getPayPost() == null) {

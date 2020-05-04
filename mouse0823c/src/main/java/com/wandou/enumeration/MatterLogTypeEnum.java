@@ -19,7 +19,15 @@ public enum MatterLogTypeEnum {
      */
     STUDY(2, "学习目标统计", "h"),
 
-    STEP_NUMBER(3, "步数统计", "step");
+    STEP_NUMBER(3, "步数统计", "step"),
+
+    WEIGHT(4, "体重", "kg"),
+
+    /**
+     * 工作
+     */
+    WORK(5, "工作", ""),
+    ;
 
     private Integer code;
     private String desc;

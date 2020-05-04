@@ -15,4 +15,6 @@ public interface CommodityService {
     PageDTO<RespCommodityDTO> list(ReqCommodityQueryDTO reqCommodityQueryDTO);
 
     CommodityPO get(Long id);
+
+    int updateById(CommodityPO commodity);
 }

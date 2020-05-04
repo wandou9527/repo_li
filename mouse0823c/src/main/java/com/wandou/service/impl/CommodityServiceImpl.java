@@ -55,4 +55,9 @@ public class CommodityServiceImpl implements CommodityService {
     public CommodityPO get(Long id) {
         return commodityMapper.selectById(id);
     }
+
+    @Override
+    public int updateById(CommodityPO commodity) {
+        return commodityMapper.updateById(commodity);
+    }
 }

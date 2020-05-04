@@ -1,11 +1,13 @@
 package com.wandou.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.wandou.annotation.XParam;
 import com.wandou.enumeration.XParamsType;
 import com.wandou.model.dto.req.ReqSubmitOrderDTO;
 import com.wandou.model.dto.resp.RespOrderDTO;
 import com.wandou.model.vo.BaseRespVO;
 import com.wandou.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import java.util.List;
  * @description
  */
 
+@Slf4j
 @RequestMapping("/order")
 @RestController
 public class OrderController {
@@ -28,6 +31,7 @@ public class OrderController {
     @PostMapping("/submit")
     public BaseRespVO<String> submit(@XParam(XParamsType.UID) Long userId,
                                      @RequestBody @Validated ReqSubmitOrderDTO submitOrderDTO) {
+        log.info("{} submit order req: {}", userId, JSON.toJSONString(submitOrderDTO));
         String orderNo = orderService.submit(submitOrderDTO, userId);
         return BaseRespVO.success(orderNo);
     }
