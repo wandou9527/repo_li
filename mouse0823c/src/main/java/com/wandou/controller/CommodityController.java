@@ -1,11 +1,13 @@
 package com.wandou.controller;
 
 import com.wandou.model.dto.PageDTO;
+import com.wandou.model.dto.req.ReqCommodityAddDTO;
 import com.wandou.model.dto.req.ReqCommodityQueryDTO;
 import com.wandou.model.dto.resp.RespCommodityDTO;
 import com.wandou.model.vo.BaseRespVO;
 import com.wandou.service.CommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,18 @@ public class CommodityController {
     public BaseRespVO list(@RequestBody ReqCommodityQueryDTO reqCommodityQueryDTO) {
         PageDTO<RespCommodityDTO> pageDTO = commodityService.list(reqCommodityQueryDTO);
         return BaseRespVO.success(pageDTO);
+    }
+
+    /**
+     * 添加商品
+     *
+     * @param addDTO
+     * @return
+     */
+    @PostMapping
+    public BaseRespVO add(@RequestBody @Validated ReqCommodityAddDTO addDTO) {
+        int add = commodityService.add(addDTO);
+        return BaseRespVO.success(null);
     }
 
 

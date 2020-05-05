@@ -1,6 +1,7 @@
 package com.wandou.service;
 
 import com.wandou.model.dto.PageDTO;
+import com.wandou.model.dto.req.ReqCommodityAddDTO;
 import com.wandou.model.dto.req.ReqCommodityQueryDTO;
 import com.wandou.model.dto.resp.RespCommodityDTO;
 import com.wandou.model.po.CommodityPO;
@@ -17,4 +18,6 @@ public interface CommodityService {
     CommodityPO get(Long id);
 
     int updateById(CommodityPO commodity);
+
+    int add(ReqCommodityAddDTO reqCommodityAddDTO);
 }

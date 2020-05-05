@@ -18,4 +18,6 @@ public class CommonConst {
 
     public static final String APPLICATION_NAME = "mouse";
 
+    public static final String DEFAULT_IMG_URL = "http://qn.wandour.top/2020-05-05-default-img.jpeg";
+
 }
