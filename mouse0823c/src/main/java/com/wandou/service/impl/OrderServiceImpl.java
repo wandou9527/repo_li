@@ -56,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
         if (orderPO.getCoinUsed() == null) {
             orderPO.setCoinUsed(0L);
         }
+        orderPO.setId(redisUtil.randomIncId());
         orderPO.setUid(userId);
         orderPO.setOrderNo(redisUtil.randomIncId().toString());
         orderMapper.insert(orderPO);
@@ -65,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<RespOrderDTO> list(Long uid, Integer oStatus) {
         OrderPO orderParam = new OrderPO();
+        orderParam.setIsDelete(0);
         orderParam.setUid(uid);
         orderParam.setOStatus(oStatus);
         QueryWrapper<OrderPO> queryWrapper = new QueryWrapper<>(orderParam);

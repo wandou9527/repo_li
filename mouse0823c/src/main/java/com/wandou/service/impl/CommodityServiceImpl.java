@@ -15,6 +15,7 @@ import com.wandou.model.dto.resp.RespCommodityDTO;
 import com.wandou.model.po.CommodityPO;
 import com.wandou.service.CommodityService;
 import com.wandou.util.GenUtil;
+import com.wandou.util.RedisUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -36,10 +37,13 @@ public class CommodityServiceImpl implements CommodityService {
     private CommodityMapper commodityMapper;
     @Autowired
     private GenUtil genUtil;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public PageDTO<RespCommodityDTO> list(ReqCommodityQueryDTO reqCommodityQueryDTO) {
         CommodityPO commodityParam = new CommodityPO();
+        commodityParam.setIsDelete(0);
         commodityParam.setCommodityType(reqCommodityQueryDTO.getCommodityType());
         commodityParam.setMerchant(reqCommodityQueryDTO.getMerchant());
         QueryWrapper<CommodityPO> queryWrapper = new QueryWrapper<>(commodityParam);
@@ -80,6 +84,7 @@ public class CommodityServiceImpl implements CommodityService {
         }
         BeanUtils.copyProperties(reqCommodityAddDTO, commodityPO);
         commodityPO.setSkuNo(genUtil.genSkuNo());
+        commodityPO.setId(redisUtil.randomIncId());
         if (StringUtils.isBlank(commodityPO.getImgs())) {
             commodityPO.setImgs(CommonConst.DEFAULT_IMG_URL);
         }
