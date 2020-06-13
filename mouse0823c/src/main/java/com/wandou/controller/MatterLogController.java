@@ -57,9 +57,10 @@ public class MatterLogController {
      */
     @GetMapping("/list")
     public BaseRespVO<List<MatterLogDTO>> list(@RequestParam(name = "userId", required = false, defaultValue = "2") Long userId,
-                                               @RequestParam(name = "mType", required = false, defaultValue = "2") Integer mType) {
-        log.info("matter log list req userId: {}, mType: {}", userId, mType);
-        List<MatterLogDTO> list = matterLogService.list(userId, mType);
+                                               @RequestParam(name = "mType", required = false, defaultValue = "2") Integer mType,
+                                               @RequestParam(name = "partitionValue", required = false) String partitionValue) {
+        log.info("matter log list req userId: {}, mType: {}, partitionValue: {}", userId, mType, partitionValue);
+        List<MatterLogDTO> list = matterLogService.list(userId, mType, partitionValue);
         BaseRespVO<List<MatterLogDTO>> baseRespVO = BaseRespVO.success(list);
         return baseRespVO;
     }

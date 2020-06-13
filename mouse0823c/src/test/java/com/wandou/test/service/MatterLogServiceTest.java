@@ -26,7 +26,7 @@ public class MatterLogServiceTest {
 
     @Test
     public void m1() {
-        List<MatterLogDTO> list = matterLogService.list(23, 3);
+        List<MatterLogDTO> list = matterLogService.list(23, 3, "202006");
         if (CollectionUtils.isEmpty(list)) {
             return;
         }

@@ -12,6 +12,7 @@ import com.wandou.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.BeanUtils;
@@ -34,11 +35,14 @@ public class MatterLogServiceImpl implements MatterLogService {
 
 
     @Override
-    public List<MatterLogDTO> list(long userId, int mType) {
+    public List<MatterLogDTO> list(long userId, int mType, String partitionValue) {
         MatterLogPO matterLogParam = new MatterLogPO();
         matterLogParam.setUserId(userId);
         matterLogParam.setMType(mType);
         matterLogParam.setIsDelete(0);
+        if (StringUtils.isNotBlank(partitionValue)) {
+            matterLogParam.setPartitionValue(partitionValue);
+        }
         QueryWrapper<MatterLogPO> queryWrapper = new QueryWrapper(matterLogParam);
         List<MatterLogPO> matterLogs = matterLogMapper.selectList(queryWrapper);
         log.info("matterLogs: {}", matterLogs);
