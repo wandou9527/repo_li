@@ -35,16 +35,26 @@ public class MatterLogServiceImpl implements MatterLogService {
 
 
     @Override
-    public List<MatterLogDTO> list(long userId, int mType, String partitionValue) {
-        MatterLogPO matterLogParam = new MatterLogPO();
-        matterLogParam.setUserId(userId);
-        matterLogParam.setMType(mType);
-        matterLogParam.setIsDelete(0);
-        if (StringUtils.isNotBlank(partitionValue)) {
-            matterLogParam.setPartitionValue(partitionValue);
+    public List<MatterLogDTO> list(long userId, int mType, String partitionValue, Long happenTimeStart, Long happenTimeEnd) {
+//        MatterLogPO matterLogParam = new MatterLogPO();
+//        matterLogParam.setUserId(userId);
+//        matterLogParam.setMType(mType);
+//        matterLogParam.setIsDelete(0);
+//        if (StringUtils.isNotBlank(partitionValue)) {
+//            matterLogParam.setPartitionValue(partitionValue);
+//        }
+//        QueryWrapper<MatterLogPO> queryWrapper = new QueryWrapper(matterLogParam);
+//        List<MatterLogPO> matterLogs = matterLogMapper.selectList(queryWrapper);
+
+        Date happenTimeStartD = null;
+        Date happenTimeEndD = null;
+        if (happenTimeStart != null) {
+            happenTimeStartD = new Date(happenTimeStart);
         }
-        QueryWrapper<MatterLogPO> queryWrapper = new QueryWrapper(matterLogParam);
-        List<MatterLogPO> matterLogs = matterLogMapper.selectList(queryWrapper);
+        if (happenTimeEnd != null) {
+            happenTimeEndD = new Date(happenTimeEnd);
+        }
+        List<MatterLogPO> matterLogs = matterLogMapper.listByUserIdAndHappenTime(userId, happenTimeStartD, happenTimeEndD, mType, partitionValue);
         log.info("matterLogs: {}", matterLogs);
         if (CollectionUtils.isEmpty(matterLogs)) {
             return Collections.EMPTY_LIST;
@@ -112,7 +122,8 @@ public class MatterLogServiceImpl implements MatterLogService {
         List<MatterLogPO> matterLogPOS = matterLogMapper.listByUserIdAndHappenTime(matterLog.getUserId(),
                 DateUtil.getStartTimeOfDay(happenTime),
                 DateUtil.getEndTimeOfDay(happenTime),
-                matterLog.getMType());
+                matterLog.getMType(),
+                null);
         if (CollectionUtils.isNotEmpty(matterLogPOS)) {
             MatterLogPO matterLogOld = matterLogPOS.get(matterLogPOS.size() - 1);
             matterLogOld.setReachAmount(matterLog.getReachAmount());

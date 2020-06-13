@@ -37,5 +37,8 @@
         <if test="mType != null">
             and m_type = #{mType}
         </if>
+        <if test="partitionValue != null">
+            and partition_value = #{partitionValue}
+        </if>
     </select>
 </mapper>

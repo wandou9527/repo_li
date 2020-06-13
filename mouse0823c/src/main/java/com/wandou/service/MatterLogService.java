@@ -17,9 +17,11 @@ public interface MatterLogService {
      * @param userId
      * @param mType
      * @param partitionValue
+     * @param happenTimeStart
+     * @param happenTimeEnd
      * @return
      */
-    List<MatterLogDTO> list(long userId, int mType, String partitionValue);
+    List<MatterLogDTO> list(long userId, int mType, String partitionValue, Long happenTimeStart, Long happenTimeEnd);
 
     /**
      * 接到mq消息添加matterLog数据

@@ -10,6 +10,14 @@ import lombok.Data;
 
 @Data
 public class ReqCommodityQueryDTO extends ReqPageParamDTO {
+
+    /**
+     * 商家
+     */
     private Long merchant;
+
+    /**
+     * 商品类型
+     */
     private Integer commodityType;
 }

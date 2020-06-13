@@ -21,6 +21,7 @@ public interface MatterLogMapper extends BaseMapper<MatterLogPO> {
     List<MatterLogPO> listByUserIdAndHappenTime(@Param("userId") Long userId,
                                                 @Param("happenTimeStart") Date happenTimeStart,
                                                 @Param("happenTimeEnd") Date happenTimeEnd,
-                                                @Param("mType") Integer mType);
+                                                @Param("mType") Integer mType,
+                                                @Param("partitionValue") String partitionValue);
 
 }
