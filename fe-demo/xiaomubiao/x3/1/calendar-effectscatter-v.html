@@ -12,6 +12,10 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="../../../config/config.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+    
+    <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
 </head>
 <body style="height: 100%; margin: 0">
 <div id="container" style="height: 80%">
@@ -23,6 +27,7 @@
     <br>
     <button onclick="">换另一用户</button>
     <button v-for="s in strList" style="height: 30px; color: #ff970b;">{{s}}用户</button>
+    <el-button v-for="s in strList" type="primary">{{s}}用户</el-button>
     <ul style="margin-left: 50px">
         <li v-for="s in strList">{{s}}</li>
     </ul>

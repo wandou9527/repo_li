@@ -17,21 +17,65 @@
     <script src="../../../config/config.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- 2020-06-15 以标签引入方式使用 element-ui ok的 😸 -->
+    <!-- 引入样式 -->
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
+    <!-- 引入组件库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
 </head>
 <body style="height: 100%; margin: 0">
-<div id="app1" style="height: 6%;">
+<div id="app1" style="background-color: aqua">
     <!--<div style="margin-top: 10px; margin-left: 20px">-->
     <!--<button onclick="listMatterLog(1)">李明</button>-->
     <!--<button onclick="listMatterLog(2)">艳杰</button>-->
     <!--<button onclick="listMatterLog(23)">知足是福</button>-->
     <!--<button onclick="listMatterLog(25)">阿冷</button>-->
     <!--</div>-->
-    {{users}}
-    <br>
-    <button @click="listMatterLog(u.id)" v-for="u in users" style="margin-right: 10px">{{u.nick}}</button>
+    <!--{{users}}-->
+
+    <el-row :gutter="20">
+        <el-col :span="6">
+            <div align="center">
+                <el-select v-model="value" placeholder="请选择用户">
+                    <el-option
+                            v-for="item in users"
+                            :key="item.id"
+                            :label="item.nick"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+            </div>
+        </el-col>
+        <el-col :span="6"><div align="center">
+            北国风光
+        </div></el-col>
+        <el-col :span="6"><div align="center">
+            千里冰封
+        </div></el-col>
+        <el-col :span="6"><div align="center">
+            万里雪飘
+        </div></el-col>
+    </el-row>
+
+    <!--<el-button @click="listMatterLog(u.id)" v-for="u in users" style="margin-right: 10px"-->
+               <!--type="primary">-->
+        <!--{{u.nick}}-->
+    <!--</el-button>-->
+    <!--<div class="block">-->
+        <!--<span class="demonstration">带快捷选项</span>-->
+        <!--<el-date-picker-->
+                <!--v-model="value2"-->
+                <!--align="right"-->
+                <!--type="date"-->
+                <!--placeholder="选择日期"-->
+                <!--:picker-options="pickerOptions">-->
+        <!--</el-date-picker>-->
+    <!--</div>-->
 </div>
 
-<div id="container" style="height: 98%;"></div>
+<div id="container" style="height: 1000px;"></div>
 
 </body>
 

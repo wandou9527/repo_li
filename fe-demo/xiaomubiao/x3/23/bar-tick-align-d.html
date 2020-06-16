@@ -20,8 +20,8 @@
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     var app = {};
-    option = null;
-    option = {
+    // option = null;
+    var option = {
         title: {
             text: '2020年「知足是福」每天步数',
             subtext: ''
@@ -110,7 +110,7 @@
                         {
                             name: '步数',
                             type: 'bar',
-                            barWidth: '40%',
+                            barWidth: '60%',
                             data: reachAmounts
                         }
                     ]

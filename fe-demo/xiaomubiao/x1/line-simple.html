@@ -30,7 +30,7 @@
         },
         xAxis: {
             type: 'category',
-            data: ['1.01','1.20', '2.20', '3.23', '4.20', '5.31']
+            data: ['1.01','1.20', '2.20', '3.23', '4.20', '5.31', '6.15']
         },
         yAxis: {
             type: 'value'
@@ -38,7 +38,8 @@
         series: [
             {
                 // 完成数额（千元）
-                data: [0, 6, 5.7, 6.9, -2.8, 5.4],
+                name: '完成数额(千元)',
+                data: [0, 6, 5.7, 6.9, -2.8, 5.4, 17.2],
                 type: 'line'
             }
             // {
@@ -55,7 +56,7 @@
             // }
         ]
     };
-    ;
+
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }
