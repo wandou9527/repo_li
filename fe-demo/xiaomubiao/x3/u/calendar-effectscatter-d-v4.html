@@ -19,11 +19,13 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <!-- 2020-06-15 以标签引入方式使用 element-ui ok的 😸 -->
+    <!-- 引入组件库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+
     <!-- 引入样式 -->
     <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
     <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
-    <!-- 引入组件库 -->
-    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+    <link href="../../../css/indexV1.css" rel="stylesheet">
 </head>
 <body style="height: 100%; margin: 0">
 <div id="app1" style="background-color: aqua">
@@ -35,10 +37,10 @@
     <!--</div>-->
     <!--{{users}}-->
 
-    <el-row :gutter="20">
+    <el-row :gutter="20" class="center">
         <el-col :span="6">
-            <div align="center">
-                <el-select v-model="value" placeholder="请选择用户">
+            <div>
+                <el-select v-model="value" placeholder="请选择用户" @change="listMatterLogV()">
                     <el-option
                             v-for="item in users"
                             :key="item.id"
@@ -48,15 +50,15 @@
                 </el-select>
             </div>
         </el-col>
-        <el-col :span="6"><div align="center">
-            北国风光
-        </div></el-col>
-        <el-col :span="6"><div align="center">
-            千里冰封
-        </div></el-col>
-        <el-col :span="6"><div align="center">
-            万里雪飘
-        </div></el-col>
+        <el-col :span="6">
+            <div>北国风光</div>
+        </el-col>
+        <el-col :span="6">
+            <div>千里冰封</div>
+        </el-col>
+        <el-col :span="6">
+            <div>万里雪飘</div>
+        </el-col>
     </el-row>
 
     <!--<el-button @click="listMatterLog(u.id)" v-for="u in users" style="margin-right: 10px"-->
@@ -85,7 +87,7 @@
     var myChart = echarts.init(dom);
     var app = {};
     //控制点大小的分母
-    const symbolSizeDenominator = 500;
+    const symbolSizeDenominator = 1000;
     option = null;
 
     function getVirtulData(year) {
@@ -445,14 +447,20 @@
             message: 'Hello Vue! lalalala 888',
             url: listMatterLogUrl,
             strList: list,
-            users: confUsers
+            users: confUsers,
+            value: ''
         },
         created: function () {
             // `this` 指向 vm 实例
-            console.log('a is: ' + '666')
+            console.log('a is: ' + 'v4 666')
             // f() 好使
+            this.listMatterLogV();
         },
-        method: {}
+        methods: {
+            listMatterLogV() {
+                listMatterLog(this.value)
+            }
+        }
     })
 
 </script>
