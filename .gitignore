@@ -25,3 +25,8 @@
 /.nb-gradle/
 
 config/*
+/fe-demo/xiaomubiao/x6/
+.DS_Store
+fe-demo/.DS_Store
+fe-demo/xiaomubiao/.DS_Store
+fe-demo/xiaomubiao/x3/.DS_Store
