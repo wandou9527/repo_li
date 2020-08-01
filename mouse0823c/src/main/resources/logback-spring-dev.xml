@@ -2,7 +2,8 @@
 
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>logback</contextName>
-    <property name="log.path" value="E:\\Java\\log\\mouse0823c"/>
+    <!--<property name="log.path" value="E:\\Java\\log\\mouse0823c"/>-->
+    <property name="log.path" value="/Users/liming/Documents/java/java_self/git_site_self/repo_li/mouse0823c/logs"/>
     <!--输出到控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <!-- <filter class="ch.qos.logback.classic.filter.ThresholdFilter">

@@ -28,7 +28,7 @@ mvn clean package -Dmaven.test.skip=true
 echo '进入 target 目录'
 cd /java/git_site/repo_li/mouse0823c/target
 echo 'run java -jar 。。。'
-nohup java -XX:ParallelGCThreads=2 -Djava.compiler=NONE -jar mouse0823c-1.1.8.jar --spring.profiles.active=dev &
+nohup java -Xmx64m -Xms64m -XX:ParallelGCThreads=2 -Djava.compiler=NONE -jar mouse0823c-1.1.8.jar --spring.profiles.active=dev &
 sleep 5
 tail -f nohup.out
 sleep 30

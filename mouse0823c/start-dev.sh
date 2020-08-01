@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo =================================
 psid=0
 javaps=`jps -l | grep mouse0823c`
