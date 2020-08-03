@@ -73,6 +73,10 @@ public class MatterLogServiceImpl implements MatterLogService {
 
     @Override
     public void addMatterLogByMqDemo(Long userId, Integer mType, String remark) {
+        // money相关暂时不程序添加
+        if (MatterLogTypeEnum.T_1.getCode().equals(mType)) {
+            return;
+        }
         if (userId == null) {
             userId = 0L;
         }

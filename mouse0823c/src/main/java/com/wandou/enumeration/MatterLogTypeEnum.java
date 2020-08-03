@@ -10,9 +10,10 @@ import lombok.Getter;
 @Getter
 public enum MatterLogTypeEnum {
     /**
-     * 2020还款计划
+     * money相关
+     * sub1 2020还款计划
      */
-    T_1(1, "2020还款计划", ""),
+    T_1(1, "money相关", ""),
 
     /**
      * 学习目标 h 小时
