@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>通用热力图</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+    <script src="../../config/config.js"></script>
+    <script src="../../js/commonUtil.js"></script>
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
+</head>
+<!--
+    通用热力图，选择数据类型（mType，userId），显示不同数据的图表
+-->
+<body style="height: 90%; width: 90%; margin: 40px">
+<div id="app1">
+    <el-row :gutter="20" class="center">
+        <el-col :span="6">
+            <div>
+                <el-select v-model="value" placeholder="请选择用户" @change="listMatterLogV()">
+                    <el-option
+                            v-for="item in users"
+                            :key="item.id"
+                            :label="item.nick"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+            </div>
+        </el-col>
+        <el-col :span="6">
+            <div>北国风光</div>
+        </el-col>
+        <el-col :span="6">
+            <div>千里冰封</div>
+        </el-col>
+        <el-col :span="6">
+            <div>万里雪飘</div>
+        </el-col>
+    </el-row>
+</div>
+<div id="container" style="height: 100%"></div>
+
+<script type="text/javascript">
+    // 单年的热力图-动态接口
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+
+    var year = getCurrentYear();
+
+    option = {
+        title: {
+            top: 30,
+            left: 'center',
+            text: year + '年数据统计'
+        },
+        tooltip: {},
+        visualMap: {
+            min: 0,
+            max: 12,
+            type: 'piecewise',
+            orient: 'horizontal',
+            left: 'center',
+            top: 65,
+            textStyle: {
+                color: '#000'
+            }
+        },
+        calendar: {
+            top: 120,
+            left: 30,
+            right: 30,
+            cellSize: ['auto', 13],
+            range: year,
+            itemStyle: {
+                borderWidth: 0.5
+            },
+            yearLabel: {show: true}
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: [['2020-01-01', 12]]
+        }
+    };
+
+    myChart.setOption(option);
+
+    listMatterLog();
+
+    function listMatterLog(userId, mType, subType) {
+        let ajaxData = [];
+        $.ajax({
+            url: listMatterLogUrl+ '?userId=1&mType=6&subType=0',
+            // url: 'http://localhost:63342/matter_log/list',
+            async: true,
+            type: 'get',
+            dataType: 'json',
+            success: function (resp) {
+                console.log('ajax matter_log/list ', resp)
+                drawChart(resp.data)
+            },
+            error: function (xhr, errorType, error) {
+                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
+            }
+        });
+    }
+
+    /**
+     * 画图表
+     *
+     * @param metaData
+     */
+    function drawChart(metaData) {
+        console.log('metaData: ', metaData)
+        var optData = [];
+        for (let i = 0; i < metaData.length; i++) {
+            optData.push([metaData[i].happenDate, metaData[i].reachAmount])
+        }
+        // myChart.hideLoading();    //隐藏加载动画
+        myChart.setOption({        //加载数据图表
+            title: {
+                top: 30,
+                left: 'center',
+                text: year + '年数据-d'
+            },
+            series: {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                data: optData
+            },
+            visualMap: {
+                min: 0,
+                max: 1,
+                type: 'piecewise',
+                orient: 'horizontal',
+                left: 'center',
+                top: 65,
+                textStyle: {
+                    color: '#000'
+                }
+            },
+        });
+    }
+
+
+    //----------------------------------------------------
+
+    var app = new Vue({
+        el: '#app1',
+        data: {
+            message: 'Hello Vue! lalalala 889',
+            url: listMatterLogUrl
+        },
+        created: function () {
+            // `this` 指向 vm 实例
+            console.log('a is: ' + '通用 666')
+            // f() 好使
+            this.listMatterLogV();
+        },
+        methods: {
+            listMatterLogV(userId, mType, subType) {
+                listMatterLog(1, 6, 0)
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

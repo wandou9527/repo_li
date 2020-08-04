@@ -16,6 +16,25 @@ function getToken() {
     return token
 }
 
+function getCurrentYear() {
+    return 2020;
+}
+
+function getNick(userId) {
+    switch (userId) {
+        case 1:
+            return '李明';
+        case 2:
+            return '艳杰';
+        case 23:
+            return '知足是福';
+        case 25:
+            return '阿冷';
+        default:
+            return '无名';
+    }
+}
+
 
 
 

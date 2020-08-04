@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>通用V2</title>
+    <!--
+
+     -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+    <script src="../../config/config.js"></script>
+    <script src="../../js/commonUtil.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- 2020-06-15 以标签引入方式使用 element-ui ok的 😸 -->
+    <!-- 引入组件库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+
+    <!-- 引入样式 -->
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
+    <!--<link href="../../../css/indexV1.css" rel="stylesheet">-->
+</head>
+<body style="height: 100%; margin: 0">
+<div id="app1" style="background-color: aqua">
+
+    <el-row :gutter="20" class="center">
+        <el-col :span="6">
+            <div>
+                用户：
+                <el-select v-model="userId" placeholder="请选择用户" @change="listMatterLogV()">
+                    <el-option
+                            v-for="item in users"
+                            :key="item.id"
+                            :label="item.nick"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+            </div>
+        </el-col>
+        <el-col :span="6">
+            一级事件类型：
+            <el-select v-model="mTypeCode" placeholder="请选择事件类型" @change="mTypeChangeV()">
+                <el-option
+                        v-for="item in mTypes"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code">
+                </el-option>
+            </el-select>
+        </el-col>
+        <el-col :span="6">
+            二级事件类型：
+            <el-select v-model="subTypeCode" placeholder="请选择二级事件类型" @change="listMatterLogV()">
+                <el-option
+                        v-for="item in subTypes"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code">
+                </el-option>
+            </el-select>
+        </el-col>
+        <el-col :span="6">
+            <div>万里雪飘</div>
+        </el-col>
+    </el-row>
+</div>
+
+<div id="container" style="height: 1000px;"></div>
+
+</body>
+
+
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    //控制点大小的分母
+    const symbolSizeDenominator = 1000;
+    option = null;
+
+    var year = getCurrentYear();
+
+    option = {
+        title: {
+            top: 30,
+            left: 'center',
+            text: year + '年数据统计'
+        },
+        tooltip: {},
+        visualMap: {
+            min: 0,
+            max: 12,
+            type: 'piecewise',
+            orient: 'horizontal',
+            left: 'center',
+            top: 65,
+            textStyle: {
+                color: '#000'
+            }
+        },
+        calendar: {
+            top: 120,
+            left: 30,
+            right: 30,
+            cellSize: ['auto', 13],
+            range: year,
+            itemStyle: {
+                borderWidth: 0.5
+            },
+            yearLabel: {show: true}
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: [['2020-01-01', 12]]
+        }
+    };
+
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+    listMatterLog();
+
+    function listMatterLog(userId, mTypeCode, subTypeCode) {
+        if (!userId) {
+            userId = 1;
+        }
+        if (!mTypeCode) {
+            mTypeCode = 3;
+        }
+        if (!subTypeCode) {
+            subTypeCode = 0;
+        }
+        let ajaxData = [];
+        $.ajax({
+            url: listMatterLogUrl + '?mType=' + mTypeCode + '&userId=' + userId + '&subType=' + subTypeCode,
+            // url: 'http://localhost:63342/matter_log/list',
+            async: true,
+            type: 'get',
+            dataType: 'json',
+            success: function (resp) {
+                // sleep(5000)
+                // vm.$set('peoples', data.result);
+                console.log('ajax matter_log/list ', resp)
+                // ajaxData = resp
+                let data = resp.data;
+                drawChart(data)
+                console.log('jie shu')
+            },
+            error: function (xhr, errorType, error) {
+                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
+            }
+        });
+    }
+
+    /**
+     * 画图表
+     *
+     * @param metaData
+     */
+    function drawChart(metaData) {
+        console.log('metaData: ', metaData)
+        var seriesData = [];
+        var max = 1;
+        for (let i = 0; i < metaData.length; i++) {
+            var reachAmount = metaData[i].reachAmount;
+            seriesData.push([metaData[i].happenDate, reachAmount])
+            if (reachAmount > max) {
+                max = reachAmount;
+            }
+        }
+
+        myChart.setOption({        //加载数据图表
+            title: {
+                top: 30,
+                left: 'center',
+                text: year + '年数据-d'
+            },
+            series: {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                data: seriesData
+            },
+            visualMap: {
+                min: 0,
+                max: max,
+                type: 'piecewise',
+                orient: 'horizontal',
+                left: 'center',
+                top: 65,
+                textStyle: {
+                    color: '#000'
+                }
+            },
+        });
+    }
+
+    var app = new Vue({
+        el: '#app1',
+        data: {
+            message: 'Hello Vue! lalalala 890',
+            url: listMatterLogUrl,
+            strList: list,
+            users: confUsers,
+            mTypes: mTypes,
+            subTypes: [
+                {code: 0, name: '默认'}
+            ],
+            userId: 1,
+            mTypeCode: 6,
+            subTypeCode: 0
+        },
+        created: function () {
+            // `this` 指向 vm 实例
+            console.log('a is: 666');
+            // f() 好使
+            this.listMatterLogV();
+        },
+        methods: {
+            listMatterLogV() {
+                listMatterLog(this.userId, this.mTypeCode, this.subTypeCode)
+            },
+            getSubTypes(mTypeCode) {
+                console.log('mTypeCode:', mTypeCode)
+                if (mTypeCode == null) {
+                    return [{code: 0, name: '默认'}];
+                }
+                for (let i = 0; i < this.mTypes; i++) {
+                    var mType = this.mTypes[i];
+                    console.log('mType:', mType)
+                    if (mType.code == mTypeCode) {
+                        return mType.subs;
+                    }
+                }
+                return [{code: 0, name: '默认'}];
+            },
+            mTypeChangeV() {
+                this.subTypes = this.getSubTypes(this.mTypeCode);
+                this.listMatterLogV();
+            }
+        }
+    })
+
+</script>
+</html>

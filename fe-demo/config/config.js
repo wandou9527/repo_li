@@ -17,6 +17,38 @@ const confUsers = [
     {id: 26, nick: '阿管'},
     {id: 27, nick: '阿力'}
 ]
+const mTypes = [
+    {
+        code: 1,
+        name: 'money相关',
+        subs: [
+            {
+                code: 0,
+                name: '2020年还款计划'
+            }
+        ]
+    },
+    {
+        code: 3,
+        name: '运动步数',
+        subs: [
+            {
+                code: 0,
+                name: '默认运动步数'
+            }
+        ]
+    },
+    {
+        code: 6,
+        name: '生活相关',
+        subs: [
+            {
+                code: 0,
+                name: '理发'
+            }
+        ]
+    }
+];
 
 
 

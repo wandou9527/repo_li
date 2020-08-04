@@ -83,7 +83,7 @@
             <div class="row">
                 <div id="cssmenu">
                     <ul>
-                        <li class='active'><a href="index.html">Home</a></li>
+                        <li class='active'><a href="index.html">Home {{user.nick}}</a></li>
                         <li><a href="archive.html">Motobike-5</a></li>
                         <li><a href="single.html">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
@@ -387,7 +387,9 @@
         data: {
             message: 'Hello Vue!',
             visitor: 46,
-            user: {}
+            user: {
+                nick: '豌豆nick'
+            }
         },
         ready: function () {
             console.log('vue eee')
