@@ -1,5 +1,6 @@
 package com.wandou.test;
 
+import com.wandou.enumeration.MatterLogTypeEnum;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
@@ -75,6 +76,14 @@ public class DemoTest {
             System.out.println("RandomStringUtils.randomNumeric(4) = " + RandomStringUtils.randomNumeric(4));
             i ++;
         } while (i < 5);
+    }
+
+    /**
+     * 多层枚举
+     */
+    @Test
+    public void m6() {
+        System.out.println(MatterLogTypeEnum.T_1.getDesc());
     }
 
 }

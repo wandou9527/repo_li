@@ -17,7 +17,9 @@ function getToken() {
 }
 
 function getCurrentYear() {
-    return 2020;
+    var date = new Date();
+    // console.log('date format: ', date.Format('yyyy-MM-dd'));
+    return date.getFullYear();
 }
 
 function getNick(userId) {

@@ -22,6 +22,7 @@ public interface MatterLogMapper extends BaseMapper<MatterLogPO> {
                                                 @Param("happenTimeStart") Date happenTimeStart,
                                                 @Param("happenTimeEnd") Date happenTimeEnd,
                                                 @Param("mType") Integer mType,
+                                                @Param("subType") Integer subType,
                                                 @Param("partitionValue") String partitionValue);
 
 }

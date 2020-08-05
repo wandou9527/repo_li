@@ -9,11 +9,12 @@ import lombok.Getter;
  */
 @Getter
 public enum MatterLogTypeEnum {
+
     /**
      * money相关
-     * sub1 2020还款计划
+     * sub1 2020还款计划，累计已还款金额
      */
-    T_1(1, "money相关", ""),
+    T_1(1, "money相关", "fen"),
 
     /**
      * 学习目标 h 小时
@@ -28,6 +29,13 @@ public enum MatterLogTypeEnum {
      * 工作
      */
     WORK(5, "工作", ""),
+
+    /**
+     * 生活
+     * sub 0 理发
+     * sub 1 喝酒
+     */
+    LIFE(5, "生活", ""),
     ;
 
     private Integer code;
@@ -51,4 +59,24 @@ public enum MatterLogTypeEnum {
         }
         return false;
     }
+
+    // ----------------------------------------
+//    public enum SubType {
+//
+//        /**
+//         * 累计已还款金额
+//         */
+//        TOTAL_REPAYMENT(1, "累计已还款金额", "fen"),
+//        ;
+//
+//        private Integer code;
+//        private String desc;
+//        private String defaultUnit;
+//
+//        SubType(int code, String desc, String defaultUnit) {
+//            this.code = code;
+//            this.desc = desc;
+//            this.defaultUnit = defaultUnit;
+//        }
+//    }
 }

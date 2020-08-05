@@ -37,6 +37,9 @@
         <if test="mType != null">
             and m_type = #{mType}
         </if>
+        <if test="subType != null">
+            and sub_type = #{subType}
+        </if>
         <if test="partitionValue != null">
             and partition_value = #{partitionValue}
         </if>

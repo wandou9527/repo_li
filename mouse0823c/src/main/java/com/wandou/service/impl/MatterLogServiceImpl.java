@@ -12,7 +12,6 @@ import com.wandou.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.BeanUtils;
@@ -35,7 +34,7 @@ public class MatterLogServiceImpl implements MatterLogService {
 
 
     @Override
-    public List<MatterLogDTO> list(long userId, int mType, String partitionValue, Long happenTimeStart, Long happenTimeEnd) {
+    public List<MatterLogDTO> list(long userId, int mType, int subType, String partitionValue, Long happenTimeStart, Long happenTimeEnd) {
 //        MatterLogPO matterLogParam = new MatterLogPO();
 //        matterLogParam.setUserId(userId);
 //        matterLogParam.setMType(mType);
@@ -54,7 +53,7 @@ public class MatterLogServiceImpl implements MatterLogService {
         if (happenTimeEnd != null) {
             happenTimeEndD = new Date(happenTimeEnd);
         }
-        List<MatterLogPO> matterLogs = matterLogMapper.listByUserIdAndHappenTime(userId, happenTimeStartD, happenTimeEndD, mType, partitionValue);
+        List<MatterLogPO> matterLogs = matterLogMapper.listByUserIdAndHappenTime(userId, happenTimeStartD, happenTimeEndD, mType, subType, partitionValue);
         log.info("matterLogs: {}", matterLogs);
         if (CollectionUtils.isEmpty(matterLogs)) {
             return Collections.EMPTY_LIST;
@@ -127,6 +126,7 @@ public class MatterLogServiceImpl implements MatterLogService {
                 DateUtil.getStartTimeOfDay(happenTime),
                 DateUtil.getEndTimeOfDay(happenTime),
                 matterLog.getMType(),
+                0,
                 null);
         if (CollectionUtils.isNotEmpty(matterLogPOS)) {
             MatterLogPO matterLogOld = matterLogPOS.get(matterLogPOS.size() - 1);
