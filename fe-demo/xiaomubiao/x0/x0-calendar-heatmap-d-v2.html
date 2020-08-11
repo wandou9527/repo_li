@@ -170,7 +170,14 @@
         var seriesData = [];
         var max = 1;
         for (let i = 0; i < metaData.length; i++) {
-            var reachAmount = metaData[i].reachAmount;
+            var matterLog = metaData[i];
+            // console.log('matterLog: ', matterLog);
+            var reachAmount = matterLog.reachAmount;
+            // money相关分转元
+            if (matterLog.mtype == 1) {
+                // console.log('fen zhuan yuan');
+                reachAmount = reachAmount / 100;
+            }
             seriesData.push([metaData[i].happenDate, reachAmount])
             if (reachAmount > max) {
                 max = reachAmount;
@@ -232,7 +239,8 @@
                 switch (mTypeCode) {
                     case 1:
                         return [
-                            {code: 0, name: '2020年还款计划'}
+                            {code: 0, name: '2020年还款计划-默认'},
+                            {code: 1, name: '累计已还款金额'}
                         ];
                     case 3:
                         return [
@@ -241,7 +249,7 @@
                     case 6:
                         return [
                             {code: 0, name: '理发'},
-                            {code: 1, name: '喝酒'}
+                            {code: 1, name: 'drink'}
                         ];
                     default:
                         return [
