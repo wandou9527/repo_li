@@ -28,8 +28,8 @@ public enum ReturnCodeEnum {
     ERROR("5000", "网络开小差，请稍后再试~"),
     ;
 
-    private String code;
-    private String message;
+    private final String code;
+    private final String message;
 
     ReturnCodeEnum(String code, String message) {
         this.code = code;
