@@ -168,7 +168,7 @@
     function drawChart(metaData) {
         console.log('metaData: ', metaData)
         var seriesData = [];
-        var max = 1;
+        var max = getDefaultMaxValue(metaData[0].mtype, metaData[0].subType);
         for (let i = 0; i < metaData.length; i++) {
             var matterLog = metaData[i];
             // console.log('matterLog: ', matterLog);
@@ -209,6 +209,26 @@
         });
     }
 
+    /**
+     * 获取默认的最大值
+     *
+     * @param mType
+     * @param subType
+     * @returns {number}
+     */
+    function getDefaultMaxValue(mType, subType) {
+        console.log('get max value ' + mType + ', ' + subType)
+        switch (mType) {
+            case 3:
+                if (subType == 1) {
+                    //跑步 5公里
+                    return 5;
+                }
+            default:
+                return 1;
+        }
+    }
+
     var app = new Vue({
         el: '#app1',
         data: {
@@ -229,6 +249,7 @@
             console.log('a is: 666');
             // f() 好使
             this.listMatterLogV();
+            this.mTypeChangeV();
         },
         methods: {
             listMatterLogV() {
@@ -244,7 +265,8 @@
                         ];
                     case 3:
                         return [
-                            {code: 0, name: '默认运动步数'}
+                            {code: 0, name: '默认运动-步数'},
+                            {code: 1, name: '跑步里程'}
                         ];
                     case 6:
                         return [
