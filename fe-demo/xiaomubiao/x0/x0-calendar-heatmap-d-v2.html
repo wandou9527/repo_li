@@ -168,19 +168,22 @@
     function drawChart(metaData) {
         console.log('metaData: ', metaData)
         var seriesData = [];
-        var max = getDefaultMaxValue(metaData[0].mtype, metaData[0].subType);
-        for (let i = 0; i < metaData.length; i++) {
-            var matterLog = metaData[i];
-            // console.log('matterLog: ', matterLog);
-            var reachAmount = matterLog.reachAmount;
-            // money相关分转元
-            if (matterLog.mtype == 1) {
-                // console.log('fen zhuan yuan');
-                reachAmount = reachAmount / 100;
-            }
-            seriesData.push([metaData[i].happenDate, reachAmount])
-            if (reachAmount > max) {
-                max = reachAmount;
+        var max = 1;
+        if (metaData && metaData.length > 0) {
+            max = getDefaultMaxValue(metaData[0].mtype, metaData[0].subType);
+            for (let i = 0; i < metaData.length; i++) {
+                var matterLog = metaData[i];
+                // console.log('matterLog: ', matterLog);
+                var reachAmount = matterLog.reachAmount;
+                // money相关分转元
+                if (matterLog.mtype == 1) {
+                    // console.log('fen zhuan yuan');
+                    reachAmount = reachAmount / 100;
+                }
+                seriesData.push([metaData[i].happenDate, reachAmount])
+                if (reachAmount > max) {
+                    max = reachAmount;
+                }
             }
         }
 
