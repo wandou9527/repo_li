@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>通用柱状图</title>
+    <!--
+    2020-10-13 建立
+    -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+    <script src="../../config/config.js"></script>
+    <script src="../../js/commonUtil.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- 2020-06-15 以标签引入方式使用 element-ui ok的 😸 -->
+    <!-- 引入组件库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+
+    <!-- 引入样式 -->
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
+    <!--<link href="../../../css/indexV1.css" rel="stylesheet">-->
+</head>
+<body style="height: 100%; margin: 10px">
+<div id="app1" style="background-color: orange">
+
+    <el-row :gutter="20" class="center">
+        <el-col :span="6">
+            <div>
+                用户：
+                <el-select v-model="userId" placeholder="请选择用户" @change="listMatterLogV()">
+                    <el-option
+                            v-for="item in users"
+                            :key="item.id"
+                            :label="item.nick"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+            </div>
+        </el-col>
+        <el-col :span="6">
+            一级事件类型：
+            <el-select v-model="mTypeCode" placeholder="请选择事件类型" @change="mTypeChangeV()">
+                <el-option
+                        v-for="item in mTypes"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code">
+                </el-option>
+            </el-select>
+        </el-col>
+        <el-col :span="6">
+            二级事件类型：
+            <el-select v-model="subTypeCode" placeholder="请选择二级事件类型" @change="listMatterLogV()">
+                <el-option
+                        v-for="item in subTypes"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code">
+                </el-option>
+            </el-select>
+        </el-col>
+        <el-col :span="6">
+            <div>万里雪飘</div>
+        </el-col>
+    </el-row>
+</div>
+
+<div id="container" style="height: 96%;width: 96%"></div>
+
+</body>
+
+
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+
+    option = {
+        title: {
+            text: '通用柱状图',
+            subtext: ''
+        },
+        color: ['#3398DB'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: [],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '数量',
+                type: 'bar',
+                barWidth: '60%',
+                data: []
+            }
+        ]
+    };
+
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+    listMatterLog();
+
+    function listMatterLog(userId, mTypeCode, subTypeCode) {
+        if (!userId) {
+            userId = 1;
+        }
+        if (!mTypeCode) {
+            mTypeCode = 3;
+        }
+        if (!subTypeCode) {
+            subTypeCode = 0;
+        }
+        // let ajaxData = [];
+        var url = listMatterLogUrl + '?mType=' + mTypeCode + '&userId=' + userId + '&subType=' + subTypeCode;
+        var date = new Date();
+        date.setMonth(date.getMonth() - 6);
+        url = url + '&happenTimeStart=' + date.getTime()
+        $.ajax({
+            url: url,
+            // url: 'http://localhost:63342/matter_log/list',
+            async: true,
+            type: 'get',
+            dataType: 'json',
+            success: function (resp) {
+                // sleep(5000)
+                // vm.$set('peoples', data.result);
+                console.log('ajax matter_log/list ', resp)
+                // ajaxData = resp
+                let data = resp.data;
+                drawChart(data)
+                console.log('jie shu')
+            },
+            error: function (xhr, errorType, error) {
+                alert('Ajax request error, errorType: ' + errorType + ', error: ' + error);
+            }
+        });
+    }
+
+    /**
+     * 画图表
+     *
+     * @param metaData
+     */
+    function drawChart(metaData) {
+        console.log('metaData: ', metaData)
+        let xData = []
+        let reachAmounts = []
+        if (metaData && metaData.length > 0) {
+            for (let i = 0; i < metaData.length; i++) {
+                var matterLog = metaData[i];
+                // console.log('matterLog: ', matterLog);
+                var reachAmount = matterLog.reachAmount;
+                // money相关分转元
+                if (matterLog.mtype == 1) {
+                    // console.log('fen zhuan yuan');
+                    reachAmount = reachAmount / 100;
+                }
+                xData.push(metaData[i].happenDate);
+                reachAmounts.push(reachAmount)
+            }
+        }
+        xData.reverse()
+        reachAmounts.reverse()
+        myChart.setOption({
+            //加载数据图表
+            xAxis: [
+                {
+                    type: 'category',
+                    data: xData,
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            series: [
+                {
+                    // name: '学习时长(h)',
+                    // type: 'bar',
+                    // barWidth: '40%',
+                    data: reachAmounts
+                }
+            ]
+        });
+    }
+
+    var app = new Vue({
+        el: '#app1',
+        data: {
+            message: 'Hello Vue! lalalala 890',
+            url: listMatterLogUrl,
+            strList: list,
+            users: confUsers,
+            mTypes: mTypes,
+            subTypes: [
+                {code: 0, name: '默认'}
+            ],
+            userId: 1,
+            mTypeCode: 3,
+            subTypeCode: 0
+        },
+        created: function () {
+            // `this` 指向 vm 实例
+            console.log('a is: 666');
+            // f() 好使
+            this.listMatterLogV();
+            this.mTypeChangeV();
+        },
+        methods: {
+            listMatterLogV() {
+                listMatterLog(this.userId, this.mTypeCode, this.subTypeCode)
+            },
+            getSubTypes(mTypeCode) {
+                console.log('mTypeCode:', mTypeCode)
+                switch (mTypeCode) {
+                    case 1:
+                        return [
+                            {code: 0, name: '2020年还款计划-默认'},
+                            {code: 1, name: '累计已还款金额'}
+                        ];
+                    case 3:
+                        return [
+                            {code: 0, name: '默认运动-步数'},
+                            {code: 1, name: '跑步里程'}
+                        ];
+                    case 6:
+                        return [
+                            {code: 0, name: '理发'},
+                            {code: 1, name: 'drink'}
+                        ];
+                    default:
+                        return [
+                            {code: 0, name: '默认000'}
+                        ];
+                }
+            },
+            mTypeChangeV() {
+                this.subTypes = this.getSubTypes(this.mTypeCode);
+                this.subTypeCode = 0;
+                this.listMatterLogV();
+            }
+        }
+    });
+
+</script>
+</html>
