@@ -21,7 +21,7 @@ public enum MatterLogTypeEnum {
      */
     STUDY(2, "学习目标统计", "h"),
 
-    STEP_NUMBER(3, "步数统计", "step"),
+    STEP_NUMBER(3, "运动与步数", "step"),
 
     WEIGHT(4, "体重", "kg"),
 
@@ -35,7 +35,7 @@ public enum MatterLogTypeEnum {
      * sub 0 理发
      * sub 1 喝酒
      */
-    LIFE(5, "生活", ""),
+    LIFE(6, "生活", ""),
     ;
 
     private Integer code;

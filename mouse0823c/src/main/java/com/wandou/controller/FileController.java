@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author liming
@@ -37,8 +41,19 @@ public class FileController {
 
     @ResponseBody
     @PostMapping(value = "/upload")
-    public BaseRespVO<Boolean> upload(@Valid ReqFileUploadDTO reqFileUploadDTO) {
+    public BaseRespVO<Boolean> upload(HttpServletRequest request, @Valid ReqFileUploadDTO reqFileUploadDTO) {
         log.info("upload req: {}", reqFileUploadDTO);
+        log.info("request: {}", request);
+        String queryString = request.getQueryString();
+        log.info("queryString: {}", queryString);
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        Set<Map.Entry<String, String[]>> entries = parameterMap.entrySet();
+        for (Map.Entry<String, String[]> entry : entries) {
+            System.out.println(entry.getKey() + "-" + Arrays.toString(entry.getValue()));
+        }
+        log.info("parameterMap: {}", parameterMap);
+        Enumeration<String> headerNames = request.getHeaderNames();
+        log.info("headerNames: {}", headerNames);
         boolean flag = fileService.upload(reqFileUploadDTO);
         return BaseRespVO.success(flag);
     }
