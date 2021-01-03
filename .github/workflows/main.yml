@@ -32,12 +32,12 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
-      - name: connection a1 and pull code 啦啦
+      - name: connection a3 and pull code 啦啦
         uses: appleboy/ssh-action@v0.0.7
         with:
-          host: ${{ secrets.A1_HOST }}
-          username: ${{ secrets.A1_HOST_USERNAME }}
-          password: ${{ secrets.A1_HOST_PASSWORD }}
+          host: ${{ secrets.A3_HOST }}
+          username: ${{ secrets.A3_USERNAME }}
+          password: ${{ secrets.A3_PASSWORD }}
           script: |
             cd /java/git_site_self/repo_li/
             git pull
