@@ -21,21 +21,14 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 public class MybatisGen {
 
     public static void main(String[] args) throws Exception {
-        try {
-//            GeneratorSqlmap generatorSqlmap = new GeneratorSqlmap();
-//            generatorSqlmap.generator();
-            new MybatisGen().generator();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        new MybatisGen().generator();
     }
 
     public void generator() throws Exception {
         List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
         //指定 逆向工程配置文件
-        File configFile = new File("/Users/liming/Documents/java/java_self/git_site_self/repo_li/mbg/src/main/java/com/wandou/demo/generatorConfig.xml");
+        File configFile = new File("src/main/resources/generatorConfig.xml");
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
