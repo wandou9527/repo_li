@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        title: {
+            text: '总QK趋势折线图',
+            subtext: 'y轴(k)'
+        },
+        tooltip: {
+            show: true,
+            trigger: 'axis'
+        },
+        xAxis: {
+            type: 'category',
+            data: ['2020.01.01', '1.20', '2.20', '3.23', '4.20', '5.31', '6.15', '7.15', '8.23', '10.05', '10.21', '11.20', '12.20', '12.31',
+                '2021.02.14']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                // 数额（千元）
+                name: '剩余数额(千元)',
+                data: [169, 163, 163.3, 163.1, 171.8, 163.6, 151.8, 137.6, 136.1, 134.1, 121.1, 116.1, 111.6, 103.1,
+                    81.4],
+                type: 'line'
+            }
+        ]
+    };
+
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+</body>
+</html>
