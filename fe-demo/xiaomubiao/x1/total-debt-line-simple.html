@@ -4,7 +4,8 @@
     <meta charset="utf-8">
 </head>
 <body style="height: 100%; margin: 0">
-<div id="container" style="height: 100%"></div>
+<div id="container" style="height: 96%"></div>
+<div id="num"></div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
@@ -16,6 +17,24 @@
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     var app = {};
+    var data = [
+        {date: '2020-01-01', amount: 169},
+        {date: '2020-01-20', amount: 163},
+        {date: '2020-02-20', amount: 163.3},
+        {date: '2020-03-23', amount: 163.1},
+        {date: '2020-04-20', amount: 171.8},
+        {date: '2020-05-31', amount: 163.6},
+        {date: '2020-06-15', amount: 151.8},
+        {date: '2020-07-15', amount: 137.6},
+        {date: '2020-08-23', amount: 136.1},
+        {date: '2020-10-05', amount: 134.1},
+        {date: '2020-10-21', amount: 121.1},
+        {date: '2020-11-22', amount: 116.1},
+        {date: '2020-12-22', amount: 111.6},
+        {date: '2020-12-31', amount: 103.1},
+        {date: '2021-02-14', amount: 81.4},
+        {date: '2021-02-27', amount: 70.4}
+    ];
     option = null;
     option = {
         title: {
@@ -28,8 +47,7 @@
         },
         xAxis: {
             type: 'category',
-            data: ['2020.01.01', '1.20', '2.20', '3.23', '4.20', '5.31', '6.15', '7.15', '8.23', '10.05', '10.21', '11.20', '12.20', '12.31',
-                '2021.02.14']
+            data: getDates()
         },
         yAxis: {
             type: 'value'
@@ -38,8 +56,7 @@
             {
                 // 数额（千元）
                 name: '剩余数额(千元)',
-                data: [169, 163, 163.3, 163.1, 171.8, 163.6, 151.8, 137.6, 136.1, 134.1, 121.1, 116.1, 111.6, 103.1,
-                    81.4],
+                data: getAmounts(),
                 type: 'line'
             }
         ]
@@ -48,6 +65,75 @@
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }
+
+    getDates();
+
+    function getDates() {
+        var dates = data.map(x => {
+            return x.date
+        }); // 生成数组
+        console.log('dates', dates)
+        return dates;
+    }
+
+    function getAmounts() {
+        var amounts = data.map(x => {
+            return x.amount;
+        })
+        return amounts;
+    }
+
+    getDatesV2();
+
+    function getDatesV2() {
+        var dates = [];
+        for (let i = 0; i < data.length; i++) {
+            dates.push(data[i].date)
+        }
+        console.log('datesV2 ', dates)
+    }
+
+
+    /**
+     * 近6个月每月完成数额
+     */
+    function getAmountPerMonthAtLast6Month() {
+        var now = new Date();
+        var lastSixMonthDate = new Date().setMonth(now.getMonth() - 6);
+        // var lastSixMonthDateStr = lastSixMonthDate.format('yyyy-MM')
+        //6个月前的年-月
+        var last6MonthDateStr = echarts.format.formatTime('yyyy-MM', lastSixMonthDate);
+        console.log('last6MonthDateStr', last6MonthDateStr)
+        var last6MonthAmount = 169;
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].date.substring(0, 7) == last6MonthDateStr) {
+                last6MonthAmount = data[i].amount;
+                console.log('last6MonthAmount ', last6MonthAmount)
+            }
+        }
+        var currentAmount = data[data.length - 1].amount;
+        console.log('currentAmount ', currentAmount)
+        var variation = last6MonthAmount - currentAmount;
+        console.log('variation ', variation)
+        var avgAmountPerMonth = variation / 6;
+        return avgAmountPerMonth;
+    }
+
+    getMonthsUntilSuccess();
+    /**
+     * 距离完成所需月数
+     */
+    function getMonthsUntilSuccess() {
+        var avgAmountPerMonth = getAmountPerMonthAtLast6Month();
+        var currentAmount = data[data.length - 1].amount;
+        // 预计还需月份数
+        var predictElapsedMonth = currentAmount / avgAmountPerMonth;
+        console.log('predictElapsedMonth ', predictElapsedMonth)
+        var dom = document.getElementById("num");
+        dom.append('以最近6个月平均速度，完成还需要 ' + parseInt(predictElapsedMonth) + ' 个月')
+        return predictElapsedMonth;
+    }
+
 </script>
 </body>
 </html>
