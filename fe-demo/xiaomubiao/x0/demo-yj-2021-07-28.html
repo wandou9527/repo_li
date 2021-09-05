@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组demo</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 数据元素长度的和
+     * @type {string[]}
+     */
+    var arr = ["abb3", "abb56000"];
+    for (let i = 0; i < arr.length; i++) {
+        console.log(arr[i].length)
+    }
+    //============================
+
+    /**
+     * 一个表格里的某一个字段如何获取这个字段所有数据相加的和
+     * @type {*[]}
+     */
+    var tableData = [
+        {
+            id: '12987122',
+            province: '辽宁省表彰奖励办公室',
+            commendations: '10',
+            commendationsCollective: '100',
+            Commendator: '1',
+            CommendatorCollective: '10',
+            percentageComplete: '12'
+        }, {
+            id: '12987123',
+            province: '辽宁省表彰奖励办公室',
+            commendations: '10',
+            commendationsCollective: '100',
+            Commendator: '1',
+            CommendatorCollective: '10',
+            percentageComplete: '12'
+        }, {
+            id: '12987124',
+            province: '辽宁省表彰奖励办公室',
+            commendations: '10',
+            commendationsCollective: '100',
+            Commendator: '1',
+            CommendatorCollective: '10',
+            percentageComplete: '12'
+        }, {
+            id: '12987125',
+            province: '辽宁省表彰奖励办公室',
+            commendations: '10',
+            commendationsCollective: '100',
+            Commendator: '1',
+            CommendatorCollective: '10',
+            percentageComplete: '12'
+        }, {
+            id: '12987126',
+            province: '辽宁省表彰奖励办公室',
+            commendations: '10',
+            commendationsCollective: '100',
+            Commendator: '1',
+            CommendatorCollective: '10',
+            percentageComplete: '12'
+        }
+    ];
+    var sum = 0;
+    for (let i = 0; i < tableData.length; i++) {
+        sum = sum + Number.parseInt(tableData[i].commendationsCollective);
+    }
+    console.log('commendationsCollective sum', sum)
+    //====================================================
+
+    var obj = {a: 1, b: 2, c: 3};
+    var array = [];
+    array.push(obj);
+    console.log("obj -> array", array);
+
+</script>
+</html>

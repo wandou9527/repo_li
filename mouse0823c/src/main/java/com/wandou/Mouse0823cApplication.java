@@ -26,8 +26,13 @@ public class Mouse0823cApplication {
         logger.warn("warn log *** {}", "逗号后面的占位符里吗");
 
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
-        ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(Mouse0823cApplication.class, args);
-        System.out.println("configurableApplicationContext.getId() = " + configurableApplicationContext.getId());
+
+        try {
+            ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(Mouse0823cApplication.class, args);
+            logger.info("configurableApplicationContext.getId() = {}", configurableApplicationContext.getId());
+        } catch (Throwable throwable) {
+            logger.error("error", throwable);
+        }
     }
 
 //    @Bean

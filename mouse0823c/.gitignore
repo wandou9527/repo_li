@@ -34,4 +34,4 @@
 /out/
 /.mvn/
 /nohup.out
-/logs/
+logs
