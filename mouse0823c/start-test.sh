@@ -21,7 +21,7 @@ javaps=`jps -l | grep mouse0823c`
     echo "================================"
  fi
 echo '准备自动启动「mouse」服务'
-cd /java/git_site_self/repo_li
+cd /java/git_site_self/repo_li/mouse0823c
 echo 'git pull ... 更新代码'
 git pull
 echo 'mvn clean package ...'
